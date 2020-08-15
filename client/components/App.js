@@ -14,6 +14,7 @@ const App = styled.div`
   color: rgb(74,74,74);
   position: relative;
   font-family: sans-serif;
+  width: 100vw;
 `;
 
 export default () => {
