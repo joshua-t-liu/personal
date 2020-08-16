@@ -15,6 +15,10 @@ const Container = styled.div`
   &.gray {
     background-color: rgb(247,247,247);
   }
+  
+  @media (max-width: ${SMALL_WIDTH}) {
+    font-size: 0.75em;
+  }
 `;
 
 const Title = styled.h2`

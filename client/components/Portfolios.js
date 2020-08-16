@@ -14,6 +14,7 @@ const Portfolios = styled.div`
   margin-top: 4em;
   @media (max-width: ${SMALL_WIDTH}) {
     margin: auto;
+    font-size: 0.75em;
   }
 `;
 

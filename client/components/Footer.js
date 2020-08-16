@@ -9,12 +9,18 @@ import { Social } from './Buttons';
 
 //Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 
+const SMALL_WIDTH = '768px';
+const MEDIUM_WIDTH = '1248px';
+
 const Footer = styled.div`
   display: flex;
   background-color: rgb(49,49,49);
   padding: 1em;
   align-items: center;
-  padding: 1em 2em;
+  padding: 2em;
+  @media (max-width: ${SMALL_WIDTH}) {
+    flex-direction: column-reverse;
+  }
 `;
 
 const Acknowledge = styled.div`

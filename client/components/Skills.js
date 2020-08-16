@@ -11,6 +11,9 @@ const Container = styled.div`
   align-items: center;
   text-align: center;
   background-color: rgb(247,247,247);
+  @media (max-width: ${SMALL_WIDTH}) {
+    font-size: 0.75em;
+  }
 `;
 
 const Title = styled.h2`
