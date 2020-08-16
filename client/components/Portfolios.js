@@ -12,6 +12,9 @@ const Portfolios = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 4em;
+  @media (max-width: ${SMALL_WIDTH}) {
+    margin: auto;
+  }
 `;
 
 const Container = styled.div`
