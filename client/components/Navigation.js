@@ -66,6 +66,7 @@ const NavBar = styled.div`
   display: flex;
   align-items: center;
   font-size: 1.2em;
+  z-index: 1000;
   &.active {
     background-color: rgb(255,255,255);
     border-bottom: 1px solid rgb(218, 218, 218);
@@ -99,7 +100,6 @@ const Overlay = styled.div`
   right: 0;
   height: 100vh;
   width: 100vw;
-  z-index: 1000;
   &.close {
     animation: ${slide} 0.25s ease-in 0s reverse forwards;
   }

@@ -48,8 +48,11 @@ const StyledBubble = styled.div`
   left: 50%;
   height: ${({ size }) => `${2.25 * size}em`};
   width: ${({ size }) => `${2.25 * size}em`};
-  transform: ${({ transform }) => `${transform}`};
+  transform: ${({ transform }) => `translate(${transform[0][0]}em, ${transform[0][1]}em)`};
   z-index: -1;
+  @media (max-width: ${SMALL_WIDTH}) {
+    transform: ${({ transform }) => `translate(${transform[1][0]}em, ${transform[1][1]}em)`};
+  }
 `;
 
 const SubText = styled.div`
@@ -125,17 +128,22 @@ const schools = [
 ]
 
 export default () => {
-
+  const translation = [
+    [[-7, -6], [-6, -6]],
+    [[0.5, -4.5], [0.5, -2]],
+    [[1, 0.5], [-0.5, 3]],
+    [[-4, 1], [-5, 1]]
+  ];
   return (
     <>
       <Container>
         <Title>7 Years of Software Implementation Experience</Title>
         <SubTitle>Working with Epic, an enterprise healthcare software</SubTitle>
         <Bubbles>
-          <Bubble company='Epic' years='3 years' size={3} transform='translate(-7em, -6em)' />
-          <Bubble company='HCI Group' years='1 year' size={2} transform='translate(0.5em, -4.5em)' />
-          <Bubble company='Mass General Brigham' years='2 years' size={2.5} transform='translate(1em, 0.5em)' />
-          <Bubble company='Huron Consulting' years='1 year' size={2} transform='translate(-4em, 1em)' />
+          <Bubble company='Epic' years='3 years' size={3} transform={translation[0]} />
+          <Bubble company='HCI Group' years='1 year' size={2} transform={translation[1]} />
+          <Bubble company='Mass General Brigham' years='2 years' size={2.5} transform={translation[2]} />
+          <Bubble company='Huron Consulting' years='1 year' size={2} transform={translation[3]} />
         </Bubbles>
       </Container>
 
