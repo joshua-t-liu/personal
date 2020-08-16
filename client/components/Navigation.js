@@ -99,6 +99,7 @@ const Overlay = styled.div`
   right: 0;
   height: 100vh;
   width: 100vw;
+  z-index: 1000;
   &.close {
     animation: ${slide} 0.25s ease-in 0s reverse forwards;
   }
