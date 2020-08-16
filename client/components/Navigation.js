@@ -20,7 +20,6 @@ const contacts = [
 
 const WideMenu = styled.div`
   display: flex;
-  justify-content: space-evenly;
   width: 33.3%;
 `;
 
@@ -52,7 +51,6 @@ const drop = keyframes`
 `;
 
 const Title = styled.div`
-  margin: -10em;
   font-weight: bold;
   font-family: cursive;
   animation: ${drop} 0.1s ease-in 0s forwards;
@@ -65,7 +63,6 @@ const NavBar = styled.div`
   width: 100vw;
   display: flex;
   align-items: center;
-  font-size: 1.2em;
   z-index: 1000;
   &.active {
     background-color: rgb(255,255,255);
