@@ -11,10 +11,10 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 5em 0;
-  height: calc(100vh - 10em);
+  min-height: calc(100vh - 10em);
   @media (max-width: ${SMALL_WIDTH}) {
     padding: 4em 0;
-    height: calc(100vh - 8em);
+    min-height: calc(100vh - 8em);
   }
 `;
 

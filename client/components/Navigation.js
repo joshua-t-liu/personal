@@ -162,7 +162,7 @@ export default ({ stickyTitle, stickyChat }) => {
   return (
     <NavBar className={(stickyTitle || isActive) && 'active'}>
       <WideMenu style={{ justifyContent: 'flex-start' }}>
-        <More onClick={() => setShowMore(!showMore)} />
+       <More onClick={() => setShowMore(!showMore)} />
 
         {showMore && <MoreMenu onClick={() => setShowMore(!showMore)} />}
 
