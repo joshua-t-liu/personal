@@ -35,7 +35,7 @@ const Bubbles = styled.div`
   position: relative;
   margin-top: 1.5em;
   align-self: stretch;
-  min-height: calc(100vh - 16em);
+  min-height: calc(75vh - 16em);
   z-index: -1;
 `;
 
