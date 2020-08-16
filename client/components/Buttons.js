@@ -4,6 +4,7 @@ import styled, { css, keyframes } from 'styled-components';
 const MEDIUM_WIDTH = '1248px';
 
 const CTA = styled.a`
+  display: inline-block;
   font-size: 1.25em;
   align-self: center;
   padding: 1em 3em;
@@ -73,7 +74,7 @@ const StyledMore = styled.svg`
 
 const More = ({ onClick }) => {
   return (
-    <StyledMore viewBox="0 0 384 384" width='1em' fill='rgb(74,74,74)' onClick={onClick}>
+    <StyledMore viewBox="0 0 384 384" height='1em' fill='rgb(74,74,74)' onClick={onClick}>
       <path d="m368 154.667969h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/>
       <path d="m368 32h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/>
       <path d="m368 277.332031h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/>
