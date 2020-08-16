@@ -12,8 +12,6 @@ import { Social } from './Buttons';
 const Footer = styled.div`
   display: flex;
   background-color: rgb(49,49,49);
-  margin: 0px -8px;
-  margin-bottom: -8px;
   padding: 1em;
   align-items: center;
   padding: 1em 2em;
