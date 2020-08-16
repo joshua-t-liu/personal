@@ -23,6 +23,7 @@ const CTA = styled.a`
 `;
 
 const CTANav = styled(CTA)`
+  display: none;
   font-size: 1em;
   margin: 0 1em;
   margin-top: -10em;
@@ -30,6 +31,7 @@ const CTANav = styled(CTA)`
   padding: 0;
   transition: margin-top 0.5s ease-in 0s, max-width 0s ease-in 0.5s, padding 0s ease-in 0.5s;
   &.active {
+    display: block;
     margin-top: 0;
     max-width: 10em;
     padding: 0.25em 1em;
