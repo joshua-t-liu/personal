@@ -25,6 +25,9 @@ const Container = styled.div`
   @media (max-width: ${SMALL_WIDTH}) {
     width: 90%;
   }
+  &:first-child {
+    padding-top: 1em;
+  }
 `;
 
 const Title = styled.h2`
