@@ -11,6 +11,11 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 5em 0;
+  height: calc(100vh - 10em);
+  @media (max-width: ${SMALL_WIDTH}) {
+    padding: 4em 0;
+    height: calc(100vh - 8em);
+  }
 `;
 
 const Title = styled.h1`
@@ -78,7 +83,9 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
         <About>
             This is my personal website where I showcase my front end skills in developing responsive, accessible web applications. Actively looking for new opportunities, and would love to connect and hear from you.
           </About>
-        <ChatButton ref={chat} margin='6em 0'>LET'S CHAT</ChatButton>
+        <div style={{ marginTop: '6em' }}>
+          <ChatButton ref={chat}>LET'S CHAT</ChatButton>
+        </div>
         {/* <div style={{ position: 'absolute', bottom: 0, right: 0, zIndex: -1 }}>
           <img src='./portrait_cartoon.jpeg' />
         </div> */}
