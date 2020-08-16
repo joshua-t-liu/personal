@@ -12,7 +12,7 @@ export default [
     ],
     result: 'Deployed product page has first meaningful paint under 2s.',
     href: 'https://github.com/joshua-t-liu/image-gallery',
-    elementId: 'img-gallery',
+    elementId: 'image-gallery',
   },
   {
     title: 'Designing and Scaling A Customer Reviews Microservice',

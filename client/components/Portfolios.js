@@ -132,7 +132,12 @@ const PortfolioButton = ({ title }) => {
 };
 
 export default () => {
-  useEffect(() => window.scrollTo(0, 0), []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const script = document.createElement('script');
+    script.src = './bundle.js';
+    document.body.append(script);
+  }, []);
 
   return (
     <Portfolios>
