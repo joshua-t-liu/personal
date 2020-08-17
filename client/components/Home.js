@@ -10,7 +10,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5em 0;
+  padding: 5em 1em;
   min-height: calc(100vh - 10em);
   @media (max-width: ${SMALL_WIDTH}) {
     padding: 4em 0;

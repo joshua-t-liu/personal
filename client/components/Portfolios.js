@@ -109,7 +109,7 @@ const Portfolio = (props) => {
         <Situation>{props.situation}</Situation>
 	<Subheader>Technology</Subheader>
         <Info>{props.technology.join(', ')}</Info>
-        <Subheader>What I did</Subheader>
+        <Subheader>My Work</Subheader>
         <ActionList>
           {props.actions.map((action) => <Bullet>{action}</Bullet>)}
         </ActionList>

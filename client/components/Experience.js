@@ -10,7 +10,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5em 0;
+  padding: 5em 1em;
   text-align: center;
   &.gray {
     background-color: rgb(247,247,247);

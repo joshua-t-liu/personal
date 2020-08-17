@@ -7,7 +7,7 @@ const MEDIUM_WIDTH = '1248px';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 5em 0;
+  padding: 5em 1em;
   align-items: center;
   text-align: center;
   background-color: rgb(247,247,247);
