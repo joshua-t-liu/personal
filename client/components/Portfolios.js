@@ -35,13 +35,7 @@ const Title = styled.h2`
   margin: 0;
   align-self: center;
   font-size: 3em;
-  text-align: center;
-  @media (max-width: ${SMALL_WIDTH}) {
-    text-align: left;
-    &:after {
-      text-align: left;
-    }
-  }
+  text-align: left;
 `;
 
 const Detail = styled.div`
