@@ -79,7 +79,7 @@ const slideIn = keyframes`
 `;
 
 const EventText = styled.div`
-  font-size: 1.5em;
+  font-size: 1.75em;
   padding-bottom: ${({ last }) => (last) ? '0px' : '2em' };
   padding-left: 1em;
   justify-content: flex-start;
@@ -100,6 +100,9 @@ const NodePath = styled.div`
 `
 const StyledEvent = styled.div`
   display: flex;
+  &:first-child {
+    margin-top: 3em;
+  }
   // &:nth-child(${({ size }) => size + 1})) {
   //   & > ${NodePath} > ${Path} {
   //     display: none;
