@@ -11,7 +11,7 @@ app.get('/portfolio', (req, res) => {
 });
 
 app.get(/\/portfolio\/.+/, (req, res) => {
-  res.redirect('/');
+  res.redirect('/portfolio');
 });
 
 app.get(/.*/, (req, res) => {

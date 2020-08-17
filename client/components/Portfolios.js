@@ -33,7 +33,6 @@ const Container = styled.div`
 
 const Title = styled.h2`
   margin: 0;
-  align-self: center;
   font-size: 3em;
   text-align: left;
 `;

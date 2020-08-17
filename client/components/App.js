@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
 import styled, { css, keyframes } from 'styled-components';
 
 import NavBar from './Navigation';
@@ -17,10 +17,11 @@ const App = styled.div`
   width: 100vw;
 `;
 
-export default () => {
+export default ({ path }) => {
   const [stickyTitle, setStickyTitle] = useState(null);
   const [stickyChat, setStickyChat] = useState(null);
-
+  const history = useHistory();
+  if (path) history.push(`/${path}`);
   return (
     <Router>
       <App>
