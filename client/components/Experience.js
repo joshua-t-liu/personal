@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
-import { College, BootCamp, GaTech, HackReactor } from './SVG';
+import TimeLine from './TimeLine';
+import { College, BootCamp, GaTech, HackReactor } from './Icons';
 
 const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
@@ -133,23 +134,48 @@ const schools = [
 ]
 
 export default () => {
+  const ref = useRef();
+  const [startTimeLine, SetStartTimeLine] = useState(false);
+
   const translation = [
     [[-7, -6], [-6, -6]],
     [[0.5, -4.5], [0.5, -2]],
     [[1, 0.5], [-0.5, 3]],
     [[-4, 1], [-5, 1]]
   ];
+
+  useEffect(() => {
+    let options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 1.0
+    }
+
+    const intersectionCb = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.target === ref.current) {
+
+          SetStartTimeLine(curr => curr || entry.isIntersecting);
+        }
+      });
+    }
+
+    const observer = new IntersectionObserver(intersectionCb, options);
+    observer.observe(ref.current);
+  }, []);
+
   return (
     <>
       <Container>
         <Title>7 Years of Software Implementation Experience</Title>
         <SubTitle>Working with Epic, an enterprise healthcare software</SubTitle>
-        <Bubbles>
+        {/* <Bubbles>
           <Bubble company='Epic' years='3 years' size={3} transform={translation[0]} />
           <Bubble company='HCI Group' years='1 year' size={2} transform={translation[1]} />
           <Bubble company='Mass General Brigham' years='2 years' size={2.5} transform={translation[2]} />
           <Bubble company='Huron Consulting' years='1 year' size={2} transform={translation[3]} />
-        </Bubbles>
+        </Bubbles> */}
+        <TimeLine ref={ref} startTimeLine={startTimeLine}/>
       </Container>
 
       {/* <SubTitle>Collaborating in cross-functional teams</SubTitle>

@@ -83,7 +83,7 @@ const Divider = styled.div`
 const Subheader = styled.p`
   font-weight: bold;
   font-size: 1.5em;
-  text-align: center;
+  text-align: left;
   margin-top: 2em;
   margin-bottom: 0;
   @media (max-width: ${SMALL_WIDTH}) {
