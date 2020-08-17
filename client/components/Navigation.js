@@ -95,7 +95,7 @@ const Overlay = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  height: 100vh;
+  height: ${({ height }) => `${height}px` || '100%'};
   width: 100vw;
   &.close {
     animation: ${slide} 0.25s ease-in 0s reverse forwards;
@@ -124,11 +124,16 @@ const StyledMoreMenu = styled.div`
 `;
 
 const MoreMenu = ({ onClick }) => {
+  const [height, setHeight] = useState(window.innerHeight);
   let location = useLocation();
   const [slideBack, setSlideBack] = useState(false);
 
+  useEffect(() => {
+    window.addEventListener('resize', () => setHeight(window.innerHeight));
+  }, []);
+
   return (
-    <Overlay className={slideBack && 'close'} onClick={() => setSlideBack(true)} onAnimationEnd={() => {if(slideBack) onClick()}}>
+    <Overlay height={height} className={slideBack && 'close'} onClick={() => setSlideBack(true)} onAnimationEnd={() => {if(slideBack) onClick()}}>
       <StyledMoreMenu>
         <div style={{ alignSelf: 'flex-end' }}>
           <Close onClick={() => setSlideBack(true)} />
