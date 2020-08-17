@@ -7,8 +7,12 @@ const PORT = 3000;
 app.use(express.static('dist'));
 
 app.get('/portfolio', (req, res) => {
-  res.redirect('/')
-})
+  res.redirect('/');
+});
+
+app.get(/\/portfolio\/.+/, (req, res) => {
+  res.redirect('/');
+});
 
 app.get(/.*/, (req, res) => {
   const options = {
