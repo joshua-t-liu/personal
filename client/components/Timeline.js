@@ -20,11 +20,25 @@ const Container = styled.div`
 `;
 
 const fill = keyframes`
-  from {
-
+  0% {
   }
-  to {
-    border-color: rgb(74,74,74);
+  25% {
+    border-top-color: rgb(74,74,74);
+  }
+  50% {
+    border-top-color: rgb(74,74,74);
+    border-right-color: rgb(74,74,74);
+  }
+  75% {
+    border-top-color: rgb(74,74,74);
+    border-right-color: rgb(74,74,74);
+    border-bottom-color: rgb(74,74,74);
+  }
+  100% {
+    border-top-color: rgb(74,74,74);
+    border-right-color: rgb(74,74,74);
+    border-bottom-color: rgb(74,74,74);
+    border-left-color: rgb(74,74,74);
   }
 `;
 
@@ -45,19 +59,21 @@ const Path = styled.div`
   width: 0.1em;
   background-color: rgb(196,196,196);
   visibility: hidden;
-  animation: ${extend} 0.1s ease-in 0.5s forwards;
+  animation: ${extend} 0.5s ease 0.5s forwards;
   display: ${({ last }) => (last) ? 'none' : null};
 `;
 
 const Node = styled.div`
   height: 1em;
   width: 1em;
-  border: solid 1px rgb(128,128,128);
+  border-style: solid;
+  border-width: 1px;
+  border-color: transparent;
   border-radius: 50%;
   background-color: white;
   flex-shrink: 0;
   z-index: 1;
-  animation: ${fill} 0.5s ease-in 0s forwards;
+  animation: ${fill} 0.4s linear 0.1s forwards;
 `;
 
 const StyledEvents = styled.div`
@@ -74,18 +90,18 @@ const slideIn = keyframes`
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(-0.25em);
   }
 `;
 
 const EventText = styled.div`
-  font-size: 1.75em;
+  font-size: 2em;
   padding-bottom: ${({ last }) => (last) ? '0px' : '2em' };
   padding-left: 1em;
   justify-content: flex-start;
   text-align: left;
   opacity: 0;
-  animation: ${slideIn} 0.1s ease-in 0.5s forwards;
+  animation: ${slideIn} 0.5s ease 0s forwards;
 `;
 
 const Title = styled.span`
@@ -102,7 +118,6 @@ const StyledEvent = styled.div`
   display: flex;
   &:first-child {
     margin-top: 3em;
-  }
   // &:nth-child(${({ size }) => size + 1})) {
   //   & > ${NodePath} > ${Path} {
   //     display: none;
