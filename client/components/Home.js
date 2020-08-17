@@ -20,18 +20,10 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-  margin-top: ${({ sticky }) => (sticky) ? '-0.05em' : null};
+  //margin-top: ${({ sticky }) => (sticky) ? '-0.05em' : null};
   font-size: 5em;
   text-align: center;
-  transition: margin-top 0.2s ease-in;
-  &:after {
-    content: 'Full stack engineer.  Math major. Software implementation experience.';
-    font-size: 0.4em;
-    display: block;
-    margin-top: 0.25em;
-    // font-weight: normal;
-    font-family: sans-serif;
-  }
+  //transition: margin-top 0.2s ease-in;
   @media (max-width: ${SMALL_WIDTH}) {
     font-size: 4em;
   }
@@ -42,6 +34,9 @@ const About = styled.p`
   width: 50%;
   margin: 0 auto;
   text-align: center;
+  & + & {
+    margin-top: 1em;
+  }
   @media (max-width: ${MEDIUM_WIDTH}) {
     width: 90%;
   }
@@ -80,9 +75,10 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
   return (
     <Container>
         <Title ref={title} sticky={stickyTitle}>Joshua Liu</Title>
-        <About>
-            This is my personal website where I showcase my front end skills in developing responsive, accessible web applications. Actively looking for new opportunities, and would love to connect and hear from you.
-          </About>
+        <About>Full stack enginer with a background in math and software implementation.</About>
+	<About>
+           Actively looking for new opportunities, and would love to connect and hear from you.
+        </About>
         <div style={{ marginTop: '6em' }}>
           <ChatButton ref={chat}>LET'S CHAT</ChatButton>
         </div>

@@ -15,7 +15,7 @@ export default [
     elementId: 'image-gallery',
   },
   {
-    title: 'Designing and Scaling A Customer Reviews Microservice',
+    title: 'Designing and Scaling Microservice For  Customer Reviews',
     technology: ['Node', 'Express', 'Nginx', 'PostgreSQL', 'Redis', 'AWS', 'Loader.io', 'New Relic'],
     situation: 'Worked on designing and scaling a customer reviews microservice for an apparel web application. Goal was to scale microservice service to handle 1000 RPS under load with average load times under 50ms. Database included 50 million customer review records.',
     actions: [
