@@ -33,6 +33,18 @@ const Groups = styled.div`
   margin: 1em 0;
 `;
 
+const rotate = (to) => keyframes`
+  to {
+    transform: rotate3d(0, 1, 0, ${to}deg);
+  }
+`;
+
+const SkillSetTitle = styled.div`
+  @media (max-width: ${SMALL_WIDTH}) {
+    align-self: flex-start;
+  }
+`;
+
 const SkillSet = styled.div`
   display: flex;
   width: 10em;
@@ -41,11 +53,22 @@ const SkillSet = styled.div`
   align-items: center;
   font-size: 2em;
   font-weight: bold;
-  background-color: rgb(255,255,255);
   border-radius: 0.25em;
   padding: 1em;
   margin 1em;
   box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 12px 0px, rgba(0, 0, 0, 0.16) 0px 47px 46px -27px;
+  background-color: ${({ flip }) => (flip) ? `rgb(255,255,255)` : 'dodgerblue'};
+  justify-content: ${({ flip }) => !flip && `center`};
+  transform: ${({ flip }) => `rotate3d(0, 1, 0, ${(flip) ? 90 : 0}deg)`};
+  & > ${SkillSetTitle} {
+    margin: ${({ flip }) => !flip && `auto`};
+  }
+  &.active {
+    animation: ${({ flip }) => css`${rotate((flip) ? 0 : -90)} 0.5s linear 0s forwards`};
+  }
+  & > ${SkillSetTitle} {
+    color: ${({ flip }) => (flip) ? 'dodgerblue' : 'white'};
+  }
   @media (max-width: ${SMALL_WIDTH}) {
     margin-top: 1em;
   }
@@ -58,13 +81,6 @@ const Skills = styled.p`
   text-align: left;
 `;
 
-const SkillSetTitle = styled.div`
-  color: dodgerblue;
-  @media (max-width: ${SMALL_WIDTH}) {
-    align-self: flex-start;
-  }
-`;
-
 const SKILLS = {
   languages: ['JavaScript', 'Python', 'MUMPS'],
   frameworks: {
@@ -74,41 +90,60 @@ const SKILLS = {
   },
 };
 
-const capitalizeFirstLetter = (str) => str[0].toUpperCase() + str.substr(1);
-
-export default () => {
-  const skillsRef = useRef();
-  const [align, setAlign] = useState(false);
+const Card = ({ skillset, skills, reverse }) => {
+  const [animState, setAnimState] = useState(0);
+  const ref = useRef();
 
   useEffect(() => {
     let options = {
       root: null,
       rootMargin: '0px',
-      threshold: 0,
+      threshold: 1,
     }
 
     const intersectionCb = (entries) => {
       entries.forEach((entry) => {
-        if (entry.target === skillsRef.current) {
-          // setAlign(!entry.isIntersecting);
-        }
+        if (entry.target === ref.current) setAnimState(curr => {
+          console.log(entry.isIntersecting);
+          if (curr === 0 && entry.isIntersecting) return curr + 1;
+          return curr;
+        });
       });
     }
 
     const observer = new IntersectionObserver(intersectionCb, options);
-    observer.observe(skillsRef.current);
+    observer.observe(ref.current);
   }, []);
 
+  return (
+    <>
+      {animState < 2 && (
+          <SkillSet
+            ref={ref}
+            className={animState && 'active'}
+            onAnimationEnd={() => setAnimState(curr => curr + 1)}
+            >
+            <SkillSetTitle>{skillset}</SkillSetTitle>
+          </SkillSet>
+      )}
+      {animState > 1 && (
+          <SkillSet flip={true} className={animState && 'active'}>
+            <SkillSetTitle>{skillset}</SkillSetTitle>
+            <Skills>{skills.join(', ')}</Skills>
+          </SkillSet>
+      )}
+    </>
+  );
+};
+
+export default () => {
   return (
     <Container>
       <Title>Skills I Bring</Title>
       <SubTitle><b>Languages:</b> {SKILLS.languages.join(', ')}</SubTitle>
       <Groups>
         {Object.entries(SKILLS.frameworks).map(([skillset, skills], idx) => (
-          <SkillSet ref={(!idx) ? skillsRef : null} {...{ align }}>
-            <SkillSetTitle>{skillset}</SkillSetTitle>
-            <Skills>{skills.join(', ')}</Skills>
-          </SkillSet>
+          <Card {...{ skillset, skills }} />
         ))}
       </Groups>
     </Container>
