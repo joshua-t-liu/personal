@@ -59,7 +59,7 @@ const Path = styled.div`
   width: 0.1em;
   background-color: rgb(196,196,196);
   visibility: hidden;
-  animation: ${extend} 0.5s ease 0.5s forwards;
+  animation: ${extend} 0.5s ease-in-out 0.5s forwards;
   display: ${({ last }) => (last) ? 'none' : null};
 `;
 
@@ -77,9 +77,12 @@ const Node = styled.div`
 `;
 
 const StyledEvents = styled.div`
+  position: relative;
+  top: 0px;
+  left: 0px;
   display: flex;
   flex-direction: column;
-  min-width: 50%;
+  min-width: 100%;
   align-items: flex-start;
 `;
 
@@ -101,7 +104,7 @@ const EventText = styled.div`
   justify-content: flex-start;
   text-align: left;
   opacity: 0;
-  animation: ${slideIn} 0.5s ease 0s forwards;
+  animation: ${slideIn} 0.5s ease-in-out 0s forwards;
 `;
 
 const Title = styled.span`
@@ -143,11 +146,22 @@ const Event = ({ last, title, year, description, setAnimState }) => {
   )
 }
 
+const Space = styled(EventText)`
+  visibility: hidden;
+  font-size: 2.25em;
+`;
+
 const Events = ({ events = [] }) => {
   const [animState, setAnimState] = useState(0);
+  let max = '';
+  events.forEach(({ title, description }) => {
+    if (max.length < title.length) max = title;
+    if (max.length < description.length) max = description;
+  });
 
   return (
     <StyledEvents>
+      <Space><Title>{max}</Title></Space>
       {events.filter((_,idx) => idx <= animState).map((event, idx) => <Event last={idx + 1 === events.length} setAnimState={setAnimState} {...event} />)}
     </StyledEvents>
   );
