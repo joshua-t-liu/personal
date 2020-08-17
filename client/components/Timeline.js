@@ -82,8 +82,11 @@ const StyledEvents = styled.div`
   left: 0px;
   display: flex;
   flex-direction: column;
-  min-width: 100%;
+  min-height: ${({ size }) => `${8 * size}em`};
   align-items: flex-start;
+  @media (max-width: ${SMALL_WIDTH}) {
+    min-height: ${({ size }) => `${10.5 * size}em`};
+  }
 `;
 
 const slideIn = keyframes`
@@ -98,13 +101,16 @@ const slideIn = keyframes`
 `;
 
 const EventText = styled.div`
-  font-size: 2em;
+  font-size: 1.5em;
   padding-bottom: ${({ last }) => (last) ? '0px' : '2em' };
   padding-left: 1em;
   justify-content: flex-start;
   text-align: left;
   opacity: 0;
-  animation: ${slideIn} 0.5s ease-in-out 0s forwards;
+  animation: ${slideIn} 0.5s ease 0s forwards;
+  @media (max-width: ${SMALL_WIDTH}) {
+    font-size: 2em;
+  }
 `;
 
 const Title = styled.span`
@@ -161,7 +167,7 @@ const Events = ({ events = [] }) => {
   });
 
   return (
-    <StyledEvents>
+    <StyledEvents size={events.length}>
       <Space><Title>{max}</Title></Space>
       {events.filter((_,idx) => idx <= animState).map((event, idx) => <Event last={idx + 1 === events.length} setAnimState={setAnimState} {...event} />)}
     </StyledEvents>
