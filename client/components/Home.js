@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import { ChatButton } from './Buttons';
 
@@ -45,6 +46,11 @@ const About = styled.p`
   // }
 `;
 
+const StyledLink = styled(Link)`
+  color: dodgerblue;
+  text-decoration: none;
+`;
+
 export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
   const title = useRef();
   const chat = useRef();
@@ -75,9 +81,11 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
   return (
     <Container>
         <Title ref={title} sticky={stickyTitle}>Joshua Liu</Title>
-        <About>Full stack enginer with a background in math and software implementation.</About>
-	<About>
-           Actively looking for new opportunities, and would love to connect and hear from you.
+        <About>
+          Full stack enginer with a background in math and software implementation. Check out my <StyledLink to='/portfolio'>portfolio</StyledLink> and see what I've been working on.
+        </About>
+	      <About>
+          Actively looking for new opportunities, and would love to connect and hear from you.
         </About>
         <div style={{ marginTop: '6em' }}>
           <ChatButton ref={chat}>LET'S CHAT</ChatButton>

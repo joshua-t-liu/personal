@@ -113,13 +113,18 @@ const Portfolio = (props) => {
         <ActionList>
           {props.actions.map((action) => <Bullet>{action}</Bullet>)}
         </ActionList>
-	<Subheader>Outcome</Subheader>
-        <Result>{props.result}</Result>
+        {props.result && (
+          <>
+            <Subheader>Outcome</Subheader>
+            <Result>{props.result}</Result>
+          </>)}
       </Detail>
       {props.elementId && <Demo id={props.elementId}/>}
-      <div style={{ margin: 'auto', marginTop: '3em' }}>
-        <GitHubButton href={props.href} />
-      </div>
+      {props.href && (
+        <div style={{ margin: 'auto', marginTop: '3em' }}>
+          <GitHubButton href={props.href} />
+        </div>
+      )}
     </Container>
   )
 }

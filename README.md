@@ -1,2 +1,2 @@
 # personal
-personal website
+Visit my personal website at http://www.jliuportfolio.com.

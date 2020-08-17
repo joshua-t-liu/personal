@@ -5,6 +5,7 @@ export default [
     situation: 'Worked with a team of 3 other developers to create a product page for real estate properties that combined 4 microservices.',
     actions: [
       'Created photo gallery front end. UI included a modal image carousel, a form for requesting more information, and additional tabs for geo-spatial information.',
+      'Created responsive user experience by implementing media queries and testing across browsers and devices.',
       'Implemented RESTful APIs and designed schema for MongoDB.',
       'Created proxy server that combined microservices and that served the product page.',
       'Deployed microservices and proxy server onto AWS.',
@@ -28,5 +29,17 @@ export default [
     ],
     result: 'Service handles 1200 RPS under load with an average load time of 50ms delay.',
     href: 'https://github.com/joshua-t-liu/reviews-module',
+  },
+  {
+    title: 'Develop Personal Website',
+    technology: ['React', 'React Router', 'Node', 'Express', 'AWS'],
+    situation: 'Designed and developed personal website.',
+    actions: [
+      'Desgined website and coded from scratch',
+      'Delivered a responsive experience by implementing media queries.',
+      'Deployed website onto AWS.',
+    ],
+    // result: '',
+    // href: 'https://github.com/joshua-t-liu/reviews-module',
   }
 ];
