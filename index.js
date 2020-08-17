@@ -26,7 +26,6 @@ app.get(/.*/, (req, res) => {
     const body = [];
     response.on('data', (chunk) => body.push(chunk));
     response.on('end', () => {
-      // res.set('Content-Type', response.headers['content-type']);
       res.send(Buffer.concat(body));
     });
     response.on('error', () => console.log('error with imagage gallery micro-service'));
