@@ -21,6 +21,7 @@ const contacts = [
 const WideMenu = styled.div`
   display: flex;
   width: 33.3%;
+  justify-content: center;
 `;
 
 const StyledLink = styled(Link)`
@@ -52,7 +53,6 @@ const drop = keyframes`
 
 const Title = styled.div`
   font-weight: bold;
-  font-family: cursive;
   animation: ${drop} 0.1s ease-in 0s forwards;
 `;
 

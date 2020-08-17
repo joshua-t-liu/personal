@@ -36,14 +36,6 @@ const Title = styled.h2`
   align-self: center;
   font-size: 3em;
   text-align: center;
-  &:after {
-    content: ${({ technology }) => (technology) ? `"${technology.join(', ')}"` : null};
-    font-size: 0.4em;
-    display: block;
-    text-align: center;
-    margin-top: 0.25em;
-    font-weight: normal;
-  }
   @media (max-width: ${SMALL_WIDTH}) {
     text-align: left;
     &:after {
@@ -57,10 +49,16 @@ const Detail = styled.div`
 
 const Situation = styled.p`
   font-size: 1.5em;
-  margin-top: 2em;
 `;
 
-const Info = styled.li`
+const Info = styled.p`
+  font-size: 1.5em;
+  @media (max-width: ${SMALL_WIDTH}) {
+    text-align: left;
+  }
+`;
+
+const Bullet = styled.li`
   font-size: 1.5em;
   margin-top: 1em;
   &:first-child {
@@ -82,12 +80,15 @@ const Divider = styled.div`
   background: rgb(236, 236, 236);
 `;
 
-const Actions = styled.p`
+const Subheader = styled.p`
   font-weight: bold;
   font-size: 1.5em;
   text-align: center;
   margin-top: 2em;
   margin-bottom: 0;
+  @media (max-width: ${SMALL_WIDTH}) {
+    text-align: left;
+  }
 `;
 
 const ActionList = styled.ul`
@@ -102,12 +103,15 @@ const Demo = styled.div`
 const Portfolio = (props) => {
   return (
     <Container even={props.even}>
-      <Title technology={props.technology}>{props.title}</Title>
+      <Title>{props.title}</Title>
       <Detail>
+	<Subheader>Overview</Subheader>
         <Situation>{props.situation}</Situation>
-        <Actions>What I did:</Actions>
+	<Subheader>Skills</Subheader>
+        <Info>{props.technology.join(', ')}</Info>
+        <Subheader>What I did</Subheader>
         <ActionList>
-          {props.actions.map((action) => <Info>{action}</Info>)}
+          {props.actions.map((action) => <Bullet>{action}</Bullet>)}
         </ActionList>
         <Result>{props.result}</Result>
       </Detail>

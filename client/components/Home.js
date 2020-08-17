@@ -21,7 +21,6 @@ const Container = styled.div`
 
 const Title = styled.h1`
   margin-top: ${({ sticky }) => (sticky) ? '-0.05em' : null};
-  font-family: cursive;
   font-size: 5em;
   text-align: center;
   transition: margin-top 0.2s ease-in;
