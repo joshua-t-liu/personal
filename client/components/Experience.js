@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
-import { College, BootCamp } from './SVG';
+import { College, BootCamp, GaTech, HackReactor } from './SVG';
 
 const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
@@ -15,7 +15,7 @@ const Container = styled.div`
   &.gray {
     background-color: rgb(247,247,247);
   }
-  
+
   @media (max-width: ${SMALL_WIDTH}) {
     font-size: 0.75em;
   }
@@ -122,12 +122,12 @@ const schools = [
   {
     title: 'Georgia Institute of Techology',
     degree: 'B.S. Mathematics',
-    image: College,
+    image: GaTech,
   },
   {
     title: 'Hack Reactor',
     degree: 'Advanced Software Engineering Immersive Program',
-    image: BootCamp,
+    image: HackReactor,
   },
 ]
 
