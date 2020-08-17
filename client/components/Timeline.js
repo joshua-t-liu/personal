@@ -149,6 +149,7 @@ const Event = ({ last, title, year, description, setAnimState }) => {
 const Space = styled(EventText)`
   visibility: hidden;
   font-size: 2.25em;
+  padding-bottom: 0;
 `;
 
 const Events = ({ events = [] }) => {
