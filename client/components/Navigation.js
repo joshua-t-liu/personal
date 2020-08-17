@@ -93,8 +93,8 @@ const Overlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  bottom: 0;
-  right: 0;
+  //bottom: 0;
+  //right: 0;
   height: ${({ height }) => `${height}px` || '100%'};
   width: 100vw;
   &.close {
@@ -109,7 +109,7 @@ const StyledMoreMenu = styled.div`
   right: 0;
   width: 280px;
   bottom: 0;
-  height: 100vh;
+  height: 100%;
   margin-left: -280px;
   display: flex;
   flex-direction: column;

@@ -107,7 +107,7 @@ const Portfolio = (props) => {
       <Detail>
 	<Subheader>Overview</Subheader>
         <Situation>{props.situation}</Situation>
-	<Subheader>Skills</Subheader>
+	<Subheader>Technology</Subheader>
         <Info>{props.technology.join(', ')}</Info>
         <Subheader>What I did</Subheader>
         <ActionList>
