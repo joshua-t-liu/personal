@@ -25,9 +25,9 @@ module.exports = {
       }
     ],
   },
-  // externals: {
-  //   react: 'React',
-  //   'react-dom': 'ReactDOM',
-  //   'styled-components': 'styled',
-  // }
+  externals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+    'styled-components': 'styled',
+  }
 }
