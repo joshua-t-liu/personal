@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: {
     // website: './client/index.js',
     hydrate: './client/hydrate.js',
