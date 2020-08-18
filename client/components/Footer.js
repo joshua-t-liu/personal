@@ -39,7 +39,7 @@ export default () => {
       <Acknowledge>
         Icons made by <PlainLink href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</PlainLink>, <PlainLink href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</PlainLink>, <PlainLink href="https://www.flaticon.com/free-icon/email_181535" title="Chanut">Chanut</PlainLink>, <PlainLink href="https://www.flaticon.com/free-icon/exercise_2928158" title="Good Ware">Good Ware</PlainLink>, and <PlainLink href="http://www.dariusdan.com/" title="Darius Dan">Darius Dan</PlainLink> from <PlainLink href="https://www.flaticon.com/" title="Flaticon"> flaticon</PlainLink>.
       </Acknowledge>
-      <div><Social /></div>
+      <Social />
     </Footer>
   );
 }

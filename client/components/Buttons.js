@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, forwardRef } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
+const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
 
 const CTA = styled.a`
@@ -148,10 +149,14 @@ const GitHubButton = ({ href = 'https://github.com/joshua-t-liu' }) => (
 );
 
 const MoreMenuContacts = styled.div`
+  align-self: stretch;
   justify-content: space-evenly;
   align-items: flex-end;
   flex-grow: 1;
   display: flex;
+  @media (max-width: ${SMALL_WIDTH}) {
+    margin-bottom: 1em;
+  }
 `;
 
 const MoreMenuContact = styled.div`
