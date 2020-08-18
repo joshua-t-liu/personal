@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
-import TimeLine from './TimeLine';
+import Timeline from './Timeline';
 import { College, BootCamp, GaTech, HackReactor } from './Icons';
 
 const SMALL_WIDTH = '768px';
@@ -127,7 +127,7 @@ export default () => {
       <Container>
         <Title>7 Years of Software Implementation Experience</Title>
         <SubTitle>Working with Epic, an enterprise healthcare software</SubTitle>
-        <TimeLine ref={ref} startTimeLine={startTimeLine}/>
+        <Timeline ref={ref} startTimeLine={startTimeLine}/>
       </Container>
 
       {/* include experience from past jobs */}
