@@ -152,7 +152,7 @@ const MoreMenuContacts = styled.div`
   align-self: stretch;
   justify-content: space-evenly;
   align-items: flex-end;
-  flex-grow: 1;
+  flex-grow: ${({ flexGrow }) => flexGrow || 1};
   display: flex;
   @media (max-width: ${SMALL_WIDTH}) {
     margin-bottom: 1em;
@@ -164,8 +164,8 @@ const MoreMenuContact = styled.div`
   display: flex;
 `;
 
-const Social = () => (
-  <MoreMenuContacts>
+const Social = (props) => (
+  <MoreMenuContacts {...props}>
     <GitHub />
     <Linkedin />
     <Email />
