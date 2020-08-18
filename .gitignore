@@ -2,3 +2,6 @@ node_modules
 client/components-old
 /client/images
 nohup.out
+index.html
+/client/index.js
+/client/components/Bubbles.js

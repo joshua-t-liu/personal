@@ -141,9 +141,10 @@ const MoreMenu = ({ onClick }) => {
 
         {['about', 'portfolio'].map((title) => (
           <StyledLink
+            key={title}
             to={`/${(title !== 'about') ? title : ''}`}
             brighter={true}
-            active={`/${(title !== 'about') ? title : ''}` === location.pathname}>
+            active={(`/${(title !== 'about') ? title : ''}` === location.pathname) ? 1 : 0}>
             {capitalizeFirstLetter(title)}
           </StyledLink>
         ))}
@@ -173,8 +174,9 @@ export default ({ stickyTitle, stickyChat }) => {
 
         {['about', 'portfolio'].map((title) => (
           <StyledLink
+            key={title}
             to={`/${(title !== 'about') ? title : ''}`}
-            active={`/${(title !== 'about') ? title : ''}` === location.pathname}>
+            active={(`/${(title !== 'about') ? title : ''}` === location.pathname) ? 1 : 0}>
             {capitalizeFirstLetter(title)}
           </StyledLink>
         ))}
@@ -184,7 +186,7 @@ export default ({ stickyTitle, stickyChat }) => {
         {(stickyTitle || isActive) && <Title>Joshua Liu</Title>}
       </WideMenu>
       <WideMenu style={{ justifyContent: 'flex-end' }}>
-        {contacts.map(({ title, href}) => <Contact href={href}>{title}</Contact>)}
+        {contacts.map(({ title, href}) => <Contact key={title} href={href}>{title}</Contact>)}
         <ChatNavButton className={(stickyChat || isActive) && 'active'} />
       </WideMenu>
     </NavBar>

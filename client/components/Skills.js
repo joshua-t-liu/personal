@@ -104,7 +104,6 @@ const Card = ({ skillset, skills, reverse }) => {
     const intersectionCb = (entries) => {
       entries.forEach((entry) => {
         if (entry.target === ref.current) setAnimState(curr => {
-          console.log(entry.isIntersecting);
           if (curr === 0 && entry.isIntersecting) return curr + 1;
           return curr;
         });
@@ -116,7 +115,7 @@ const Card = ({ skillset, skills, reverse }) => {
   }, []);
 
   return (
-    <>
+    <React.Fragment>
       {animState < 2 && (
           <SkillSet
             ref={ref}
@@ -132,7 +131,7 @@ const Card = ({ skillset, skills, reverse }) => {
             <Skills>{skills.join(', ')}</Skills>
           </SkillSet>
       )}
-    </>
+    </React.Fragment>
   );
 };
 
@@ -143,7 +142,7 @@ export default () => {
       <SubTitle><b>Languages:</b> {SKILLS.languages.join(', ')}</SubTitle>
       <Groups>
         {Object.entries(SKILLS.frameworks).map(([skillset, skills], idx) => (
-          <Card {...{ skillset, skills }} />
+          <Card key={skillset} {...{ skillset, skills }} />
         ))}
       </Groups>
     </Container>

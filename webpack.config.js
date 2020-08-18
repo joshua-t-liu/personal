@@ -2,10 +2,13 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry: './client/index.js',
+  entry: {
+    // website: './client/index.js',
+    hydrate: './client/hydrate.js',
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'website.js',
+    filename: '[name].js',
   },
   module: {
     rules: [
@@ -17,13 +20,14 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: ['@babel/preset-env', '@babel/preset-react'],
+          plugins: ['babel-plugin-styled-components'],
         }
       }
     ],
   },
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-    'styled-components': 'styled',
-  }
+  // externals: {
+  //   react: 'React',
+  //   'react-dom': 'ReactDOM',
+  //   'styled-components': 'styled',
+  // }
 }

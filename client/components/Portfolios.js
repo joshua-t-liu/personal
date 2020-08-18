@@ -95,30 +95,33 @@ const Demo = styled.div`
 
 const Portfolio = (props) => {
   return (
-    <Container even={props.even}>
-      <Title>{props.title}</Title>
-      <Detail>
-	<Subheader>Overview</Subheader>
-        <Situation>{props.situation}</Situation>
-	<Subheader>Technology</Subheader>
-        <Info>{props.technology.join(', ')}</Info>
-        <Subheader>My Work</Subheader>
-        <ActionList>
-          {props.actions.map((action) => <Bullet>{action}</Bullet>)}
-        </ActionList>
-        {props.result && (
-          <>
-            <Subheader>Outcome</Subheader>
-            <Result>{props.result}</Result>
-          </>)}
-      </Detail>
-      {props.elementId && <Demo id={props.elementId}/>}
-      {props.href && (
-        <div style={{ margin: 'auto', marginTop: '3em' }}>
-          <GitHubButton href={props.href} />
-        </div>
-      )}
-    </Container>
+    <React.Fragment>
+      {props.notFirst && <Divider />}
+      <Container>
+        <Title>{props.title}</Title>
+        <Detail>
+          <Subheader>Overview</Subheader>
+          <Situation>{props.situation}</Situation>
+          <Subheader>Technology</Subheader>
+          <Info>{props.technology.join(', ')}</Info>
+          <Subheader>My Work</Subheader>
+          <ActionList>
+            {props.actions.map((action, idx) => <Bullet key={idx}>{action}</Bullet>)}
+          </ActionList>
+          {props.result && (
+            <React.Fragment>
+              <Subheader>Outcome</Subheader>
+              <Result>{props.result}</Result>
+            </React.Fragment>)}
+        </Detail>
+        {props.elementId && <Demo id={props.elementId}/>}
+        {props.href && (
+          <div style={{ margin: 'auto', marginTop: '3em' }}>
+            <GitHubButton href={props.href} />
+          </div>
+        )}
+      </Container>
+    </React.Fragment>
   )
 }
 
@@ -151,12 +154,7 @@ export default () => {
 
   return (
     <Portfolios>
-      {portfolios.map((portfolio, idx) => (
-        <>
-          {(idx > 0) && <Divider />}
-          <Portfolio key={idx} even={idx % 2 === 0} {...portfolio}/>
-        </>
-      ))}
+      {portfolios.map((portfolio, idx) => <Portfolio key={idx} notFirst={idx > 0} {...portfolio}/>)}
     </Portfolios>
   )
 };

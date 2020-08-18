@@ -23,7 +23,24 @@ const CTA = styled.a`
   }
 `;
 
-const CTANav = styled(CTA)`
+const CTANav = styled.a`
+display: inline-block;
+font-size: 1.25em;
+align-self: center;
+padding: 1em 3em;
+border: 1px solid dodgerblue;
+border-radius: 0.25em;
+cursor: pointer;
+background-color: dodgerblue;
+color: white;
+font-weight: bold;
+box-shadow: dodgerblue 0px 10px 20px -10px;
+text-decoration: none;
+margin: ${({ margin }) => margin};
+&:hover {
+  background-color: white;
+  color: dodgerblue;
+}
   font-size: 1em;
   margin: 0 1em;
   margin-top: -10em;

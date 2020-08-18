@@ -32,11 +32,12 @@ export default [
   },
   {
     title: 'Develop Personal Website',
-    technology: ['React', 'React Router', 'Node', 'Express', 'AWS'],
+    technology: ['React', 'React Router', 'Node', 'Express', 'AWS', 'Server Side Rendering', 'Webpack'],
     situation: 'Designed and developed personal website.',
     actions: [
       'Desgined website and coded from scratch',
       'Delivered a responsive experience by implementing media queries.',
+      'Implemented server side rendering using React.',
       'Deployed website onto AWS.',
     ],
     // result: '',

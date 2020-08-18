@@ -32,48 +32,6 @@ const SubTitle = styled.div`
   margin-top: 1em;
 `;
 
-const Bubbles = styled.div`
-  position: relative;
-  margin-top: 1.5em;
-  align-self: stretch;
-  //min-height: calc(75vh - 16em);
-  min-height: 30em;
-  z-index: -1;
-`;
-
-const StyledBubble = styled.div`
-  background-color: rgb(247,247,247);
-  border-radius: 50%;
-  font-size: 2.5em;
-  text-align: center;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  top: 50%;
-  left: 50%;
-  height: ${({ size }) => `${2.25 * size}em`};
-  width: ${({ size }) => `${2.25 * size}em`};
-  transform: ${({ transform }) => `translate(${transform[0][0]}em, ${transform[0][1]}em)`};
-  z-index: -1;
-  @media (max-width: ${SMALL_WIDTH}) {
-    transform: ${({ transform }) => `translate(${transform[1][0]}em, ${transform[1][1]}em)`};
-  }
-`;
-
-const SubText = styled.div`
-  font-size: 0.5em;
-  margin-top: 0.5em;
-  font-weight: 900;
-`;
-
-const Bubble = ({ company, years, ...props }) => (
-  <StyledBubble {...props}>
-    <div>{years}</div>
-    <SubText>{company}</SubText>
-  </StyledBubble>
-);
-
 const School = styled.div`
   width: 15em;
   display: flex;
@@ -165,34 +123,21 @@ export default () => {
   }, []);
 
   return (
-    <>
+    <React.Fragment>
       <Container>
         <Title>7 Years of Software Implementation Experience</Title>
         <SubTitle>Working with Epic, an enterprise healthcare software</SubTitle>
-        {/* <Bubbles>
-          <Bubble company='Epic' years='3 years' size={3} transform={translation[0]} />
-          <Bubble company='HCI Group' years='1 year' size={2} transform={translation[1]} />
-          <Bubble company='Mass General Brigham' years='2 years' size={2.5} transform={translation[2]} />
-          <Bubble company='Huron Consulting' years='1 year' size={2} transform={translation[3]} />
-        </Bubbles> */}
         <TimeLine ref={ref} startTimeLine={startTimeLine}/>
       </Container>
 
-      {/* <SubTitle>Collaborating in cross-functional teams</SubTitle>
-      <SubTitle>In multiple capacities</SubTitle> */}
-      {/* {<li>Project Management</li>
-            <li>Feature Development</li>
-            <li>Requirements Gathering</li>
-            <li>Testing</li>
-            <li>Release Planning</li>
-            <li>Debugging</li>} */}
+      {/* include experience from past jobs */}
 
       <Container className={'gray'}>
         <Title>Where I've Studied</Title>
         <Schools>
-          {schools.map((school) => <Badge {...school}/>)}
+          {schools.map((school) => <Badge key={school.title} {...school}/>)}
         </Schools>
       </Container>
-      </>
+      </React.Fragment>
   );
 }

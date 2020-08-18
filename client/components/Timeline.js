@@ -169,7 +169,7 @@ const Events = ({ events = [] }) => {
   return (
     <StyledEvents size={events.length}>
       <Space><Title>{max}</Title></Space>
-      {events.filter((_,idx) => idx <= animState).map((event, idx) => <Event last={idx + 1 === events.length} setAnimState={setAnimState} {...event} />)}
+      {events.filter((_,idx) => idx <= animState).map((event, idx) => <Event key={idx} last={idx + 1 === events.length} setAnimState={setAnimState} {...event} />)}
     </StyledEvents>
   );
 };
