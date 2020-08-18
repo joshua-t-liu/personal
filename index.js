@@ -11,11 +11,13 @@ const http = require('http');
 const { createElement } = require('react');
 const ReactDOMServer = require('react-dom/server');
 const { ServerStyleSheet } = require('styled-components');
+const compression = require('compression')
 const { AppSSR } = require('./client/app');
 
 const app = express();
 const PORT = 3000;
 
+app.use(compression());
 app.use(express.static('dist'));
 
 app.get(/\/$|\/portfolio$/, (req, res) => {

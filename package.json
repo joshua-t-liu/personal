@@ -9,6 +9,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
+    "compression": "^1.7.4",
     "create-react-class": "^15.6.3",
     "express": "^4.17.1"
   },
