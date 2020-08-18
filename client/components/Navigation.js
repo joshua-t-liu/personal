@@ -57,7 +57,7 @@ const Title = styled.div`
 `;
 
 const NavBar = styled.div`
-  position: sticky;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;

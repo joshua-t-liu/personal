@@ -13,7 +13,7 @@ const Portfolios = styled.div`
   align-items: center;
   margin-top: 4em;
   @media (max-width: ${SMALL_WIDTH}) {
-    margin: auto;
+    margin-top: 4em;
     font-size: 0.75em;
   }
 `;
