@@ -1,4 +1,7 @@
 import React from 'react';
+import 'lazysizes';
+// import a plugin
+import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 
 export default [
   {
@@ -34,7 +37,7 @@ export default [
     result: 'Service handles 1200 RPS under load with an average load time of 50ms delay.',
     href: 'https://github.com/joshua-t-liu/reviews-module',
     Component: () => (
-      <img style={{ width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} src='./customer_reviews.png' />
+      <img className='lazyload' style={{ width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} data-src='./customer_reviews.png' />
     )
   },
   {
@@ -50,7 +53,7 @@ export default [
     result: 'Responsive site with first contentful paint under 2 seconds.',
     href: 'https://github.com/joshua-t-liu/personal',
     Component: () => (
-      <img style={{ width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} src='./website-desktop.png' />
+      <img className='lazyload' style={{ width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} data-src='./website-desktop.png' />
     )
   }
 ];
