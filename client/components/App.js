@@ -16,17 +16,23 @@ const App = styled.div`
   color: rgb(74,74,74);
   position: relative;
   font-family: sans-serif;
-  width: 100vw;
+  width: 100%;
 `;
 
 export default ({ path }) => {
   const [stickyTitle, setStickyTitle] = useState(null);
   const [stickyChat, setStickyChat] = useState(null);
+  const ref = useRef();
+  const [height, setHeight] = useState();
   const history = useHistory();
+
+  useEffect(() => {
+    setHeight(ref.current && ref.current.offsetHeight);
+  }, [ref.current]);
 
   return (
     <App id='application'>
-      <NavBar {...{ stickyTitle, stickyChat }} />
+      <NavBar ref={ref} {...{ stickyTitle, stickyChat }} />
       {/* <Suspense fallback={<div style={{ height: '100vh', width: '100vw' }}></div>}> */}
         <Switch>
           <Route exact path='/'>
@@ -34,7 +40,7 @@ export default ({ path }) => {
           </Route>
             }
           <Route path='/portfolio'>
-            <Portfolios />
+            <Portfolios height={height} />
           </Route>
         </Switch>
       {/* </Suspense> */}

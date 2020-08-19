@@ -60,7 +60,7 @@ const NavBar = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   display: flex;
   align-items: center;
   z-index: 1000;
@@ -160,16 +160,16 @@ const capitalizeFirstLetter = (str) => {
   return str[0].toUpperCase() + str.substr(1);
 }
 
-export default ({ stickyTitle, stickyChat }) => {
+export default forwardRef(({ stickyTitle, stickyChat }, ref) => {
   const [showMore, setShowMore] = useState(false);
   let location = useLocation();
   const isActive = location.pathname === '/portfolio';
 
   return (
-    <NavBar className={(stickyTitle || isActive) && 'active'}>
+    <NavBar ref={ref} className={(stickyTitle || isActive) && 'active'}>
+
       <WideMenu style={{ justifyContent: 'flex-start' }}>
        <More onClick={() => setShowMore(!showMore)} />
-
         {showMore && <MoreMenu onClick={() => setShowMore(!showMore)} />}
 
         {['about', 'portfolio'].map((title) => (
@@ -180,15 +180,17 @@ export default ({ stickyTitle, stickyChat }) => {
             {capitalizeFirstLetter(title)}
           </StyledLink>
         ))}
-
       </WideMenu>
+
       <WideMenu>
         {(stickyTitle || isActive) && <Title>Joshua Liu</Title>}
       </WideMenu>
+
       <WideMenu style={{ justifyContent: 'flex-end' }}>
         {contacts.map(({ title, href}) => <Contact key={title} href={href}>{title}</Contact>)}
         <ChatNavButton className={(stickyChat || isActive) && 'active'} />
       </WideMenu>
+
     </NavBar>
   )
-};
+});

@@ -5,29 +5,60 @@ import { GitHubButton } from './Buttons';
 import portfolios from '../portfolio_data';
 
 const SMALL_WIDTH = '768px';
+const SMALL_WIDTH_NUM = 768;
 const MEDIUM_WIDTH = '1248px';
 
-const Portfolios = styled.div`
+const Layout = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 4em;
+  margin-top: ${({ height }) => `${height}px`};
   @media (max-width: ${SMALL_WIDTH}) {
-    margin-top: 4em;
     font-size: 0.75em;
   }
+  flex-direction: ${({ odd }) => !odd && 'row-reverse'};
+`;
+
+const Cell = styled.div`
+  width: 50%;
+  padding: 0 2em;
+  &.sticky {
+    position: sticky;
+    height: ${({ height }) => `calc(100vh - ${height}px)`};
+    display: flex;
+    align-items: center;
+    top: ${({ height }) => `${height}px`};
+  }
+  @media (max-width: ${SMALL_WIDTH}) {
+    width: 100%;
+    &.sticky {
+      display: none;
+    }
+  }
+`;
+
+const CellMobile = styled.div`
+  display: none;
+  margin: 5em 0;
+  @media (max-width: ${SMALL_WIDTH}) {
+    display: block;
+  }
+`;
+
+const Divider = styled.div`
+  box-sizing: border-box;
+  height: 1px;
+  width: 100%;
+  max-width: 1366px;
+  margin: 0 auto;
+  display: block;
+  background: rgb(236, 236, 236);
 `;
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 5em 0;
-  width: 50%;
-  @media (max-width: ${SMALL_WIDTH}) {
-    width: 90%;
-  }
   &:first-child {
-    padding-top: 1em;
+    padding-top: 3em;
   }
 `;
 
@@ -35,9 +66,6 @@ const Title = styled.h2`
   margin: 0;
   font-size: 3em;
   text-align: left;
-`;
-
-const Detail = styled.div`
 `;
 
 const Situation = styled.p`
@@ -63,16 +91,6 @@ const Result = styled.p`
   font-size: 1.5em;
 `;
 
-const Divider = styled.div`
-  box-sizing: border-box;
-  height: 1px;
-  width: 100%;
-  max-width: 1366px;
-  display: block;
-  margin: 0px auto;
-  background: rgb(236, 236, 236);
-`;
-
 const Subheader = styled.p`
   font-weight: bold;
   font-size: 1.5em;
@@ -89,32 +107,28 @@ const ActionList = styled.ul`
   padding-top: 1em;
 `;
 
-const Demo = styled.div`
-  margin: 3em 0;
-`;
-
 const Portfolio = (props) => {
+  const Component = props.Component;
+
   return (
     <React.Fragment>
-      {props.notFirst && <Divider />}
       <Container>
         <Title>{props.title}</Title>
-        <Detail>
-          <Subheader>Overview</Subheader>
-          <Situation>{props.situation}</Situation>
-          <Subheader>Technology</Subheader>
-          <Info>{props.technology.join(', ')}</Info>
-          <Subheader>My Work</Subheader>
-          <ActionList>
-            {props.actions.map((action, idx) => <Bullet key={idx}>{action}</Bullet>)}
-          </ActionList>
-          {props.result && (
-            <React.Fragment>
-              <Subheader>Outcome</Subheader>
-              <Result>{props.result}</Result>
-            </React.Fragment>)}
-        </Detail>
-        {props.elementId && <Demo id={props.elementId}/>}
+        <Subheader>Overview</Subheader>
+        <Situation>{props.situation}</Situation>
+        <Subheader>Technology</Subheader>
+        <Info>{props.technology.join(', ')}</Info>
+        <Subheader>My Work</Subheader>
+        <ActionList>
+          {props.actions.map((action, idx) => <Bullet key={idx}>{action}</Bullet>)}
+        </ActionList>
+        <Subheader>Outcome</Subheader>
+        <Result>{props.result}</Result>
+        {props.isMobile && (
+          <CellMobile>
+            <Component />
+          </CellMobile>
+        )}
         {props.href && (
           <div style={{ margin: 'auto', marginTop: '3em' }}>
             <GitHubButton href={props.href} />
@@ -123,38 +137,46 @@ const Portfolio = (props) => {
       </Container>
     </React.Fragment>
   )
-}
-
-const Buttons = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  font-size: 1.25em;
-`;
-
-const Button = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const PortfolioButton = ({ title }) => {
-  return (
-    <Button>
-      <div>{title}</div>
-    </Button>
-  );
 };
 
-export default () => {
+export default ({ height }) => {
+  const [isDesktop, setIsDesktop] = useState(true);
+  const [isMobile, setIsMobile] = useState(true);
+
   useEffect(() => {
+    setIsDesktop(window.innerWidth > SMALL_WIDTH_NUM);
+    setIsMobile(window.innerWidth <= SMALL_WIDTH_NUM);
+
+    const loadScript = () => {
+      const script = document.createElement('script');
+      script.src = './bundle.js';
+      document.body.append(script);
+    }
+    loadScript();
+
+    window.addEventListener('resize', () => {
+      setIsDesktop(window.innerWidth > SMALL_WIDTH_NUM);
+      setIsMobile(window.innerWidth <= SMALL_WIDTH_NUM);
+      if (!document.getElementById('image-gallery').childElementCount) loadScript();
+    })
     window.scrollTo(0, 0);
-    const script = document.createElement('script');
-    script.src = './bundle.js';
-    document.body.append(script);
+
   }, []);
 
   return (
-    <Portfolios>
-      {portfolios.map((portfolio, idx) => <Portfolio key={idx} notFirst={idx > 0} {...portfolio}/>)}
-    </Portfolios>
+    <React.Fragment>
+      {portfolios.map((portfolio, idx) => {
+        const Component = portfolio.Component;
+        return (
+          <React.Fragment key={idx}>
+            <Layout height={height} odd={idx % 2} >
+              {isDesktop && <Cell className='sticky' height={height} ><Component /></Cell>}
+              <Cell><Portfolio {...portfolio} isMobile={isMobile} /></Cell>
+            </Layout>
+            {(idx < portfolios.length - 1) && <Divider />}
+          </React.Fragment>
+        )
+      })}
+    </React.Fragment>
   )
 };

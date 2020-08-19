@@ -2,6 +2,7 @@
   "name": "portfolio",
   "version": "0.0.1",
   "scripts": {
+    "start": "node ./server/index.js",
     "build": "webpack --watch"
   },
   "dependencies": {
