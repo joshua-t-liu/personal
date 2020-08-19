@@ -125,19 +125,20 @@ export default () => {
   return (
     <React.Fragment>
       <Container>
-        <Title>7 Years of Software Implementation Experience</Title>
-        <SubTitle>Working with Epic, an enterprise healthcare software</SubTitle>
+        {/* 7 Years of Software Implementation Experience */}
+        <Title>Timeline</Title>
+        <SubTitle>7 years of software implementation experience, working with Epic, an enterprise healthcare software</SubTitle>
         <Timeline ref={ref} startTimeLine={startTimeLine}/>
       </Container>
 
       {/* include experience from past jobs */}
 
-      <Container className={'gray'}>
+      {/* <Container className={'gray'}>
         <Title>Where I've Studied</Title>
         <Schools>
           {schools.map((school) => <Badge key={school.title} {...school}/>)}
         </Schools>
-      </Container>
+      </Container> */}
       </React.Fragment>
   );
 }

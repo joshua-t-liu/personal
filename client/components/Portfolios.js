@@ -11,7 +11,7 @@ const MEDIUM_WIDTH = '1248px';
 const Layout = styled.div`
   display: flex;
   margin-top: ${({ height }) => `${height}px`};
-  @media (max-width: ${SMALL_WIDTH}) {
+  @media (max-width: ${MEDIUM_WIDTH}) {
     font-size: 0.75em;
   }
   flex-direction: ${({ odd }) => !odd && 'row-reverse'};

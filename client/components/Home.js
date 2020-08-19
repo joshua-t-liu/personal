@@ -8,6 +8,7 @@ const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,8 +91,8 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
         <div style={{ marginTop: '6em' }}>
           <ChatButton ref={chat}>LET'S CHAT</ChatButton>
         </div>
-        {/* <div style={{ position: 'absolute', bottom: 0, right: 0, zIndex: -1 }}>
-          <img src='./portrait_cartoon.jpeg' />
+        {/* <div style={{ position: 'absolute', bottom: 0, right: 0, zIndex: 'auto' }}>
+          <img src='./headshot.jpeg' />
         </div> */}
     </Container>
   )

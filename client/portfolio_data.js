@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import styled, { css, keyframes } from 'styled-components';
 import 'lazysizes';
 // import a plugin
 import 'lazysizes/plugins/parent-fit/ls.parent-fit';
@@ -41,7 +42,7 @@ export default [
     )
   },
   {
-    title: 'Develop Personal Website',
+    title: 'Developing Portfolio Website',
     technology: ['React', 'React Router', 'Node', 'Express', 'AWS', 'Server Side Rendering', 'Webpack'],
     situation: 'Designed and developed personal website.',
     actions: [
@@ -52,8 +53,14 @@ export default [
     ],
     result: 'Responsive site with first contentful paint under 2 seconds.',
     href: 'https://github.com/joshua-t-liu/personal',
-    Component: () => (
-      <img className='lazyload' style={{ width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} data-src='./website-desktop.png' />
-    )
+    Component: () => {
+
+      return (
+        <div>
+          {<img className='lazyload' style={{ width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} data-src='./website-desktop.png' />}
+          {false && <img style={{ border: '1px solid rgb(196, 196, 196)', borderRadius: '2em', objectFit: 'contain', height: '80%', margin: 'auto' }} src='./website-mobile.png' />}
+        </div>
+      )
+    }
   }
 ];

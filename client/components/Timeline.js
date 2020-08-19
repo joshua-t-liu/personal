@@ -154,7 +154,7 @@ const Event = ({ last, title, year, description, setAnimState }) => {
 
 const Space = styled(EventText)`
   visibility: hidden;
-  font-size: 2.25em;
+  font-size: 1.75em;
   padding-bottom: 0;
 `;
 
@@ -175,10 +175,12 @@ const Events = ({ events = [] }) => {
 };
 
 const events = [
+  { title: 'Georgia Institute of Technology', year: '2012', description: 'B.S. Math' },
   { title: 'Epic', year: '2012 - 2015', description: 'Technical Services' },
   { title: 'Huron Consulting', year: '2016 - 2016', description: 'Consultant' },
   { title: 'HCI Group', year: '2017 - 2017', description: 'Consultant' },
   { title: 'Mass General Brigham', year: '2018 - 2020', description: 'Implementation Analyst' },
+  { title: 'Hack Reactor', year: '2020', description: 'Advanced Software Engineering Immersive Program' },
 ];
 
 export default forwardRef((props, ref) => {
