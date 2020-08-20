@@ -14,9 +14,9 @@ const Container = styled.div`
   align-items: center;
   padding: 5em 1em;
   min-height: calc(100vh - 10em);
-  @media (max-width: ${SMALL_WIDTH}) {
-    padding: 4em 0;
-    min-height: calc(100vh - 8em);
+  @media (max-width: ${MEDIUM_WIDTH}) {
+    padding: 3em 0;
+    min-height: calc(100vh - 3em);
     font-size: 0.75em;
   }
 `;
@@ -103,9 +103,6 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
             <ChatButton ref={chat}>LET'S CHAT</ChatButton>
           </div>
         </Banner>
-        {/* <div style={{ position: 'absolute', bottom: 0, right: 0, zIndex: 'auto' }}>
-          <img src='./portrait.png' />
-        </div> */}
     </Container>
   )
 };

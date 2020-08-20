@@ -138,7 +138,7 @@ const Card = ({ skillset, skills, reverse }) => {
 export default () => {
   return (
     <Container>
-      <Title>Skills I Bring</Title>
+      <Title>Here's What I Bring</Title>
       <SubTitle><b>Languages:</b> {SKILLS.languages.join(', ')}</SubTitle>
       <Groups>
         {Object.entries(SKILLS.frameworks).map(([skillset, skills], idx) => (
