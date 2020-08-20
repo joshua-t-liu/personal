@@ -16,7 +16,7 @@ const Container = styled.div`
   min-height: calc(100vh - 10em);
   @media (max-width: ${MEDIUM_WIDTH}) {
     padding: 3em 0;
-    min-height: calc(100vh - 3em);
+    min-height: calc(100vh - 6em);
     font-size: 0.75em;
   }
 `;
