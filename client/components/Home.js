@@ -27,6 +27,9 @@ const Banner = styled.div`
   left: 50%;
   transform: translate(-50%,-50%);
   width: 70%;
+  @media (max-width: ${SMALL_WIDTH}) {
+    width: 90%;
+  }
 `;
 
 const Title = styled.h1`

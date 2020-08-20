@@ -68,7 +68,7 @@ const NavBar = styled.div`
     background-color: rgb(255,255,255);
     border-bottom: 1px solid rgb(218, 218, 218);
   }
-  @media (max-width: ${SMALL_WIDTH}) {
+  @media (max-width: ${MEDIUM_WIDTH}) {
     & ${Contact} {
       display: none;
     }
@@ -180,14 +180,14 @@ export default forwardRef(({ stickyTitle, stickyChat }, ref) => {
             {capitalizeFirstLetter(title)}
           </StyledLink>
         ))}
+        {contacts.map(({ title, href}) => <Contact key={title} href={href}>{title}</Contact>)}
       </WideMenu>
 
       <WideMenu>
-        {(stickyTitle || isActive) && <Title>Joshua Liu</Title>}
+        {/* {(stickyTitle || isActive) && <Title>Joshua Liu</Title>} */}
       </WideMenu>
 
       <WideMenu style={{ justifyContent: 'flex-end' }}>
-        {contacts.map(({ title, href}) => <Contact key={title} href={href}>{title}</Contact>)}
         <ChatNavButton className={(stickyChat || isActive) && 'active'} />
       </WideMenu>
 
