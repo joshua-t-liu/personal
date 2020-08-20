@@ -21,19 +21,28 @@ const Container = styled.div`
   }
 `;
 
+const Banner = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 70%;
+`;
+
 const Title = styled.h1`
-  //margin-top: ${({ sticky }) => (sticky) ? '-0.05em' : null};
-  font-size: 5em;
+  font-size: 6em;
+  margin: 0.2em auto;
   text-align: center;
-  //transition: margin-top 0.2s ease-in;
+  color: #333;
   @media (max-width: ${SMALL_WIDTH}) {
     font-size: 4em;
   }
 `;
 
 const About = styled.p`
-  font-size: 1.5em;
-  width: 50%;
+  font-size: 1.25em;
+  line-height: 1.5em;
+  width: 60%;
   margin: 0 auto;
   text-align: center;
   & + & {
@@ -42,9 +51,12 @@ const About = styled.p`
   @media (max-width: ${MEDIUM_WIDTH}) {
     width: 90%;
   }
-  // @media (max-width: ${SMALL_WIDTH}) {
-  //   text-align: left;
-  // }
+`;
+
+const Name = styled(About)`
+  color: dodgerblue;
+  font-weight: bold;
+  font-size: 1.75em;
 `;
 
 const StyledLink = styled(Link)`
@@ -81,18 +93,18 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
 
   return (
     <Container>
-        <Title ref={title} sticky={stickyTitle}>Joshua Liu</Title>
-        <About>
-          Full stack enginer with a background in math and software implementation. Check out my <StyledLink to='/portfolio'>portfolio</StyledLink> and see what I've been working on.
-        </About>
-	      <About>
-          Actively looking for new opportunities, and would love to connect and hear from you.
-        </About>
-        <div style={{ marginTop: '6em' }}>
-          <ChatButton ref={chat}>LET'S CHAT</ChatButton>
-        </div>
+        <Banner>
+          <Name>Joshua Liu</Name>
+          <Title ref={title} sticky={stickyTitle}>DESIGN DEVELOP DEPLOY</Title>
+          <About>
+            Full stack enginer with a background in math and software implementation. Check out my <StyledLink to='/portfolio'>portfolio</StyledLink> and see what I've been working on.  <b>Actively</b> looking for new opportunities, and would love to connect and hear from you.
+          </About>
+          <div style={{ margin: '3em 0', textAlign: 'center' }}>
+            <ChatButton ref={chat}>LET'S CHAT</ChatButton>
+          </div>
+        </Banner>
         {/* <div style={{ position: 'absolute', bottom: 0, right: 0, zIndex: 'auto' }}>
-          <img src='./headshot.jpeg' />
+          <img src='./portrait.png' />
         </div> */}
     </Container>
   )
