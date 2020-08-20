@@ -26,14 +26,14 @@ const Banner = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  width: 70%;
+  width: 60%;
   @media (max-width: ${SMALL_WIDTH}) {
     width: 90%;
   }
 `;
 
 const Title = styled.h1`
-  font-size: 6em;
+  font-size: 5em;
   margin: 0.2em auto;
   text-align: center;
   color: #333;

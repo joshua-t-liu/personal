@@ -25,7 +25,7 @@ const WideMenu = styled.div`
 `;
 
 const StyledLink = styled(Link)`
-  margin: 1em;
+  margin: 1.75em;
   text-decoration: none;
   color: ${({ active, brighter }) => {
     if (brighter) return (active) ? 'rgb(183,183,183)' : 'rgb(255,255,255)';
@@ -37,7 +37,7 @@ const StyledLink = styled(Link)`
 `;
 
 const Contact = styled.a`
-  margin: 1em;
+  margin: 1.75em;
   text-decoration: none;
   color: rgb(74,74,74);
   &:hover {
