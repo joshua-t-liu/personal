@@ -30,6 +30,13 @@ const Banner = styled.div`
   @media (max-width: ${SMALL_WIDTH}) {
     width: 90%;
   }
+  @media (max-height: ${SMALL_WIDTH}) {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    margin: auto;
+  }
 `;
 
 const Title = styled.h1`
