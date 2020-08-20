@@ -71,7 +71,7 @@ const SkillSet = styled.div`
     }
   }
   @media (max-width: ${SMALL_WIDTH}) {
-    width: 40%;
+    width: 33%;
   }
 `;
 
