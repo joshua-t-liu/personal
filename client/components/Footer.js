@@ -17,7 +17,7 @@ const Footer = styled.div`
   background-color: rgb(49,49,49);
   padding: 1em;
   align-items: center;
-  padding: 2em;
+  padding: 0.75em;
   @media (max-width: ${SMALL_WIDTH}) {
     flex-direction: column-reverse;
   }

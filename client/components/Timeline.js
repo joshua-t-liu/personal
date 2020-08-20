@@ -1,6 +1,15 @@
 import React, { useRef, useState, useEffect, forwardRef } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
+const events = [
+  { title: 'Georgia Institute of Technology', year: '2012', description: 'B.S. Math' },
+  { title: 'Epic', year: '2012 - 2015', description: 'Technical Services' },
+  { title: 'Huron Consulting', year: '2016', description: 'Consultant' },
+  { title: 'HCI Group', year: '2017', description: 'Consultant' },
+  { title: 'Mass General Brigham', year: '2018 - 2020', description: 'Implementation Analyst' },
+  { title: 'Hack Reactor', year: '2020', description: 'Advanced Software Engineering Immersive Program' },
+];
+
 const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
 
@@ -13,7 +22,6 @@ const Container = styled.div`
   &.gray {
     background-color: rgb(247,247,247);
   }
-
   @media (max-width: ${SMALL_WIDTH}) {
     font-size: 0.75em;
   }
@@ -59,8 +67,6 @@ const Path = styled.div`
   width: 0.1em;
   background-color: rgb(196,196,196);
   visibility: hidden;
-  animation: ${extend} 0.5s ease-in-out 0.5s forwards;
-  display: ${({ last }) => (last) ? 'none' : null};
 `;
 
 const Node = styled.div`
@@ -73,30 +79,24 @@ const Node = styled.div`
   background-color: white;
   flex-shrink: 0;
   z-index: 1;
-  animation: ${fill} 0.4s linear 0.1s forwards;
 `;
 
-const StyledEvents = styled.div`
+const NodePath = styled.div`
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Events = styled.div`
   position: relative;
   top: 0px;
   left: 0px;
   display: flex;
   flex-direction: column;
-  min-height: ${({ size }) => `${8 * size}em`};
+  // min-height: ${({ size }) => `${8 * size}em`};
   align-items: flex-start;
   @media (max-width: ${SMALL_WIDTH}) {
-    min-height: ${({ size }) => `${10.5 * size}em`};
-  }
-`;
-
-const slideIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(3em);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(-0.25em);
+    // min-height: ${({ size }) => `${10.5 * size}em`};
   }
 `;
 
@@ -107,7 +107,8 @@ const EventText = styled.div`
   justify-content: flex-start;
   text-align: left;
   opacity: 0;
-  animation: ${slideIn} 0.5s ease 0s forwards;
+  transform: translateY(3em);
+  transition: opacity 0.5s ease 0s, transform 0.5s ease 0s;
   @media (max-width: ${SMALL_WIDTH}) {
     font-size: 2em;
   }
@@ -118,34 +119,40 @@ const Title = styled.span`
   color: dodgerblue;
 `;
 
-const NodePath = styled.div`
-  display:flex;
-  flex-direction: column;
-  align-items: center;
-`
-const StyledEvent = styled.div`
-  display: flex;
-  &:first-child {
-    margin-top: 3em;
-  // &:nth-child(${({ size }) => size + 1})) {
-  //   & > ${NodePath} > ${Path} {
-  //     display: none;
-  //   }
-  // }
-`;
-
 const Description = styled.span`
   color: rgb(123,123,123);
 `;
 
-const Event = ({ last, title, year, description, setAnimState }) => {
+const StyledEvent = styled.div`
+  display: flex;
+  &.active {
+    & > ${NodePath} > ${Node} {
+      animation: ${fill} 0.4s linear 0.1s forwards;
+    }
+    & > ${NodePath} > ${Path} {
+      animation: ${extend} 0.5s ease-in-out 0.5s forwards;
+    }
+
+    & > ${EventText} {
+      opacity: 1;
+      transform: translateY(-0.25em);
+    }
+  }
+  &:last-child {
+    & > ${NodePath} > ${Path} {
+      display: none;
+    }
+  }
+`;
+
+const Event = ({ activateEvent, title, year, description, setAnimState }) => {
   return (
-    <StyledEvent>
+    <StyledEvent className={activateEvent}>
       <NodePath>
         <Node />
-        <Path last={last} onAnimationEnd={() => setAnimState(curr => curr + 1)}/>
+        <Path onAnimationEnd={() => setAnimState(curr => curr + 1)}/>
       </NodePath>
-      <EventText last={last} >
+      <EventText>
         <Title>{title}</Title>
         <br/>
         {year}
@@ -154,43 +161,22 @@ const Event = ({ last, title, year, description, setAnimState }) => {
       </EventText>
     </StyledEvent>
   )
-}
-
-const Space = styled(EventText)`
-  visibility: hidden;
-  font-size: 1.75em;
-  padding-bottom: 0;
-`;
-
-const Events = ({ events = [] }) => {
-  const [animState, setAnimState] = useState(0);
-  let max = '';
-  events.forEach(({ title, description }) => {
-    if (max.length < title.length) max = title;
-    if (max.length < description.length) max = description;
-  });
-
-  return (
-    <StyledEvents size={events.length}>
-      <Space><Title>{max}</Title></Space>
-      {events.filter((_,idx) => idx <= animState).map((event, idx) => <Event key={idx} last={idx + 1 === events.length} setAnimState={setAnimState} {...event} />)}
-    </StyledEvents>
-  );
 };
 
-const events = [
-  { title: 'Georgia Institute of Technology', year: '2012', description: 'B.S. Math' },
-  { title: 'Epic', year: '2012 - 2015', description: 'Technical Services' },
-  { title: 'Huron Consulting', year: '2016', description: 'Consultant' },
-  { title: 'HCI Group', year: '2017', description: 'Consultant' },
-  { title: 'Mass General Brigham', year: '2018 - 2020', description: 'Implementation Analyst' },
-  { title: 'Hack Reactor', year: '2020', description: 'Advanced Software Engineering Immersive Program' },
-];
-
 export default forwardRef((props, ref) => {
+  const [animState, setAnimState] = useState(0);
   return (
     <Container ref={ref}>
-      {props.startTimeLine && <Events events={events} />}
+      <Events>
+        {events.map((event, idx) => (
+          <Event
+            key={idx}
+            last = {idx + 1 === events.length}
+            activateEvent={props.startTimeLine && (idx <= animState) && 'active'}
+            setAnimState={setAnimState}
+            {...event} />
+        ))}
+      </Events>
     </Container>
   )
 });
