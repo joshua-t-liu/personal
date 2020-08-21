@@ -116,6 +116,7 @@ const HighLight = styled(Title)`
   color: transparent;
   width: 0%;
   visibility: visible;
+  overflow: hidden;
   animation: ${({ delay }) => css`${highlight} 0.5s ease-in ${0.5 / 2 * delay}s forwards`};
 `;
 
