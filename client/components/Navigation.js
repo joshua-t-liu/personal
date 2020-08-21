@@ -25,7 +25,7 @@ const WideMenu = styled.div`
 `;
 
 const StyledLink = styled(Link)`
-  margin: 1.75em;
+  margin: ${({ margin }) => margin || '1.75em'};
   text-decoration: none;
   color: ${({ active, brighter }) => {
     if (brighter) return (active) ? 'rgb(183,183,183)' : 'rgb(255,255,255)';
@@ -60,7 +60,7 @@ const NavBar = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   display: flex;
   align-items: center;
   z-index: 1000;
@@ -144,6 +144,7 @@ const MoreMenu = ({ onClick }) => {
             key={title}
             to={`/${(title !== 'about') ? title : ''}`}
             brighter={true}
+            margin='1em'
             active={(`/${(title !== 'about') ? title : ''}` === location.pathname) ? 1 : 0}>
             {capitalizeFirstLetter(title)}
           </StyledLink>
@@ -184,7 +185,6 @@ export default forwardRef(({ stickyTitle, stickyChat }, ref) => {
       </WideMenu>
 
       <WideMenu>
-        {/* {(stickyTitle || isActive) && <Title>Joshua Liu</Title>} */}
       </WideMenu>
 
       <WideMenu style={{ justifyContent: 'flex-end' }}>

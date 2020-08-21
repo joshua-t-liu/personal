@@ -46,10 +46,7 @@ export default () => {
       entries.forEach((entry) => {
         if (entry.target === ref.current) {
 
-          SetStartTimeLine(curr => {
-            console.log(curr || entry.isIntersecting);
-            return curr || entry.isIntersecting;
-          });
+          SetStartTimeLine(curr => curr || entry.isIntersecting);
         }
       });
     }
@@ -61,7 +58,6 @@ export default () => {
   return (
     <React.Fragment>
       <Container>
-        {/* 7 Years of Software Implementation Experience */}
         <Title>Timeline</Title>
         <SubTitle>7 years of software implementation experience, working with Epic, an enterprise healthcare software</SubTitle>
         <Timeline ref={ref} startTimeLine={startTimeLine}/>

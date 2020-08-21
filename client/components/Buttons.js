@@ -25,28 +25,26 @@ const CTA = styled.a`
 `;
 
 const CTANav = styled.a`
-display: inline-block;
-font-size: 1.25em;
-align-self: center;
-padding: 1em 3em;
-border: 1px solid dodgerblue;
-border-radius: 0.25em;
-cursor: pointer;
-background-color: white;
-color: dodgerblue;
-font-weight: bold;
-box-shadow: dodgerblue 0px 10px 20px -10px;
-text-decoration: none;
-margin: ${({ margin }) => margin};
-&:hover {
-  background-color: dodgerblue;
-  color: white;
-}
+  display: inline-block;
+  font-size: 1.25em;
+  align-self: center;
+  border: 1px solid dodgerblue;
+  border-radius: 0.25em;
+  cursor: pointer;
+  background-color: white;
+  color: dodgerblue;
+  font-weight: bold;
+  box-shadow: dodgerblue 0px 10px 20px -10px;
+  text-decoration: none;
   font-size: 1em;
   margin: 0 1em;
   margin-top: -10em;
   max-width: 0;
   padding: 0;
+  &:hover {
+    background-color: dodgerblue;
+    color: white;
+  }
   transition: margin-top 0.5s ease-in 0s, max-width 0s ease-in 0.5s, padding 0s ease-in 0.5s;
   &.active {
     margin-top: 0;
@@ -77,7 +75,6 @@ const Close = ({ onClick }) => (
     </g>
   </Icon>
 )
-
 
 //<div>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 

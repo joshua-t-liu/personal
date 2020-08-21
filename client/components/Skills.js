@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
+import SKILLS from '../skill_data';
+
 const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
 
@@ -74,16 +76,6 @@ const SkillSet = styled.div`
     width: 33%;
   }
 `;
-
-const SKILLS = {
-  languages: ['JavaScript', 'Python', 'MUMPS'],
-  frameworks: {
-    Languages: ['JavaScript', 'Python', 'MUMPS'],
-    'Other': ['Docker', 'AWS', 'Git', 'Jest, Enzyme', 'Webpack', 'Babel', 'Mocha, Chai', 'New Relic', 'Loader.io'],
-    'Front End': ['React', 'React-Native', 'Redux', 'React Router', 'jQuery', 'HTML', 'CSS'],
-    'Back End': ['Node', 'Express', 'Nginx', 'SQL', 'MySQL', 'PostgreSQL', 'MongoDB', 'Redis'],
-  },
-};
 
 const List = ({ skillset, skills, reverse }) => {
   const [animState, setAnimState] = useState(false);
