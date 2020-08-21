@@ -39,17 +39,7 @@ const Banner = styled.div`
   }
 `;
 
-const Title = styled.h1`
-  font-size: 5em;
-  margin: 0.2em auto;
-  text-align: center;
-  color: #333;
-  @media (max-width: ${SMALL_WIDTH}) {
-    font-size: 4em;
-  }
-`;
-
-const About = styled.p`
+const AboutText = styled.p`
   font-size: 1.25em;
   line-height: 1.5em;
   width: 60%;
@@ -63,7 +53,7 @@ const About = styled.p`
   }
 `;
 
-const Name = styled(About)`
+const Name = styled(AboutText)`
   color: dodgerblue;
   font-weight: bold;
   font-size: 1.75em;
@@ -73,6 +63,92 @@ const StyledLink = styled(Link)`
   color: dodgerblue;
   text-decoration: none;
 `;
+
+const appear = keyframes`
+  20% {
+    visibility: hidden;
+  }
+  21% {
+    visibility: visible;
+  }
+  100% {
+    visibility: visible;
+  }
+`;
+
+const Title = styled.h1`
+  font-size: 5em;
+  // margin: 0.2em auto;
+  margin: 0;
+  text-align: center;
+  color: #333;
+  white-space: pre;
+  @media (max-width: ${SMALL_WIDTH}) {
+    font-size: 4em;
+  }
+  visibility: hidden;
+  animation: ${({ delay }) => css`${appear} 0.5s ease-in ${0.5 / 2 * delay}s forwards`};
+`;
+
+const highlight = keyframes`
+  0%{
+    left: 0;
+  }
+  20% {
+    width: 100%;
+    left: 0;
+  }
+  80% {
+    width: 100%;
+    left: 0;
+  }
+  100% {
+    width: 0%;
+    left: 100%;
+  }
+`;
+
+const HighLight = styled(Title)`
+  position: absolute;
+  top: 0;
+  margin: auto;
+  background-color: #333;
+  color: transparent;
+  width: 0%;
+  visibility: visible;
+  animation: ${({ delay }) => css`${highlight} 0.5s ease-in ${0.5 / 2 * delay}s forwards`};
+`;
+
+const shiftUp = keyframes`
+  to {
+    opacity: 1;
+    transform: translateY(0em);
+  }
+`;
+
+const About = styled.div`
+  transform: translateY(2em);
+  opacity: 0;
+  animation: ${shiftUp} 0.25s ease-in-out 0.75s forwards;
+`;
+
+const HeadLine = ({ title, delay }) => {
+  return (
+    <div style={{ position: 'relative' }}>
+      <Title delay={delay}>{title}</Title>
+      <HighLight delay={delay}>{title}</HighLight>
+    </div>
+  )
+}
+
+const HeadLines = styled.div`
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1em 0;
+`;
+
 
 export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
   const title = useRef();
@@ -105,13 +181,19 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
     <Container>
         <Banner>
           <Name>Joshua Liu</Name>
-          <Title ref={title} sticky={stickyTitle}>DESIGN DEVELOP DEPLOY</Title>
+          <HeadLines ref={title} sticky={stickyTitle} >
+            {['DESIGN', 'DEVELOP', 'DEPLOY'].map((title, idx) => (
+              <HeadLine key={idx} title={title} delay={idx} />
+            ))}
+          </HeadLines>
           <About>
-            Full stack enginer with a background in math and software implementation. Check out my <StyledLink to='/portfolio'>portfolio</StyledLink> and see what I've been working on.  <b>Actively</b> looking for new opportunities, and would love to connect and hear from you.
+            <AboutText>
+              Full stack enginer with a background in math and software implementation. Check out my <StyledLink to='/portfolio'>portfolio</StyledLink> and see what I've been working on.  <b>Actively</b> looking for new opportunities, and would love to connect and hear from you.
+            </AboutText>
+            <div style={{ margin: '3em 0', textAlign: 'center' }}>
+              <ChatButton ref={chat}>LET'S CHAT</ChatButton>
+            </div>
           </About>
-          <div style={{ margin: '3em 0', textAlign: 'center' }}>
-            <ChatButton ref={chat}>LET'S CHAT</ChatButton>
-          </div>
         </Banner>
     </Container>
   )
