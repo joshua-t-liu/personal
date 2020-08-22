@@ -19,9 +19,9 @@ const contacts = [
 ];
 
 const WideMenu = styled.div`
+  flex-grow: 1;
   display: flex;
-  width: 33.3%;
-  justify-content: center;
+  justify-content: space-around;
 `;
 
 const StyledLink = styled(Link)`
@@ -57,11 +57,11 @@ const Title = styled.div`
 `;
 
 const NavBar = styled.div`
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
-  width: 100%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   z-index: 1000;
   &.active {
@@ -182,9 +182,6 @@ export default forwardRef(({ stickyTitle, stickyChat }, ref) => {
           </StyledLink>
         ))}
         {contacts.map(({ title, href}) => <Contact key={title} href={href}>{title}</Contact>)}
-      </WideMenu>
-
-      <WideMenu>
       </WideMenu>
 
       <WideMenu style={{ justifyContent: 'flex-end' }}>

@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
+import TimeLineParalax from './TimeLineParalax';
 import Home from './Home';
 import Skills from './Skills';
 import Experience from './Experience';
@@ -12,7 +13,8 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
     <React.Fragment>
       <Home {...{ stickyTitle, setStickyTitle, stickyChat, setStickyChat }} />
       <Skills />
-      <Experience />
+      <TimeLineParalax />
+      {/* <Experience /> */}
     </React.Fragment>
   );
 };
