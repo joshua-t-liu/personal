@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
-import TimeLineParalax from './TimeLineParalax';
+import TimeLineParalax from './TimelineParallax';
 import Home from './Home';
 import Skills from './Skills';
 import Experience from './Experience';
