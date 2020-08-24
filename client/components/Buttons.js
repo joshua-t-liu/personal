@@ -25,6 +25,7 @@ const CTA = styled.a`
 `;
 
 const CTANav = styled.a`
+  overflow: hidden;
   display: inline-block;
   font-size: 1.25em;
   align-self: center;

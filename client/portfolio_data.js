@@ -26,7 +26,7 @@ export default [
   {
     title: 'Designing and Scaling Microservice For  Customer Reviews',
     technology: ['Node', 'Express', 'Nginx', 'PostgreSQL', 'Redis', 'AWS', 'Loader.io', 'New Relic'],
-    situation: 'Worked on designing and scaling a customer reviews microservice for an apparel web application. Goal was to scale microservice service to handle 1000 RPS under load with average load times under 50ms. Database included 50 million customer review records, and frontend was developed by a team member',
+    situation: 'Worked on designing and scaling a customer reviews microservice for an apparel web application. Goal was to scale microservice service to handle 1000 RPS under load with average load times under 50ms. Database included 50 million customer review records, and frontend was developed by a team member.',
     actions: [
       'Desgined schema for PostgreSQL database.',
       'Benchmarked database on local machine.',
@@ -46,9 +46,10 @@ export default [
     technology: ['React', 'React Router', 'Node', 'Express', 'AWS', 'Server Side Rendering', 'Webpack'],
     situation: 'Designed and developed personal website.',
     actions: [
-      'Desgined website and coded from scratch',
+      'Desgined website and coded from scratch.',
       'Delivered a responsive experience by implementing media queries and testing cross-browsers and cross-devices.',
       'Implemented server side rendering using React.',
+      'Implemented parallax effects and animation from scratch.',
       'Deployed website on AWS.',
     ],
     result: 'Responsive site with first contentful paint under 2 seconds.',

@@ -150,7 +150,6 @@ const HeadLines = styled.div`
   margin: 1em 0;
 `;
 
-
 export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
   const title = useRef();
   const chat = useRef();
@@ -180,6 +179,7 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
 
   return (
     <Container>
+
         <Banner>
           <Name>Joshua Liu</Name>
           <HeadLines ref={title} sticky={stickyTitle} >

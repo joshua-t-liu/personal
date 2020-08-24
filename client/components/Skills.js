@@ -85,7 +85,7 @@ const List = ({ skillset, skills, reverse }) => {
     let options = {
       root: null,
       rootMargin: '0px',
-      threshold: 0,
+      threshold: 0.25,
     }
 
     const intersectionCb = (entries) => {
