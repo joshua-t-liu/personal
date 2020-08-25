@@ -224,7 +224,7 @@ export default ({ event, offset, innerHeight, innerWidth }) => {
           {...props}>
             {event.left.img && (
             <ImageFrame >
-              <Image className='lazyload' src={event.left.img} style={{ objectPosition: getImgTranslation() }} />
+              <Image className='lazyload' data-src={event.left.img} style={{ objectPosition: getImgTranslation() }} />
               </ImageFrame>
             )}
             <Title>{event.left.title}</Title>
@@ -245,7 +245,7 @@ export default ({ event, offset, innerHeight, innerWidth }) => {
           {...props}>
             {event.right.img && (
             <ImageFrame >
-              <Image className='lazyload' src={event.right.img} style={{ objectPosition: getImgTranslation() }} />
+              <Image className='lazyload' data-src={event.right.img} style={{ objectPosition: getImgTranslation() }} />
               </ImageFrame>
             )}
             <Title>{event.right.title}</Title>
