@@ -105,15 +105,15 @@ const EventContent = styled.div`
   &.watch {
     transform: ${({ offset, offsetTop, left }) => {
       if (left) {
-        return `translate(min(calc(-${offsetTop}px + ${offset}px + 100vh), calc(45vw - 100%)))`;
+        return `translate(min(calc(-${offsetTop}px + ${offset}px + 75vh), calc(45vw - 100%)))`;
       }
-      return `translate(max(calc(${offsetTop}px - ${offset}px - 100vh), -45vw + 100%))`;
+      return `translate(max(calc(${offsetTop}px - ${offset}px - 75vh), -45vw + 100%))`;
     }};
     opacity: ${({ offset, innerHeight, innerWidth, offsetTop, left }) => {
       return `calc(1 + (-${offsetTop} + ${offset} + ${innerHeight}) / ${innerWidth})`;
     }};
   }
-  @media (max-width: ${MEDIUM_WIDTH}) {
+  @media (max-width: ${SMALL_WIDTH}) {
     &.watch {
       transform: ${({ offset, offsetTop, left }) => {
         if (left) {
@@ -416,6 +416,7 @@ export default () => {
           {...dim}>
         </Event>
       ))}
+      <div style={{ height: '25vh' }} />
     </Container>
   )
 };
