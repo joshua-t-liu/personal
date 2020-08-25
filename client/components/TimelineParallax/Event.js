@@ -132,7 +132,6 @@ const ImageFrame = styled.div`
 const Image = styled.img`
   object-fit: none;
   width: 100%;
-  height: auto;
 `;
 
 export default ({ event, offset, innerHeight, innerWidth }) => {
@@ -190,11 +189,11 @@ export default ({ event, offset, innerHeight, innerWidth }) => {
   };
 
   const getImgTranslation = () => {
-    let shift = 0.25;
+    let shift = 0.5;
     if (innerWidth < MEDIUM_WIDTH_INT) {
       shift = 0.5;
     }
-    if (ref.current && visible) return `50% ${100 - (offset + innerHeight * shift - ref.current.offsetTop) * 100 / innerHeight}%`;
+    if (ref.current && visible) return `50% ${100 - (offset + innerHeight * shift - ref.current.offsetTop) * 50 / innerHeight}%`;
   }
 
   const props = {
@@ -214,6 +213,7 @@ export default ({ event, offset, innerHeight, innerWidth }) => {
 
       {event.left && (
         <EventContent
+          id={event.left.title}
           style={{
             transform: getTranslation(true),
             opacity: getOpacity(),
@@ -223,7 +223,9 @@ export default ({ event, offset, innerHeight, innerWidth }) => {
           $left={true}
           {...props}>
             {event.left.img && (
-            <ImageFrame ><Image src={event.left.img} style={{ objectPosition: getImgTranslation() }} /></ImageFrame>
+            <ImageFrame >
+              <Image className='lazyload' src={event.left.img} style={{ objectPosition: getImgTranslation() }} />
+              </ImageFrame>
             )}
             <Title>{event.left.title}</Title>
             <Role>{event.left.role}</Role>
@@ -239,11 +241,12 @@ export default ({ event, offset, innerHeight, innerWidth }) => {
           }}
           ref={(!event.left || null)  && ref}
           className={visible && 'watch'}
-          $offset={visible ? offset : undefined}
           $right={true}
           {...props}>
             {event.right.img && (
-            <ImageFrame ><Image src={event.right.img} style={{ objectPosition: getImgTranslation() }} /></ImageFrame>
+            <ImageFrame >
+              <Image className='lazyload' src={event.right.img} style={{ objectPosition: getImgTranslation() }} />
+              </ImageFrame>
             )}
             <Title>{event.right.title}</Title>
             <Role>{event.right.role}</Role>
