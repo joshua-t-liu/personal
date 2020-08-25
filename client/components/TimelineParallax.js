@@ -174,21 +174,18 @@ const HeadOutter = styled.div`
   left: 50%;
   transform: translate(-50%,-50%);
   margin: auto;
-  border: solid 0.1em rgb(30,144,255);
   border-radius: 50%;
   width: 12em;
   height: 12em;
   margin-bottom: 0;
   font-size: 1em;
   font-weight: bold;
-  background-color: white;
-  color: rgba(74,74,74,1);
+  color: rgba(255,255,255,1);
   &.active {
-    width: 6em;
-    height: 6em;
+    width: 5em;
+    height: 5em;
     margin-bottom: 9em;
     font-size: 1em;
-    border-color: rgba(30,155,255,0.25);
   }
   transition-property: width, height, border-width, margin-bottom, font-size, border-color, color;
   transition-duration:0.2s;
@@ -207,15 +204,13 @@ const HeadInner = styled(HeadOutter)`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 10em;
-  height: 10em;
-  border-color: rgb(247,247,247);
-  background-color: rgb(247,247,247);
+  width: 11em;
+  height: 11em;
+  background-color: rgba(30,144,255,0.33);;
   ${HeadOutter}.active > & {
     width: 5em;
     height: 5em;
-    border-color: rgba(247,247,247,0.25);
-    background-color: rgba(247,247,247,0.25);
+    background-color: rgba(30,144,255,0.08);
   }
   @media (max-width: ${SMALL_WIDTH}) {
     ${HeadOutter}.active > & {
@@ -226,10 +221,11 @@ const HeadInner = styled(HeadOutter)`
 `;
 
 const HeadContent = styled(HeadInner)`
-  width: 8em;
-  height: 8em;
+  width: 10em;
+  height: 10em;
   text-align: center;
   white-space: pre;
+  background-color: rgba(30,144,255,1);
   &:after {
     content: ${({ text }) => `'${text}'`};
     position: absolute;
@@ -240,8 +236,7 @@ const HeadContent = styled(HeadInner)`
   ${HeadOutter}.active > ${HeadInner} > & {
     width: 3em;
     height: 3em;
-    border-color: rgba(247,247,247,0.25);
-    background-color: rgba(247,247,247,0.25);
+    background-color: rgba(30,144,255,0.25);
     color: rgba(74,74,74,0.25);
   }
   @media (max-width: ${SMALL_WIDTH}) {
@@ -282,7 +277,7 @@ const Head = ({ offset }) => {
         </HeadOutter>
       </HeadContainer>
 
-      <div style={{ height: '33vh' }} />
+      <div style={{ height: '25vh' }} />
     </React.Fragment>
   )
 };
