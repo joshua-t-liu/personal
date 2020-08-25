@@ -6,16 +6,17 @@ import { ChatButton } from './Buttons';
 
 const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
+const SMALL_HEIGHT = '414px';
 
 const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5em 1em;
+  padding: 3em 1em;
   min-height: calc(100vh - 10em);
   @media (max-width: ${MEDIUM_WIDTH}) {
-    padding: 3em 0;
+    padding: 2em 0;
     min-height: calc(100vh - 6em);
     font-size: 0.75em;
   }
@@ -30,7 +31,7 @@ const Banner = styled.div`
   @media (max-width: ${SMALL_WIDTH}) {
     width: 90%;
   }
-  @media (max-height: ${SMALL_WIDTH}) {
+  @media (max-height: ${SMALL_HEIGHT}) {
     position: relative;
     top: 0;
     left: 0;
