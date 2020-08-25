@@ -128,6 +128,22 @@ const EventContent = styled.div`
     width: 100%;
     box-sizing: border-box;
   }
+  @media (min-width: ${SMALL_WIDTH}) and (max-width: ${MEDIUM_WIDTH}) {
+    &.watch {
+      transform: ${({ offset, offsetTop, left }) => {
+        if (left) {
+          return `translate(min(calc(-${offsetTop}px + ${offset}px + 50vh), 0px))`
+        }
+        return `translate(max(calc(${offsetTop}px - ${offset}px - 50vh), 0px))`;
+      }};
+      opacity: ${({ offset, innerHeight, innerWidth, offsetTop, left }) => (
+        `calc(2 + (-${offsetTop} + ${offset} + ${innerHeight}) / ${innerWidth})`
+      )};
+    }
+    margin: auto;
+    box-sizing: border-box;
+    width: 60%;
+  }
 `;
 
 const Title = styled.div`
@@ -165,6 +181,7 @@ const HeadContainer = styled.div`
   margin: 0 auto;
   z-index: 1;
   font-size: 3em;
+  font-weight: bold;
   overflow: hidden;
 `;
 
@@ -178,9 +195,7 @@ const HeadOutter = styled.div`
   width: 12em;
   height: 12em;
   margin-bottom: 0;
-  font-size: 1em;
-  font-weight: bold;
-  color: rgba(255,255,255,1);
+  background-color: rgba(255,255,255,1);
   &.active {
     width: 5em;
     height: 5em;
@@ -188,13 +203,12 @@ const HeadOutter = styled.div`
     font-size: 1em;
   }
   transition-property: width, height, border-width, margin-bottom, font-size, border-color, color;
-  transition-duration:0.2s;
-  transition-timing-function: ease-in;
+  transition-duration:0.25s;
+  transition-timing-function: ease-in-out;
   @media (max-width: ${SMALL_WIDTH}) {
     &.active {
-      width: 3em;
-      height: 3em;
-      font-size: 1em;
+      width: 6em;
+      height: 6em;
     }
   }
 `;
@@ -206,16 +220,16 @@ const HeadInner = styled(HeadOutter)`
   transform: translate(-50%, -50%);
   width: 11em;
   height: 11em;
-  background-color: rgba(30,144,255,0.33);;
+  background-color: rgba(30,144,255,1);
   ${HeadOutter}.active > & {
     width: 5em;
     height: 5em;
-    background-color: rgba(30,144,255,0.08);
+    background-color: rgba(30,144,255,0.5);
   }
   @media (max-width: ${SMALL_WIDTH}) {
     ${HeadOutter}.active > & {
-      width: 2em;
-      height: 2em;
+      width: 6em;
+      height: 6em;
     }
   }
 `;
@@ -225,7 +239,8 @@ const HeadContent = styled(HeadInner)`
   height: 10em;
   text-align: center;
   white-space: pre;
-  background-color: rgba(30,144,255,1);
+  background-color: rgba(255,255,255,1);
+  color: rgba(30,144,255,1);
   &:after {
     content: ${({ text }) => `'${text}'`};
     position: absolute;
@@ -234,15 +249,14 @@ const HeadContent = styled(HeadInner)`
     transform: translate(-50%, -50%);
   }
   ${HeadOutter}.active > ${HeadInner} > & {
-    width: 3em;
-    height: 3em;
-    background-color: rgba(30,144,255,0.25);
-    color: rgba(74,74,74,0.25);
+    width: 6em;
+    height: 2em;
+    color: rgba(30,144,255,0.5);
   }
   @media (max-width: ${SMALL_WIDTH}) {
     ${HeadOutter}.active > ${HeadInner}> & {
-      width: 1em;
-      height: 1em;
+      width: 7em;
+      height: 2em;
     }
   }
 `;
