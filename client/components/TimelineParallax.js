@@ -117,6 +117,7 @@ const EventContent = styled.div`
   margin-right: ${({ $left }) => ($left) ? 'auto' : null};
   @media (max-width: ${SMALL_WIDTH}) {
     width: 100%;
+    padding: 0 1em;
     box-sizing: border-box;
   }
   @media (min-width: ${SMALL_WIDTH}) and (max-width: ${MEDIUM_WIDTH}) {
@@ -241,17 +242,24 @@ const HeadContent = styled(HeadInner)`
   }
 `;
 
-const Image = styled.img`
+const ImageFrame = styled.div`
   width: 33vw;
   max-width: 100%;
   height: 16vw;
-  border-top-right-radius: 2em;
-  border-bottom-left-radius: 2em;
+  // border-top-right-radius: 2em;
+  // border-bottom-left-radius: 2em;
+  overflow: hidden;
   margin-bottom: 1em;
   @media (max-width: ${MEDIUM_WIDTH}) {
     width: 100%;
     height: 33vh;
   }
+`;
+
+const Image = styled.img`
+  object-fit: none;
+  width: 100%;
+  height: auto;
 `;
 
 const Head = ({ offset }) => {
@@ -330,6 +338,14 @@ const Event = ({ event, offset, innerHeight, innerWidth }) => {
     if (ref.current && visible) return `calc(1 + (-${ref.current.offsetTop} + ${offset} + ${innerHeight / 2}) / ${innerWidth / 4})`;
   };
 
+  const getImgTranslation = () => {
+    let shift = 0.25;
+    if (innerWidth < MEDIUM_WIDTH_INT) {
+      shift = 0.5;
+    }
+    if (ref.current && visible) return `50% ${100 - (offset + innerHeight * shift - ref.current.offsetTop) * 100 / innerHeight}%`;
+  }
+
   return (
     <EventContainer ref={containerRef} className={active && 'active'}>
       <TimeMark>
@@ -352,7 +368,9 @@ const Event = ({ event, offset, innerHeight, innerWidth }) => {
           $innerHeight={innerHeight}
           $innerWidth={innerWidth}
           $offsetTop={ref.current && ref.current.offsetTop}>
-            {event.left && event.left.img && <Image src={event.left.img} />}
+            {event.left && event.left.img && (
+            <ImageFrame ><Image src={event.left.img} style={{ objectPosition: getImgTranslation() }} /></ImageFrame>
+            )}
             <Title>{event.left.title}</Title>
             <Role>{event.left.role}</Role>
             <Description>{event.left.description}</Description>
@@ -372,7 +390,9 @@ const Event = ({ event, offset, innerHeight, innerWidth }) => {
           $innerHeight={innerHeight}
           $innerWidth={innerWidth}
           $offsetTop={ref.current && ref.current.offsetTop}>
-            {event.right && event.right.img && <Image src={event.right.img} />}
+            {event.right && event.right.img && (
+            <ImageFrame ><Image src={event.right.img} style={{ objectPosition: getImgTranslation() }} /></ImageFrame>
+            )}
             <Title>{event.right.title}</Title>
             <Role>{event.right.role}</Role>
             <Description>{event.right.description}</Description>

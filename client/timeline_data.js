@@ -7,7 +7,7 @@ export default [
       description: 'Graduated with a Bachelors of Science in Mathematics.',
     },
     right :{
-      img: '/georgia_tech.png',
+      img: '/tech_tower_2.jpg',
     }
   },
   {
@@ -37,7 +37,7 @@ export default [
   },
   {
     right: {
-      img: '/partners.jpg',
+      img: '/partners_2.jpg',
       title: 'Mass General Brigham',
       year: '2018 - 2020',
       role: 'Implementation Analyst',
@@ -51,8 +51,5 @@ export default [
       role: 'Student',
       description: 'Intensive 12 weeks advanced software engineering immersive program where I honed my full stack skills.'
     },
-    // right: {
-    //   img: '',
-    // },
   },
 ];

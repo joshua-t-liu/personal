@@ -49,7 +49,7 @@ export default [
       'Desgined website and coded from scratch.',
       'Delivered a responsive experience by implementing media queries and testing cross-browsers and cross-devices.',
       'Implemented server side rendering using React.',
-      // 'Implemented parallax effects and animation from scratch.',
+      'Implemented parallax and animation effects from scratch.',
       'Deployed website on AWS.',
     ],
     result: 'Responsive site with first contentful paint under 2 seconds.',
