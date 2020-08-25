@@ -5,6 +5,8 @@ import events from '../timeline_data';
 
 const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
+const SMALL_WIDTH_INT = 768;
+const MEDIUM_WIDTH_INT = 1248;
 
 const Container = styled.div`
   position: relative;
@@ -93,6 +95,17 @@ const Date = styled.div`
   background-color: rgba(255,255,255,0.7);
 `;
 
+/**  &.watch {
+    transform: ${({ $offset: offset, $offsetTop: offsetTop, $left: left }) => {
+      if (left) {
+        return css`translate(min(calc(-${offsetTop}px + ${offset}px + 75vh), calc(45vw - 100%)))`;
+      }
+      return css`translate(max(calc(${offsetTop}px - ${offset}px - 75vh), -45vw + 100%))`;
+    }};
+    opacity: ${({ $offset: offset, $innerHeight: innerHeight, $innerWidth: innerWidth, $offsetTop: offsetTop, $left: left }) => {
+      return css`calc(1 + (-${offsetTop} + ${offset} + ${innerHeight}) / ${innerWidth})`;
+    }};
+  } */
 const EventContent = styled.div`
   z-index: 1;
   width: 25%;
@@ -100,46 +113,13 @@ const EventContent = styled.div`
   backdrop-filter: blur(8px);
   background-color: rgba(247,247,247,0.3);
   color: rgb(74,74,74);
-  margin-left: ${({ right }) => (right) ? 'auto' : null};
-  margin-right: ${({ left }) => (left) ? 'auto' : null};
-  &.watch {
-    transform: ${({ offset, offsetTop, left }) => {
-      if (left) {
-        return `translate(min(calc(-${offsetTop}px + ${offset}px + 75vh), calc(45vw - 100%)))`;
-      }
-      return `translate(max(calc(${offsetTop}px - ${offset}px - 75vh), -45vw + 100%))`;
-    }};
-    opacity: ${({ offset, innerHeight, innerWidth, offsetTop, left }) => {
-      return `calc(1 + (-${offsetTop} + ${offset} + ${innerHeight}) / ${innerWidth})`;
-    }};
-  }
+  margin-left: ${({ $right }) => ($right) ? 'auto' : null};
+  margin-right: ${({ $left }) => ($left) ? 'auto' : null};
   @media (max-width: ${SMALL_WIDTH}) {
-    &.watch {
-      transform: ${({ offset, offsetTop, left }) => {
-        if (left) {
-          return `translate(min(calc(-${offsetTop}px + ${offset}px + 50vh), 0px))`
-        }
-        return `translate(max(calc(${offsetTop}px - ${offset}px - 50vh), 0px))`;
-      }};
-      opacity: ${({ offset, innerHeight, innerWidth, offsetTop, left }) => (
-        `calc(2 + (-${offsetTop} + ${offset} + ${innerHeight}) / ${innerWidth})`
-      )};
-    }
     width: 100%;
     box-sizing: border-box;
   }
   @media (min-width: ${SMALL_WIDTH}) and (max-width: ${MEDIUM_WIDTH}) {
-    &.watch {
-      transform: ${({ offset, offsetTop, left }) => {
-        if (left) {
-          return `translate(min(calc(-${offsetTop}px + ${offset}px + 50vh), 0px))`
-        }
-        return `translate(max(calc(${offsetTop}px - ${offset}px - 50vh), 0px))`;
-      }};
-      opacity: ${({ offset, innerHeight, innerWidth, offsetTop, left }) => (
-        `calc(2 + (-${offsetTop} + ${offset} + ${innerHeight}) / ${innerWidth})`
-      )};
-    }
     margin: auto;
     box-sizing: border-box;
     width: 60%;
@@ -312,9 +292,7 @@ const Event = ({ event, offset, innerHeight, innerWidth }) => {
     };
 
     const observerVisible = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        setVisibility(entry.isIntersecting);
-      });
+      entries.forEach((entry) => setVisibility(entry.isIntersecting));
     }, optionsVisible);
 
     observerVisible.observe(containerRef.current);
@@ -331,6 +309,27 @@ const Event = ({ event, offset, innerHeight, innerWidth }) => {
     observer.observe(ref.current);
   }, []);
 
+  const getTranslation = (left) => {
+    let shift = '75vh';
+    let leftBound = 'calc(45vw - 100%)';
+    let rightBound = 'calc(-45vw + 100%)';
+    if (innerWidth < MEDIUM_WIDTH_INT) {
+      shift = '50vh';
+      leftBound = '0px';
+      rightBound = '0px';
+    }
+    if (visible) {
+      if (left) {
+        return `translate(min(calc(-${ref.current.offsetTop}px + ${offset}px + ${shift}), ${leftBound}))`
+      }
+      return `translate(max(calc(${ref.current.offsetTop}px - ${offset}px - ${shift}), ${rightBound}))`
+    }
+  };
+
+  const getOpacity = () => {
+    if (ref.current && visible) return `calc(1 + (-${ref.current.offsetTop} + ${offset} + ${innerHeight / 2}) / ${innerWidth / 4})`;
+  };
+
   return (
     <EventContainer ref={containerRef} className={active && 'active'}>
       <TimeMark>
@@ -341,14 +340,18 @@ const Event = ({ event, offset, innerHeight, innerWidth }) => {
 
       {event.left && (
         <EventContent
+          style={{
+            transform: getTranslation(true),
+            opacity: getOpacity(),
+          }}
           id={event.left.title}
           ref={ref}
           className={visible && 'watch'}
-          offset={visible ? offset : undefined}
-          left={true}
-          innerHeight={innerHeight}
-          innerWidth={innerWidth}
-          offsetTop={ref.current && ref.current.offsetTop}>
+          $offset={visible ? offset : undefined}
+          $left={true}
+          $innerHeight={innerHeight}
+          $innerWidth={innerWidth}
+          $offsetTop={ref.current && ref.current.offsetTop}>
             {event.left && event.left.img && <Image src={event.left.img} />}
             <Title>{event.left.title}</Title>
             <Role>{event.left.role}</Role>
@@ -358,13 +361,17 @@ const Event = ({ event, offset, innerHeight, innerWidth }) => {
 
       {event.right && (
         <EventContent
+          style={{
+            transform: getTranslation(),
+            opacity: getOpacity(),
+          }}
           ref={(!event.left || null)  && ref}
           className={visible && 'watch'}
-          offset={visible ? offset : undefined}
-          right={true}
-          innerHeight={innerHeight}
-          innerWidth={innerWidth}
-          offsetTop={ref.current && ref.current.offsetTop}>
+          $offset={visible ? offset : undefined}
+          $right={true}
+          $innerHeight={innerHeight}
+          $innerWidth={innerWidth}
+          $offsetTop={ref.current && ref.current.offsetTop}>
             {event.right && event.right.img && <Image src={event.right.img} />}
             <Title>{event.right.title}</Title>
             <Role>{event.right.role}</Role>
@@ -381,23 +388,21 @@ export default () => {
   const [innerHeight, setInnerHeight] = useState(0);
   const [innerWidth, setInnerWidth] = useState(0);
 
-  const delay = 10;
+  const delay = 15;
   useEffect(() => {
-    const adjustOffset = () => {
-      setOffset(() => window.pageYOffset  - ref.current.offsetTop);
-    };
+    const adjustOffset = () => setOffset(window.pageYOffset  - ref.current.offsetTop);
     const adjustDim = () => {
-      setInnerWidth(window.innerWidth / 4);
-      setInnerHeight(window.innerHeight / 2);
+      setInnerWidth(window.innerWidth);
+      setInnerHeight(window.innerHeight);
     };
 
     adjustOffset();
     adjustDim();
-    window.addEventListener('scroll', adjustOffset);
+    // window.addEventListener('scroll', adjustOffset);
     window.addEventListener('resize', adjustDim);
 
-    // setInterval(adjustOffset, 10);
-    return () => window.removeEventListener('scroll', adjustOffset);
+    setInterval(adjustOffset, delay);
+    return () => window.removeEventListener('resize', adjustDim);
   }, []);
 
   const dim = {
