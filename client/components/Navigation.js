@@ -140,19 +140,17 @@ const MoreMenu = ({ onClick }) => {
         <div style={{ alignSelf: 'flex-end' }}>
           <Close onClick={() => setSlideBack(true)} />
         </div>
-
-        {['about', 'portfolio'].map((title) => (
+        {['works', 'skills', 'about'].map((title) => (
           <StyledLink
+            as='a'
+            href={`#${title}`}
             key={title}
-            // to={`/${(title !== 'about') ? title : ''}`}
             brighter={true}
             margin='1em'
-            active={(`/${(title !== 'about') ? title : ''}` === location.pathname) ? 1 : 0}
-            href='#portfolio'>
+            active={(`/${(title !== 'home') ? title : ''}` === location.pathname) ? 1 : 0}>
             {capitalizeFirstLetter(title)}
           </StyledLink>
         ))}
-
         <Social />
       </StyledMoreMenu>
     </Overlay>
