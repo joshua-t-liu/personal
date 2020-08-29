@@ -3,12 +3,13 @@ import styled, { css, keyframes } from 'styled-components';
 
 import Head from './TimelineParallax/Head';
 import Event from './TimelineParallax/Event';
+import Present from './TimelineParallax/Present';
 import events from '../timeline_data';
 
 const Container = styled.div`
   position: relative;
   width: 100%;
-  padding: 5em 0;
+  padding-top: 5em;
 `;
 
 export default () => {
@@ -49,7 +50,8 @@ export default () => {
           {...dim}>
         </Event>
       ))}
-      <div style={{ height: '25vh' }} />
+      <Present />
+      {/* <div style={{ height: '25vh' }} /> */}
     </Container>
   )
 };

@@ -174,7 +174,7 @@ export default forwardRef(({ stickyTitle, stickyChat }, ref) => {
        <More onClick={() => setShowMore(!showMore)} />
         {showMore && <MoreMenu onClick={() => setShowMore(!showMore)} />}
 
-        {['works', 'skills', 'about'].map((title) => (
+        {['works', 'skills', 'about', 'contact'].map((title) => (
           <StyledLink
             as='a'
             href={`#${title}`}
@@ -183,7 +183,7 @@ export default forwardRef(({ stickyTitle, stickyChat }, ref) => {
             {capitalizeFirstLetter(title)}
           </StyledLink>
         ))}
-        {contacts.map(({ title, href}) => <Contact key={title} href={href}>{title}</Contact>)}
+        {/* {contacts.map(({ title, href}) => <Contact key={title} href={href}>{title}</Contact>)} */}
       </WideMenu>
 
       <WideMenu style={{ justifyContent: 'flex-end' }}>

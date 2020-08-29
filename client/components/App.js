@@ -44,7 +44,7 @@ export default ({ path }) => {
           </Route>
         </Switch>
       {/* </Suspense> */}
-      <Footer />
+      {/* <Footer /> */}
     </App>
   )
 }
