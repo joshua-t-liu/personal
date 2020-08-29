@@ -182,15 +182,15 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
     <Container>
 
         <Banner>
-          <Name>Joshua Liu</Name>
+          <Name>Full Stack Enginer </Name>
           <HeadLines ref={title} sticky={stickyTitle} >
-            {['DESIGN', 'DEVELOP', 'DEPLOY'].map((title, idx) => (
+            {['JOSHUA LIU'].map((title, idx) => (
               <HeadLine key={idx} title={title} delay={idx} />
             ))}
           </HeadLines>
           <About>
             <AboutText>
-              Full stack enginer with a background in math and software implementation. Check out my <StyledLink to='/portfolio'>portfolio</StyledLink> and see what I've been working on.  <b>Actively</b> looking for new opportunities, and would love to connect and hear from you.
+              Math and software implementation background. Passionate about technology. Check out my <StyledLink to='/portfolio'>portfolio</StyledLink> and see what I've been working on.  <b>Actively</b> looking for new opportunities, and would love to connect and hear from you.
             </AboutText>
             <div style={{ margin: '3em 0', textAlign: 'center' }}>
               <ChatButton ref={chat}>LET'S CHAT</ChatButton>
