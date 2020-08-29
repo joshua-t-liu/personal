@@ -38,7 +38,7 @@ app.get(/\/$|\/portfolio$/, (req, res) => {
   }
 });
 
-app.get(/\/[photos|mapView|streetView|schools|commute]/, (req, res) => {
+app.get(/\/photos|\/mapView|\/streetView|\/schools|\/commute/, (req, res) => {
   res.redirect('/');
 });
 

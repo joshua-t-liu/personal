@@ -164,12 +164,8 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
 
     const intersectionCb = (entries) => {
       entries.forEach((entry) => {
-        if (entry.target === chat.current) {
-          setStickyChat(!entry.isIntersecting);
-        }
-        if (entry.target === title.current) {
-          setStickyTitle(!entry.isIntersecting);
-        }
+        if (entry.target === chat.current) setStickyChat(!entry.isIntersecting);
+        if (entry.target === title.current) setStickyTitle(!entry.isIntersecting);
       });
     }
 
@@ -180,7 +176,6 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
 
   return (
     <Container>
-
         <Banner>
           <Name>Full Stack Engineer </Name>
           <HeadLines ref={title} sticky={stickyTitle} >
