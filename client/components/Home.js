@@ -60,7 +60,7 @@ const Name = styled(AboutText)`
   font-size: 1.75em;
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.div`
   color: dodgerblue;
   text-decoration: none;
 `;
@@ -190,7 +190,7 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
           </HeadLines>
           <About>
             <AboutText>
-              Math and software implementation background. Passionate about technology. Check out my <StyledLink to='/portfolio'>portfolio</StyledLink> and see what I've been working on.  <b>Actively</b> looking for new opportunities, and would love to connect and hear from you.
+              Math and software implementation background. Passionate about technology. Check out my <StyledLink as='a' href='#works'>work</StyledLink> and see what I've been up to. <b>Actively</b> looking for new opportunities, and would love to connect and hear from you.
             </AboutText>
             <div style={{ margin: '3em 0', textAlign: 'center' }}>
               <ChatButton ref={chat}>LET'S CHAT</ChatButton>
