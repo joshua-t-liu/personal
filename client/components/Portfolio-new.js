@@ -77,6 +77,7 @@ const Carousel = styled.div`
 
 const CarouselInner = styled.div`
   display: flex;
+  visibility: hidden;
   opacity: 0;
   transform: ${({ $shift }) => `translate(${$shift}%, -125%)`};
   transition-property: opacity, transform;
@@ -84,11 +85,13 @@ const CarouselInner = styled.div`
   transition-duration: 0.5s, 1s;
   transition-timing-function: ease-in, ease-in-out;
   &.active {
+    visibility: visible;
     opacity: 1;
     transform: ${({ $shift }) => `translate(${$shift}%, 0)`};
   }
   @media (max-width: ${SMALL_WIDTH}) {
     flex-wrap: wrap;
+    visibility: visible;
     transform: ${({ $shift }) => `translate(0, 25%)`};
   }
 `;

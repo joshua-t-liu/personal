@@ -182,7 +182,7 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
     <Container>
 
         <Banner>
-          <Name>Full Stack Enginer </Name>
+          <Name>Full Stack Engineer </Name>
           <HeadLines ref={title} sticky={stickyTitle} >
             {['JOSHUA LIU'].map((title, idx) => (
               <HeadLine key={idx} title={title} delay={idx} />
