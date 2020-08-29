@@ -40,7 +40,7 @@ export default () => {
   };
 
   return (
-    <Container ref={ref}>
+    <Container id='about' ref={ref}>
       <Head offset={offset} />
       {events.map((event, idx) => (
         <Event

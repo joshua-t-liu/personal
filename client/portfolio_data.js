@@ -19,9 +19,28 @@ export default [
     ],
     result: 'Deployed product page has first meaningful paint under 2s.',
     href: 'https://github.com/joshua-t-liu/image-gallery',
-    Component: ({ isDesktop }) => (
-      <div id='image-gallery' style={{ width: '100%' }} />
-    ),
+    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover' }} data-src='https://static.trulia-cdn.com/pictures/thumbs_6/zillowstatic/ISnic0adawu8z90000000000.webp' />,
+    Component: ({ isDesktop }) => {
+
+      useEffect(() => {
+      const loadScript = () => {
+        const script = document.createElement('script');
+        script.src = './bundle.js';
+        document.body.append(script);
+      }
+      loadScript();
+
+      window.addEventListener('resize', () => {
+        setIsDesktop(window.innerWidth > SMALL_WIDTH_NUM);
+        setIsMobile(window.innerWidth <= SMALL_WIDTH_NUM);
+        if (!document.getElementById('image-gallery').childElementCount) loadScript();
+      });
+      }, []);
+
+      return(
+        <div id='image-gallery' style={{ width: '100%' }} />
+      )
+    },
   },
   {
     title: 'Designing and Scaling Microservice For  Customer Reviews',
@@ -37,6 +56,7 @@ export default [
     ],
     result: 'Service handles 1200 RPS under load with an average load time of 50ms delay.',
     href: 'https://github.com/joshua-t-liu/reviews-module',
+    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', transform: 'scale(1.5)', objectFit: 'contain' }} data-src='https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy/15cb47f732c84b8b999aaaea00f31c0d_9366/Ultraboost_20_Shoes_Orange_FV8449_01_standard.jpg' />,
     Component: () => (
       <img className='lazyload' style={{ width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} data-src='./customer_reviews.png' />
     )
@@ -54,12 +74,13 @@ export default [
     ],
     result: 'Responsive site with first contentful paint under 2 seconds.',
     href: 'https://github.com/joshua-t-liu/personal',
+    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover' }} data-src='./website-new.png' />,
     Component: () => {
 
       return (
         <div>
           {<img className='lazyload' style={{ width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} data-src='./website-desktop.png' />}
-          {false && <img style={{ border: '1px solid rgb(196, 196, 196)', borderRadius: '2em', objectFit: 'contain', height: '80%', margin: 'auto' }} src='./website-mobile.png' />}
+          {false && <img style={{ border: '1px solid rgb(196, 196, 196)', borderRadius: '2em', objectFit: 'contain', height: '80%', margin: 'auto' }} src='./website-new.png' />}
         </div>
       )
     }

@@ -110,8 +110,8 @@ const List = ({ skillset, skills, reverse }) => {
 
 export default () => {
   return (
-    <Container>
-      <Title>Here's What I Bring</Title>
+    <Container id='skills'>
+      <Title>Skills</Title>
       <SkillSets>
         {Object.entries(SKILLS.frameworks).map(([skillset, skills], idx) => (
           <List key={skillset} {...{ skillset, skills }} />

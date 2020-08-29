@@ -5,6 +5,7 @@ import TimeLineParalax from './TimelineParallax';
 import Home from './Home';
 import Skills from './Skills';
 import Experience from './Experience';
+import Portfolio from './Portfolio-new';
 
 export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
   useEffect(() => window.scrollTo(0, 0), []);
@@ -12,6 +13,7 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
   return (
     <React.Fragment>
       <Home {...{ stickyTitle, setStickyTitle, stickyChat, setStickyChat }} />
+      <Portfolio />
       <Skills />
       <TimeLineParalax />
       {/* <Experience /> */}

@@ -24,7 +24,9 @@ const WideMenu = styled.div`
   justify-content: space-around;
 `;
 
-const StyledLink = styled(Link)`
+// const StyledLink = styled(Link)`
+const StyledLink = styled.div`
+  cursor: pointer;
   margin: ${({ margin }) => margin || '1.75em'};
   text-decoration: none;
   color: ${({ active, brighter }) => {
@@ -142,10 +144,11 @@ const MoreMenu = ({ onClick }) => {
         {['about', 'portfolio'].map((title) => (
           <StyledLink
             key={title}
-            to={`/${(title !== 'about') ? title : ''}`}
+            // to={`/${(title !== 'about') ? title : ''}`}
             brighter={true}
             margin='1em'
-            active={(`/${(title !== 'about') ? title : ''}` === location.pathname) ? 1 : 0}>
+            active={(`/${(title !== 'about') ? title : ''}` === location.pathname) ? 1 : 0}
+            href='#portfolio'>
             {capitalizeFirstLetter(title)}
           </StyledLink>
         ))}
@@ -173,11 +176,12 @@ export default forwardRef(({ stickyTitle, stickyChat }, ref) => {
        <More onClick={() => setShowMore(!showMore)} />
         {showMore && <MoreMenu onClick={() => setShowMore(!showMore)} />}
 
-        {['about', 'portfolio'].map((title) => (
+        {['works', 'skills', 'about'].map((title) => (
           <StyledLink
+            as='a'
+            href={`#${title}`}
             key={title}
-            to={`/${(title !== 'about') ? title : ''}`}
-            active={(`/${(title !== 'about') ? title : ''}` === location.pathname) ? 1 : 0}>
+            active={(`/${(title !== 'home') ? title : ''}` === location.pathname) ? 1 : 0}>
             {capitalizeFirstLetter(title)}
           </StyledLink>
         ))}
