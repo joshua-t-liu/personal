@@ -45,6 +45,7 @@ const PADDING = 3;
 const Carousel = styled.div`
   position: relative;
   display: flex;
+  margin: auto 0;
   height: 60vh;
   &:before {
     content: "";

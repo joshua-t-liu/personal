@@ -37,7 +37,7 @@ const SkillSets = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  // margin-top: 1em;
+  margin: auto 0;
   @media (max-width: ${SMALL_WIDTH}) {
     margin-top: 1em;
   }

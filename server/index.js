@@ -22,10 +22,12 @@ const PORT = 3000;
 app.use(compression());
 app.use(express.static('./dist'));
 
+app.get('/portfolio', (req, res) => res.redirect('/'));
+
 app.get(/\/$|\/portfolio$/, (req, res) => {
   const sheet = new ServerStyleSheet();
   try {
-    const html = ReactDOMServer.renderToString(sheet.collectStyles(createElement(AppSSR, { location: req.path })));
+    const html = ReactDOMServer.renderToString(sheet.collectStyles(createElement(AppSSR, { location: ''  })));
     const styleTags = sheet.getStyleTags();
     fs.readFile(path.resolve(__dirname, '../dist/template.html'), 'utf8', (err, template) => {
       template = template.replace('application', html);
