@@ -2,7 +2,10 @@ import React, { useRef, useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { ChatButton } from './Buttons';
+import Background from './Background';
+import Navigation from './Navigation-new';
+import { ChatButton, Social } from './Buttons';
+import SKILLS from '../skill_data';
 
 const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
@@ -14,10 +17,10 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 3em 1em;
-  min-height: calc(100vh - 10em);
+  height: calc(100vh - 6em);
   @media (max-width: ${MEDIUM_WIDTH}) {
     padding: 2em 0;
-    min-height: calc(100vh - 6em);
+    height: calc(100vh - 4em);
     font-size: 0.75em;
   }
 `;
@@ -82,13 +85,12 @@ const Title = styled.h1`
   // margin: 0.2em auto;
   margin: 0;
   text-align: center;
-  color: #333;
   white-space: pre;
   @media (max-width: ${SMALL_WIDTH}) {
     font-size: 4em;
   }
-  visibility: hidden;
-  animation: ${({ delay }) => css`${appear} 0.5s ease-in ${0.5 / 2 * delay}s forwards`};
+  // visibility: hidden;
+  // animation: ${({ delay }) => css`${appear} 0.5s ease-in ${0.5 / 2 * delay}s forwards`};
 `;
 
 const highlight = keyframes`
@@ -131,14 +133,14 @@ const shiftUp = keyframes`
 const About = styled.div`
   transform: translateY(2em);
   opacity: 0;
-  animation: ${shiftUp} 0.25s ease-in-out 0.75s forwards;
+  animation: ${shiftUp} 0.5s ease-in-out 0s forwards;
 `;
 
 const HeadLine = ({ title, delay }) => {
   return (
     <div style={{ position: 'relative' }}>
       <Title delay={delay}>{title}</Title>
-      <HighLight delay={delay}>{title}</HighLight>
+      {/* <HighLight delay={delay}>{title}</HighLight> */}
     </div>
   )
 }
@@ -149,6 +151,7 @@ const HeadLines = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 1em 0;
+  color: rgb(51,51,51);
 `;
 
 export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
@@ -170,28 +173,28 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
     }
 
     const observer = new IntersectionObserver(intersectionCb, options);
-    observer.observe(title.current);
-    observer.observe(chat.current);
+    // observer.observe(title.current);
+    // observer.observe(chat.current);
   }, []);
 
   return (
-    <Container>
-        <Banner>
-          <Name>Full Stack Engineer </Name>
-          <HeadLines ref={title} sticky={stickyTitle} >
-            {['JOSHUA LIU'].map((title, idx) => (
-              <HeadLine key={idx} title={title} delay={idx} />
-            ))}
-          </HeadLines>
-          <About>
-            <AboutText>
-              Math and software implementation background. Passionate about technology. Check out my <StyledLink as='a' href='#works'>work</StyledLink> and see what I've been up to. <b>Actively</b> looking for new opportunities, and would love to connect and hear from you.
-            </AboutText>
-            <div style={{ margin: '3em 0', textAlign: 'center' }}>
-              <ChatButton ref={chat}>LET'S CHAT</ChatButton>
-            </div>
-          </About>
-        </Banner>
+    <Container id='home'>
+      {/* <Background /> */}
+      <Banner>
+        <Name>Full Stack Engineer </Name>
+        <HeadLines ref={title} sticky={stickyTitle} >
+          {['JOSHUA LIU'].map((title, idx) => (
+            <HeadLine key={idx} title={title} delay={idx} />
+          ))}
+        </HeadLines>
+        <About>
+          <Navigation />
+          {/* <div style={{ margin: '3em 0', textAlign: 'center' }}>
+            <ChatButton ref={chat}>LET'S CHAT</ChatButton>
+          </div> */}
+          <Social justifyContent='center'/>
+        </About>
+      </Banner>
     </Container>
   )
 };

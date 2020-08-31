@@ -10,9 +10,10 @@ const Container = styled.div`
   position: relative;
   color: white;
   width: 100%;
-  height: 100%;
+  // height: 100%;
   z-index: 1;
   overflow: hidden;
+  margin-bottom: -5em;
   @media (max-width: ${SMALL_WIDTH}) {
     z-index: 10;
   }
@@ -20,7 +21,7 @@ const Container = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  height: 100%;
+  // height: 100%;
   display: flex;
   justify-content: space-between;
   transform: translate(0, 100%);
@@ -89,14 +90,6 @@ const SocialContainer = styled.div`
   width: 50%;
   font-size: 0.6em;
   margin: 1em auto;
-  // @media (max-width: ${SMALL_WIDTH}) {
-  //   align-self: center;
-  //   width: 70%;
-  //   height: 3em;
-  // }
-  // @media (max-width: ${MEDIUM_WIDTH}) {
-  //   margin-top: 1em;
-  // }
 `;
 
 const CTA = styled.div`

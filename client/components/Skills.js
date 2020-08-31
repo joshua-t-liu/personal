@@ -7,12 +7,15 @@ const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
 
 const Container = styled.div`
+  height: calc(100vh - 8em);
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  padding: 5em 1em;
+  padding: 4em 1em;
   align-items: stretch;
   text-align: center;
-  background-color: rgb(247,247,247);
+  // background-color: rgb(247,247,247);
   @media (max-width: ${SMALL_WIDTH}) {
     font-size: 0.75em;
   }
@@ -21,13 +24,20 @@ const Container = styled.div`
 const Title = styled.h2`
   font-size: 3em;
   margin: 0;
+  opacity: 0;
+  transform: translate(0, -5em);
+  transition: transform 0.33s ease-in-out 0s, opacity 0.33s ease-in-out 0s;
+  &.active {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
 `;
 
 const SkillSets = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  margin-top: 3em;
+  // margin-top: 1em;
   @media (max-width: ${SMALL_WIDTH}) {
     margin-top: 1em;
   }
@@ -40,7 +50,7 @@ const SkillSetTitle = styled.div`
   @media (max-width: ${SMALL_WIDTH}) {
     align-self: flex-start;
   }
-  transition: transform 0.5s ease-in-out 0.25s,opacity 0.5s ease-in-out 0.25s};
+  transition: transform 0.5s ease-in-out 0.11s,opacity 0.5s ease-in-out 0.11s;
 `;
 
 const Skills = styled.p`
@@ -50,7 +60,7 @@ const Skills = styled.p`
   margin: 0;
   transform: translateY(5em);
   opacity: 0;
-  transition: ${({ delay }) => css`transform 0.5s ease-in-out ${(1 + delay)/8 + 0.25}s,opacity 0.5s ease-in-out ${(1 + delay)/8 + 0.25}s`};
+  transition: ${({ delay }) => css`transform 0.5s ease-in-out ${(1 + delay)/8 + 0.11}s,opacity 0.5s ease-in-out ${(1 + delay)/8 + 0.11}s`};
 `;
 
 const SkillSet = styled.div`
@@ -90,7 +100,7 @@ const List = ({ skillset, skills, reverse }) => {
 
     const intersectionCb = (entries) => {
       entries.forEach((entry) => {
-        if (entry.target === ref.current) setAnimState(curr => curr || entry.isIntersecting);
+        if (entry.target === ref.current) setAnimState(entry.isIntersecting);
         });
     };
 
@@ -109,9 +119,29 @@ const List = ({ skillset, skills, reverse }) => {
 };
 
 export default () => {
+  const [active, setActive] = useState(false);
+  const ref = useRef();
+
+  useEffect(() => {
+    let options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.25,
+    }
+
+    const intersectionCb = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.target === ref.current) setActive(entry.isIntersecting);
+        });
+    };
+
+    const observer = new IntersectionObserver(intersectionCb, options);
+    observer.observe(ref.current);
+  }, []);
+
   return (
-    <Container id='skills'>
-      <Title>Skills</Title>
+    <Container id='skills' ref={ref}>
+      <Title className={active && 'active'} >Skills</Title>
       <SkillSets>
         {Object.entries(SKILLS.frameworks).map(([skillset, skills], idx) => (
           <List key={skillset} {...{ skillset, skills }} />

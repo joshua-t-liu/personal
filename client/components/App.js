@@ -32,8 +32,6 @@ export default ({ path }) => {
 
   return (
     <App id='application'>
-      <NavBar ref={ref} {...{ stickyTitle, stickyChat }} />
-      {/* <Suspense fallback={<div style={{ height: '100vh', width: '100vw' }}></div>}> */}
         <Switch>
           <Route exact path='/'>
             <About {...{ stickyTitle, setStickyTitle, stickyChat, setStickyChat }} />
@@ -43,8 +41,6 @@ export default ({ path }) => {
             <Portfolios height={height} />
           </Route>
         </Switch>
-      {/* </Suspense> */}
-      {/* <Footer /> */}
     </App>
   )
 }

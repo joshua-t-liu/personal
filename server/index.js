@@ -1,3 +1,4 @@
+require("babel-polyfill");
 require('babel-register')({
   presets: ['env', 'react'],
   plugins: ['dynamic-import-node', 'babel-plugin-styled-components']

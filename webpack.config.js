@@ -2,13 +2,15 @@ const path = require('path');
 
 module.exports = {
   mode: 'production',
-  entry: {
-    // website: './client/index.js',
-    hydrate: './client/hydrate.js',
-  },
+  entry: ['babel-polyfill', './client/hydrate.js'],
+  // entry: {
+  //   // website: './client/index.js',
+  //   'babel-polyfill': 'babel-polyfill',
+  //   hydrate: './client/hydrate.js',
+  // },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
+    filename: 'hydrate.js',
   },
   module: {
     rules: [

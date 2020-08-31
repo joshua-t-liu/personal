@@ -19,7 +19,7 @@ export default [
     ],
     result: 'Deployed product page has first meaningful paint under 2s.',
     href: 'https://github.com/joshua-t-liu/image-gallery',
-    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover' }} data-src='https://static.trulia-cdn.com/pictures/thumbs_6/zillowstatic/ISnic0adawu8z90000000000.webp' />,
+    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover' }} data-src='https://static.trulia-cdn.com/pictures/thumbs_5/zillowstatic/ISnic0adawu8z90000000000.jpg' />,
     Component: ({ isDesktop }) => {
 
       useEffect(() => {
@@ -74,12 +74,11 @@ export default [
     ],
     result: 'Responsive site with first contentful paint under 2 seconds.',
     href: 'https://github.com/joshua-t-liu/personal',
-    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover' }} data-src='./website-new.png' />,
+    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover', display: 'block' }} data-src='./website-new.png' />,
     Component: () => {
-
       return (
         <div>
-          {<img className='lazyload' style={{ width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} data-src='./website-desktop.png' />}
+          {<img className='lazyload' style={{ width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} data-src='./website-new.png' />}
           {false && <img style={{ border: '1px solid rgb(196, 196, 196)', borderRadius: '2em', objectFit: 'contain', height: '80%', margin: 'auto' }} src='./website-new.png' />}
         </div>
       )

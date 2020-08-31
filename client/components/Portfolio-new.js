@@ -8,6 +8,9 @@ const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
 
 const Container = styled.div`
+  height: calc(100vh - 4em);
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,8 +26,8 @@ const Title = styled.h2`
   opacity: 0;
   transform: translate(0, 300%);
   transition-property: opacity, transform;
-  transition-delay: 0.5s, 0s;
-  transition-duration: 0.5s, 1s;
+  transition-delay: 0s, 0s;
+  transition-duration: 0.25s, 0.5s;
   transition-timing-function: ease-in, ease-in;
   &.active {
     opacity: 1;
@@ -81,8 +84,8 @@ const CarouselInner = styled.div`
   opacity: 0;
   transform: ${({ $shift }) => `translate(${$shift}%, -125%)`};
   transition-property: opacity, transform;
-  transition-delay: 0.5s, 0s;
-  transition-duration: 0.5s, 1s;
+  transition-delay: 0s, 0s;
+  transition-duration: 0.25s, 0.5s;
   transition-timing-function: ease-in, ease-in-out;
   &.active {
     visibility: visible;
@@ -93,6 +96,9 @@ const CarouselInner = styled.div`
     flex-wrap: wrap;
     visibility: visible;
     transform: ${({ $shift }) => `translate(0, 25%)`};
+    &.active {
+      transform: ${({ $shift }) => `translate(0, 0)`};
+    }
   }
 `;
 
@@ -114,7 +120,7 @@ const Overlay = styled.div`
   flex-direction: row;
   align-items: center;
   text-align: center;
-  backdrop-filter: blur(0.25em);
+  backdrop-filter: blur(0em);
   background-color: rgba(0, 0, 0, 0.3);
   color: rgb(255,255,255);
   font-weight: bold;
@@ -122,7 +128,7 @@ const Overlay = styled.div`
     visibility: visible;
     top: 2em;
     left: 2em;
-    backdrop-filter: blur(0.1em);
+    backdrop-filter: blur(0em);
     background-color: rgba(0, 0, 0, 0.4);
     height: calc(100% - 4em);
     width: calc(100% - 4em);
@@ -183,35 +189,35 @@ const Button = styled.div`
   }
 `;
 
-export default () => {
+export default ({ active }) => {
   const [shift, setShift] = useState(0);
   const [animState, setAnimState] = useState(false);
   const [currPortfolio, setPortfolio] = useState(null);
   const ref = useRef();
 
   useEffect(() => {
-    let options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1,
-    }
+    // let options = {
+    //   root: null,
+    //   rootMargin: '0px',
+    //   threshold: 0.1,
+    // }
 
-    const intersectionCb = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.target === ref.current) setAnimState((curr) => curr || entry.intersectionRatio >= 0.1);
-        });
-    };
+    // const intersectionCb = (entries) => {
+    //   entries.forEach((entry) => {
+    //     if (entry.target === ref.current) setAnimState(entry.intersectionRatio >= 0.1);
+    //     });
+    // };
 
-    const observer = new IntersectionObserver(intersectionCb, options);
-    observer.observe(ref.current);
+    // const observer = new IntersectionObserver(intersectionCb, options);
+    // observer.observe(ref.current);
   }, []);
 
   return (
     <Container id='works'>
       {currPortfolio && <PortfolioModal portfolio={currPortfolio} close={() => setPortfolio(null)}/>}
-      <Title className={animState && 'active'}>Works</Title>
+      <Title className={active && 'active'}>Works</Title>
       <Carousel ref={ref}>
-        <CarouselInner className={animState && 'active'} $shift={shift}>
+        <CarouselInner className={active && 'active'} $shift={shift}>
           {portfolios.map((portfolio, idx) => {
             const Image = portfolio.Image;
             return (
@@ -227,7 +233,7 @@ export default () => {
           })}
         </CarouselInner>
       </Carousel>
-      <Buttons className={animState && 'active'}>
+      <Buttons className={active && 'active'}>
         <Button className={!shift && 'active'} onClick={() => setShift(0)}></Button>
         <Button className={shift && 'active'} onClick={() => setShift(-50)}></Button>
       </Buttons>

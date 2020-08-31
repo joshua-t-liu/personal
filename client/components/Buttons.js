@@ -148,7 +148,7 @@ const GitHubButton = ({ href = 'https://github.com/joshua-t-liu' }) => (
 
 const MoreMenuContacts = styled.div`
   align-self: stretch;
-  justify-content: space-evenly;
+  justify-content: ${({ justifyContent }) => justifyContent || 'space-evenly' };
   align-items: flex-end;
   flex-grow: ${({ flexGrow }) => flexGrow || 1};
   display: flex;
@@ -170,6 +170,64 @@ const Social = (props) => (
   </MoreMenuContacts>
 );
 
+//Icons made by <a href="https://www.flaticon.com/authors/roundicons" title="Roundicons">Roundicons</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+const StyledHomeButton = styled.div`
+  z-index: 1000;
+  cursor: pointer;
+  position: fixed;
+  bottom: 3em;
+  right: 3em;
+  border-radius: 0.25em;
+  padding: 1em;
+  border: solid 0.1em rgb(30, 144, 255);
+  & > svg {
+    fill: rgb(30, 144, 255);
+  }
+  &:hover {
+    background-color: rgb(30, 144, 255);
+    & > svg {
+      fill: rgb(255, 255, 255);
+    }
+  }
+  @media (max-width: ${SMALL_WIDTH}) {
+    display: none;
+  }
+`;
+
+const StyledHomeButtonMobile = styled(StyledHomeButton)`
+  display: ${({ $onlyMobile }) => ($onlyMobile) ? 'none' : 'block'};
+  position: ${({ $position }) => $position};
+  border: none;
+  bottom: auto;
+  top: 1em;
+  right: 1em;
+  @media (max-width: ${SMALL_WIDTH}) {
+    display: block;
+  }
+`;
+
+const HomeButton = () => {
+  return (
+    <StyledHomeButton as='a' href='#home'>
+      <svg x="0px" y="0px" viewBox="0 0 492 492" height='2em'>
+        <g>
+          <path d="M442.627,185.388L265.083,7.844C260.019,2.78,253.263,0,245.915,0c-7.204,0-13.956,2.78-19.02,7.844L49.347,185.388    c-10.488,10.492-10.488,27.568,0,38.052l16.12,16.128c5.064,5.06,11.82,7.844,19.028,7.844c7.204,0,14.192-2.784,19.252-7.844    l103.808-103.584v329.084c0,14.832,11.616,26.932,26.448,26.932h22.8c14.832,0,27.624-12.1,27.624-26.932V134.816l104.396,104.752    c5.06,5.06,11.636,7.844,18.844,7.844s13.864-2.784,18.932-7.844l16.072-16.128C453.163,212.952,453.123,195.88,442.627,185.388z"/>
+        </g>
+      </svg>
+    </StyledHomeButton>
+  )
+};
+
+const CloseV2 =({ type = 'a', onlyMobile = true, position }) => (
+  <StyledHomeButtonMobile as={type} href='#home' $onlyMobile={onlyMobile} $position={position}>
+    <svg height='1em' x="0px" y="0px" viewBox="0 0 47.971 47.971" fill='rgb(51,51,51)'>
+      <g>
+        <path d="M28.228,23.986L47.092,5.122c1.172-1.171,1.172-3.071,0-4.242c-1.172-1.172-3.07-1.172-4.242,0L23.986,19.744L5.121,0.88   c-1.172-1.172-3.07-1.172-4.242,0c-1.172,1.171-1.172,3.071,0,4.242l18.865,18.864L0.879,42.85c-1.172,1.171-1.172,3.071,0,4.242   C1.465,47.677,2.233,47.97,3,47.97s1.535-0.293,2.121-0.879l18.865-18.864L42.85,47.091c0.586,0.586,1.354,0.879,2.121,0.879   s1.535-0.293,2.121-0.879c1.172-1.171,1.172-3.071,0-4.242L28.228,23.986z"/>
+      </g>
+    </svg>
+  </StyledHomeButtonMobile>
+);
+
 export {
   ChatButton,
   ChatNavButton,
@@ -180,4 +238,6 @@ export {
   Linkedin,
   Email,
   Social,
+  HomeButton,
+  CloseV2,
 };

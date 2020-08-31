@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styled, { css, keyframes } from 'styled-components';
 
-import { GitHubButton, Close } from './Buttons';
+import { GitHubButton, CloseV2 } from './Buttons';
 
 const SMALL_WIDTH = '768px';
 const SMALL_WIDTH_NUM = 768;
@@ -35,6 +35,7 @@ const Modal = styled.div`
 `;
 
 const ModalBody = styled.div`
+  position: relative;
   height: calc(100% - 2em);
   padding: 1em 0;
   background-color: white;
@@ -193,7 +194,9 @@ export default ({ height, portfolio, close }) => {
   return createPortal((
           <Modal onClick={close}>
             <ModalBody onClick={(event) => event.stopPropagation()}>
-              <div style={{ display: 'flex', flexDirection: 'row-reverse', padding: '0 1em' }}><Close fill='rgb(74,74,74)' onClick={close} /></div>
+              {/* <div style={{ position: 'absolute', top: '1em', right: '1em', padding: '0 1em' }}><Close fill='rgb(74,74,74)' onClick={close} /></div> */}
+
+              <div onClick={close}><CloseV2 type='div' position='absolute' onlyMobile={false}/></div>
               <Layout height={height}>
                 <Cell><Portfolio {...portfolio} isMobile={isMobile} /></Cell>
                 {isDesktop && <Cell className='sticky' height={height} ><Component /></Cell>}
