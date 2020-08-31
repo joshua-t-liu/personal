@@ -28,7 +28,7 @@ const StyledLink = styled.div`
   margin: ${({ margin }) => margin || '1.75em'};
   border: solid 0.1em rgb(51,51,51);
   border-radius: 2em;
-  padding: 1em;
+  padding: 0.5em 1em;
   font-weight: bold;
   color: rgb(51,51,51);
   cursor: pointer;
@@ -119,7 +119,7 @@ export default forwardRef(({ stickyTitle, stickyChat }, ref) => {
   return (
     <NavBar ref={ref} className={(stickyTitle || isActive) && 'active'}>
       <Line />
-      {['works', 'skills', 'about'].map((title) => (
+      {['work', 'skills', 'about'].map((title) => (
           <StyledLink
             as='a'
             href={`#${title}`}
