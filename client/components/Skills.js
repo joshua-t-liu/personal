@@ -47,10 +47,14 @@ const SkillSetTitle = styled.div`
   color: dodgerblue;
   transform: translateY(5em);
   opacity: 0;
+  background
   @media (max-width: ${SMALL_WIDTH}) {
     align-self: flex-start;
   }
   transition: transform 0.5s ease-in-out 0.11s,opacity 0.5s ease-in-out 0.11s;
+  &:before {
+    content: ${({ title }) => `"${title }"`};
+  }
 `;
 
 const Skills = styled.p`
@@ -64,7 +68,7 @@ const Skills = styled.p`
 `;
 
 const SkillSet = styled.div`
-  width: 20%;
+  width: calc(20% - 2em);
   padding: 1em;
   display: flex;
   flex-direction: column;
@@ -72,6 +76,8 @@ const SkillSet = styled.div`
   font-size: 2em;
   font-weight: bold;
   text-align: left;
+  margin: 1em;
+  background-color: rgba(0,0,0,0.033);
   &.active {
     & > div > ${SkillSetTitle} {
       transform: translateY(0);
@@ -111,7 +117,7 @@ const List = ({ skillset, skills, reverse, active }) => {
   return (
     <SkillSet ref={ref} className={active && 'active'}>
       <div>
-        <SkillSetTitle>{skillset}</SkillSetTitle>
+        <SkillSetTitle title={skillset} />
         {skills.map((skill, idx) => <Skills key={idx} delay={idx}>{skill}</Skills>)}
       </div>
     </SkillSet>
