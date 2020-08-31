@@ -87,29 +87,29 @@ const SkillSet = styled.div`
   }
 `;
 
-const List = ({ skillset, skills, reverse }) => {
-  const [animState, setAnimState] = useState(false);
+const List = ({ skillset, skills, reverse, active }) => {
+  // const [animState, setAnimState] = useState(false);
   const ref = useRef();
 
-  useEffect(() => {
-    let options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.25,
-    }
+  // useEffect(() => {
+  //   let options = {
+  //     root: null,
+  //     rootMargin: '0px',
+  //     threshold: 0.25,
+  //   }
 
-    const intersectionCb = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.target === ref.current) setAnimState(entry.isIntersecting);
-        });
-    };
+  //   const intersectionCb = (entries) => {
+  //     entries.forEach((entry) => {
+  //       if (entry.target === ref.current) setAnimState(entry.isIntersecting);
+  //       });
+  //   };
 
-    const observer = new IntersectionObserver(intersectionCb, options);
-    observer.observe(ref.current);
-  }, []);
+  //   const observer = new IntersectionObserver(intersectionCb, options);
+  //   observer.observe(ref.current);
+  // }, []);
 
   return (
-    <SkillSet ref={ref} className={animState && 'active'}>
+    <SkillSet ref={ref} className={active && 'active'}>
       <div>
         <SkillSetTitle>{skillset}</SkillSetTitle>
         {skills.map((skill, idx) => <Skills key={idx} delay={idx}>{skill}</Skills>)}
@@ -118,33 +118,33 @@ const List = ({ skillset, skills, reverse }) => {
   );
 };
 
-export default ({ innerHeight }) => {
-  const [active, setActive] = useState(false);
+export default ({ innerHeight, active }) => {
+  // const [active, setActive] = useState(false);
   const ref = useRef();
 
-  useEffect(() => {
-    let options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.25,
-    }
+  // useEffect(() => {
+  //   let options = {
+  //     root: null,
+  //     rootMargin: '0px',
+  //     threshold: 0.25,
+  //   }
 
-    const intersectionCb = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.target === ref.current) setActive(entry.isIntersecting);
-        });
-    };
+  //   const intersectionCb = (entries) => {
+  //     entries.forEach((entry) => {
+  //       if (entry.target === ref.current) setActive(entry.isIntersecting);
+  //       });
+  //   };
 
-    const observer = new IntersectionObserver(intersectionCb, options);
-    observer.observe(ref.current);
-  }, []);
+  //   const observer = new IntersectionObserver(intersectionCb, options);
+  //   observer.observe(ref.current);
+  // }, []);
 
   return (
     <Container id='skills' ref={ref} innerHeight={innerHeight} >
       <Title className={active && 'active'} >Skills</Title>
       <SkillSets>
         {Object.entries(SKILLS.frameworks).map(([skillset, skills], idx) => (
-          <List key={skillset} {...{ skillset, skills }} />
+          <List key={skillset} {...{ skillset, skills }} active={active} />
         ))}
       </SkillSets>
     </Container>

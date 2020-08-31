@@ -17,10 +17,12 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 3em 1em;
-  height: ${({ innerHeight }) => `calc(min(100vh, ${innerHeight}px) - 6em)`};
+  // height: ${({ innerHeight }) => `calc(min(100vh, ${innerHeight}px) - 6em)`};
+  height: calc(100vh - 6em);
   @media (max-width: ${MEDIUM_WIDTH}) {
     padding: 2em 0;
-    height: ${({ innerHeight }) => `calc(min(100vh, ${innerHeight}px) - 4em)`};
+    height: calc(100vh - 4em);
+    // height: ${({ innerHeight }) => `calc(min(100vh, ${innerHeight}px) - 4em)`};
     font-size: 0.75em;
   }
 `;
