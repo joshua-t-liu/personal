@@ -20,7 +20,7 @@ const Container = styled.div`
   height: ${({ innerHeight }) => `calc(min(100vh, ${innerHeight}px) - 6em)`};
   @media (max-width: ${MEDIUM_WIDTH}) {
     padding: 2em 0;
-    height: calc(100vh - 4em);
+    height: ${({ innerHeight }) => `calc(min(100vh, ${innerHeight}px) - 4em)`};
     font-size: 0.75em;
   }
 `;

@@ -7,7 +7,7 @@ const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
 
 const Container = styled.div`
-  height: calc(100vh - 8em);
+height: ${({ innerHeight }) => `calc(min(100vh, ${innerHeight}px) - 8em)`};
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
@@ -118,7 +118,7 @@ const List = ({ skillset, skills, reverse }) => {
   );
 };
 
-export default () => {
+export default ({ innerHeight }) => {
   const [active, setActive] = useState(false);
   const ref = useRef();
 
@@ -140,7 +140,7 @@ export default () => {
   }, []);
 
   return (
-    <Container id='skills' ref={ref}>
+    <Container id='skills' ref={ref} innerHeight={innerHeight} >
       <Title className={active && 'active'} >Skills</Title>
       <SkillSets>
         {Object.entries(SKILLS.frameworks).map(([skillset, skills], idx) => (
