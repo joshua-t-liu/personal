@@ -96,6 +96,14 @@ WordCloud.prototype.createStates = function() {
   const ROT_RADIUS = 2;
   const { cos } = Particle;
   const promises = [];
+  let copy = createImageBitmap || function(data, x, y, width, height) {
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d', { alpha: true });
+    ctx.putImageData(data, x, y);
+    return new Promise((resolve) => resolve(canvas));
+  };
 
   for (let i=0; i < cos.length; i++) {
 
@@ -129,7 +137,7 @@ WordCloud.prototype.createStates = function() {
       this.wide + 2 * (Particle.max + ROT_RADIUS),
       this.bottom + this.top + 2 * (Particle.max + ROT_RADIUS));
 
-    promises.push(createImageBitmap(
+    promises.push(copy(
       imageData, 0, 0,
       this.wide + 2 * (Particle.max + ROT_RADIUS),
       this.bottom + this.top + 2 * (Particle.max + ROT_RADIUS)));

@@ -101,6 +101,9 @@ const Line = styled.div`
   background-color: rgb(51,51,51);
   width: 90%;
   height: 0.1em;
+  @media (max-width: ${SMALL_WIDTH}) {
+    width: 80%;
+  }
 `;
 
 const capitalizeFirstLetter = (str) => {

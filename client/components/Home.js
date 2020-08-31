@@ -159,20 +159,20 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
   const chat = useRef();
 
   useEffect(() => {
-    let options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 1.0
-    }
+    // let options = {
+    //   root: null,
+    //   rootMargin: '0px',
+    //   threshold: 1.0
+    // }
 
-    const intersectionCb = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.target === chat.current) setStickyChat(!entry.isIntersecting);
-        if (entry.target === title.current) setStickyTitle(!entry.isIntersecting);
-      });
-    }
+    // const intersectionCb = (entries) => {
+    //   entries.forEach((entry) => {
+    //     if (entry.target === chat.current) setStickyChat(!entry.isIntersecting);
+    //     if (entry.target === title.current) setStickyTitle(!entry.isIntersecting);
+    //   });
+    // }
 
-    const observer = new IntersectionObserver(intersectionCb, options);
+    // const observer = new IntersectionObserver(intersectionCb, options);
     // observer.observe(title.current);
     // observer.observe(chat.current);
   }, []);
