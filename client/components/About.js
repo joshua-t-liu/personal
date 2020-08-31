@@ -9,13 +9,16 @@ import Portfolio from './Portfolio-new';
 import { HomeButton, CloseV2 } from './Buttons';
 
 export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
+  const [innerHeight, setInnerHeight] = useState(100000);
   const [hash, setHash] = useState('#home');
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    setInnerHeight(window.innerHeight);
     setHash(window.location.hash);
+
     window.addEventListener('hashchange', () => setHash(window.location.hash));
     window.addEventListener('resize', () => {
+      setInnerHeight(window.innerHeight);
       let id = window.location.hash.substr(1);
       if (id === '') id = 'home';
       const ele = document.getElementById(id);
@@ -31,7 +34,7 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
           <CloseV2 />
         </React.Fragment>
       )}
-      <Home {...{ stickyTitle, setStickyTitle, stickyChat, setStickyChat }} />
+      <Home innerHeight={innerHeight} />
       <Portfolio active={hash === '#works'} />
       <Skills />
       <TimeLineParalax />

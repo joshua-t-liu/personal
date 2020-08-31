@@ -17,7 +17,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 3em 1em;
-  height: calc(100vh - 6em);
+  height: ${({ innerHeight }) => `calc(min(100vh, ${innerHeight}px) - 6em)`};
   @media (max-width: ${MEDIUM_WIDTH}) {
     padding: 2em 0;
     height: calc(100vh - 4em);
@@ -154,44 +154,22 @@ const HeadLines = styled.div`
   color: rgb(51,51,51);
 `;
 
-export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
+export default ({ innerHeight }) => {
   const title = useRef();
   const chat = useRef();
 
-  useEffect(() => {
-    // let options = {
-    //   root: null,
-    //   rootMargin: '0px',
-    //   threshold: 1.0
-    // }
-
-    // const intersectionCb = (entries) => {
-    //   entries.forEach((entry) => {
-    //     if (entry.target === chat.current) setStickyChat(!entry.isIntersecting);
-    //     if (entry.target === title.current) setStickyTitle(!entry.isIntersecting);
-    //   });
-    // }
-
-    // const observer = new IntersectionObserver(intersectionCb, options);
-    // observer.observe(title.current);
-    // observer.observe(chat.current);
-  }, []);
-
   return (
-    <Container id='home'>
+    <Container id='home' innerHeight={innerHeight}>
       {/* <Background /> */}
       <Banner>
         <Name>Full Stack Engineer </Name>
-        <HeadLines ref={title} sticky={stickyTitle} >
+        <HeadLines ref={title}>
           {['JOSHUA LIU'].map((title, idx) => (
             <HeadLine key={idx} title={title} delay={idx} />
           ))}
         </HeadLines>
         <About>
           <Navigation />
-          {/* <div style={{ margin: '3em 0', textAlign: 'center' }}>
-            <ChatButton ref={chat}>LET'S CHAT</ChatButton>
-          </div> */}
           <Social justifyContent='center'/>
         </About>
       </Banner>
