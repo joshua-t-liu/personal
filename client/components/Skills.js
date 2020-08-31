@@ -89,30 +89,16 @@ const SkillSet = styled.div`
     }
   }
   @media (max-width: ${SMALL_WIDTH}) {
-    width: 33%;
+    // width: calc(33% - 0.3em);
+    // margin: 0.15em;
+    // flex-grow: 1;
+    width: calc(100% - 2em);
+    text-align: center;
   }
 `;
 
 const List = ({ skillset, skills, reverse, active }) => {
-  // const [animState, setAnimState] = useState(false);
   const ref = useRef();
-
-  // useEffect(() => {
-  //   let options = {
-  //     root: null,
-  //     rootMargin: '0px',
-  //     threshold: 0.25,
-  //   }
-
-  //   const intersectionCb = (entries) => {
-  //     entries.forEach((entry) => {
-  //       if (entry.target === ref.current) setAnimState(entry.isIntersecting);
-  //       });
-  //   };
-
-  //   const observer = new IntersectionObserver(intersectionCb, options);
-  //   observer.observe(ref.current);
-  // }, []);
 
   return (
     <SkillSet ref={ref} className={active && 'active'}>
@@ -125,25 +111,7 @@ const List = ({ skillset, skills, reverse, active }) => {
 };
 
 export default ({ innerHeight, active }) => {
-  // const [active, setActive] = useState(false);
   const ref = useRef();
-
-  // useEffect(() => {
-  //   let options = {
-  //     root: null,
-  //     rootMargin: '0px',
-  //     threshold: 0.25,
-  //   }
-
-  //   const intersectionCb = (entries) => {
-  //     entries.forEach((entry) => {
-  //       if (entry.target === ref.current) setActive(entry.isIntersecting);
-  //       });
-  //   };
-
-  //   const observer = new IntersectionObserver(intersectionCb, options);
-  //   observer.observe(ref.current);
-  // }, []);
 
   return (
     <Container id='skills' ref={ref} innerHeight={innerHeight} >
