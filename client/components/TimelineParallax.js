@@ -9,16 +9,15 @@ import events from '../timeline_data';
 const Container = styled.div`
   position: relative;
   width: 100%;
-  height: calc(100vh - 10em);
+  height: ${({ innerHeight }) => `calc(min(100vh, ${innerHeight}px) - 10em)`};
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 5em 0;
 `;
 
-export default () => {
+export default ({ innerHeight }) => {
   const ref = useRef();
   const [offset, setOffset] = useState(0);
-  const [innerHeight, setInnerHeight] = useState(0);
   const [innerWidth, setInnerWidth] = useState(0);
   const delay = 15;
 
@@ -33,7 +32,6 @@ export default () => {
 
     const adjustDim = () => {
       setInnerWidth(window.innerWidth);
-      setInnerHeight(window.innerHeight);
     };
 
     adjustOffset();
@@ -51,7 +49,7 @@ export default () => {
   };
 
   return (
-    <Container  ref={ref}>
+    <Container ref={ref} innerHeight={innerHeight} >
       <div id='about' style={{ marginTop: '-5em', height: '5em' }} />
       <Head offset={offset} />
       {events.map((event, idx) => (

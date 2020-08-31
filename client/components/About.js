@@ -37,7 +37,7 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
       <Home innerHeight={innerHeight} />
       <Portfolio active={hash === '#works'} />
       <Skills active={hash === '#skills'}  innerHeight={innerHeight} />
-      <TimeLineParalax />
+      <TimeLineParalax innerHeight={innerHeight} />
     </React.Fragment>
   );
 };
