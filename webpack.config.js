@@ -2,7 +2,8 @@ const path = require('path');
 
 module.exports = {
   mode: 'production',
-  entry: ['babel-polyfill', './client/hydrate.js'],
+  // entry: ['babel-polyfill', './client/hydrate.js'],
+  entry: ['./client/hydrate.js'],
   // entry: {
   //   // website: './client/index.js',
   //   'babel-polyfill': 'babel-polyfill',

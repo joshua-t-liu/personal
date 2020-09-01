@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
 import TimeLineParalax from './TimelineParallax';
+import Form from './Form';
 import Home from './Home';
 import Skills from './Skills';
 import Experience from './Experience';
@@ -22,6 +23,7 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
       let id = window.location.hash.substr(1);
       if (id === '') id = 'home';
       const ele = document.getElementById(id);
+      console.log(ele.offsetTop, id);
       window.scroll(0, ele.offsetTop);
     });
   }, []);
@@ -34,6 +36,7 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
           <CloseV2 />
         </React.Fragment>
       )}
+      {/* <Form /> */}
       <Home innerHeight={innerHeight} />
       <Portfolio active={hash === '#work'} />
       <Skills active={hash === '#skills'}  innerHeight={innerHeight} />

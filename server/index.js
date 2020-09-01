@@ -1,4 +1,4 @@
-require("babel-polyfill");
+// require("babel-polyfill");
 require('babel-register')({
   presets: ['env', 'react'],
   plugins: ['dynamic-import-node', 'babel-plugin-styled-components']
@@ -63,6 +63,10 @@ app.get(/.*/, (req, res) => {
   });
 
   request.end();
+});
+
+app.post('/followup', (req, res) => {
+  res.send('complete');
 });
 
 app.listen(PORT, () => {

@@ -3,6 +3,7 @@ import styled, { css, keyframes } from 'styled-components';
 
 import PortfolioModal from './PortfolioModal';
 import portfolios from '../portfolio_data';
+import { LeftArrow, RightArrow } from './Buttons';
 
 const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
@@ -47,26 +48,26 @@ const Carousel = styled.div`
   display: flex;
   margin: auto 0;
   height: 60vh;
-  &:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: ${() => `-${PADDING}em`};
-    height: 100%;
-    width: ${() => `${PADDING}em`};
-    background-color: rgb(255,255,255);
-    z-index:10;
-  }
-  &:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: ${() => `-${PADDING}em`};
-    height: 100%;
-    width: ${() => `${PADDING}em`};
-    background-color: rgb(255,255,255);
-    z-index:10;
-  }
+  // &:before {
+  //   content: "";
+  //   position: absolute;
+  //   top: 0;
+  //   left: ${() => `-${PADDING}em`};
+  //   height: 100%;
+  //   width: ${() => `${2 * PADDING}em`};
+  //   background-color: rgb(255,255,255);
+  //   z-index:10;
+  // }
+  // &:after {
+  //   content: "";
+  //   position: absolute;
+  //   top: 0;
+  //   right: ${() => `-${PADDING}em`};
+  //   height: 100%;
+  //   width: ${() => `${2 * PADDING}em`};
+  //   background-color: rgb(255,255,255);
+  //   z-index:10;
+  // }
   @media (max-width: ${SMALL_WIDTH}) {
     flex-wrap: wrap;
     height: 100%;
@@ -77,6 +78,32 @@ const Carousel = styled.div`
       content: none;
     }
   }
+`;
+
+const Space = styled.div`
+  position: absolute;
+  top: 0;
+  left: ${({ left }) => left ? `-${PADDING}em` : null};
+  right: ${({ left }) => !left ? `-${PADDING}em` : null};
+  height: 100%;
+  width: ${() => `${2 * PADDING}em`};
+  background-color: rgb(255,255,255);
+  z-index:10;
+  opacity: 0;
+  transition: opacity 0.1s 0.5s ease-in-out;
+  &.active {
+    opacity: 1;
+  }
+  @media (max-width: ${SMALL_WIDTH}) {
+    display: none;
+  }
+`;
+
+const ArrowContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const CarouselInner = styled.div`
@@ -137,6 +164,7 @@ const Overlay = styled.div`
 `;
 
 const WorkTitle = styled.div`
+  width: 100%;
   font-size: 3em;
   padding: 0.25em;
   @media (max-width: ${MEDIUM_WIDTH}) {
@@ -218,6 +246,11 @@ export default ({ active }) => {
       {currPortfolio && <PortfolioModal portfolio={currPortfolio} close={() => setPortfolio(null)}/>}
       <Title className={active && 'active'}>Works</Title>
       <Carousel ref={ref}>
+        <Space left={true} className={active && 'active'}>
+          <ArrowContainer>
+            <LeftArrow active={active && shift} onClick={() => setShift(0)} />
+          </ArrowContainer>
+        </Space>
         <CarouselInner className={active && 'active'} $shift={shift}>
           {portfolios.map((portfolio, idx) => {
             const Image = portfolio.Image;
@@ -233,6 +266,11 @@ export default ({ active }) => {
             )
           })}
         </CarouselInner>
+        <Space className={active && 'active'}e>
+          <ArrowContainer>
+            <RightArrow active={active && !shift} onClick={() => setShift(-50)}/>
+          </ArrowContainer>
+        </Space>
       </Carousel>
       <Buttons className={active && 'active'}>
         <Button className={!shift && 'active'} onClick={() => setShift(0)}></Button>

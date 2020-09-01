@@ -49,17 +49,19 @@ export default ({ innerHeight }) => {
   };
 
   return (
-    <Container ref={ref} innerHeight={innerHeight} >
-      <div id='about' style={{ marginTop: '-5em', height: '5em' }} />
-      <Head offset={offset} />
-      {events.map((event, idx) => (
-        <Event
-          key={idx}
-          event={event}
-          {...dim}>
-        </Event>
-      ))}
-      <Present />
-    </Container>
+    <React.Fragment>
+      <div id='about'/>
+      <Container ref={ref} innerHeight={innerHeight} >
+        <Head offset={offset} />
+        {events.map((event, idx) => (
+          <Event
+            key={idx}
+            event={event}
+            {...dim}>
+          </Event>
+        ))}
+        <Present />
+      </Container>
+    </React.Fragment>
   )
 };
