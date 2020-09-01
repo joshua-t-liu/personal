@@ -63,11 +63,9 @@ const Cell = styled.div`
     position: sticky;
     height: 100%;
     top: 50%;
-    // transform: translate(0, -50%);
-    // height: ${({ height }) => `calc(100vh - ${height}px)`};
     display: flex;
     align-items: center;
-    // top: ${({ height }) => `${height}px`};
+    justify-content: center;
   }
   @media (max-width: ${SMALL_WIDTH}) {
     width: 100%;
