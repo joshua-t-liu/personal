@@ -27,7 +27,7 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
     window.addEventListener('hashchange', () => {
       setHash(window.location.hash);
       jump();
-    };
+    });
     window.addEventListener('resize', () => {
       setInnerHeight(window.innerHeight);
       jump();
