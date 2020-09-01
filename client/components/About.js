@@ -14,17 +14,23 @@ export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
   const [hash, setHash] = useState('#home');
 
   useEffect(() => {
-    setInnerHeight(window.innerHeight);
-    setHash(window.location.hash);
-
-    window.addEventListener('hashchange', () => setHash(window.location.hash));
-    window.addEventListener('resize', () => {
-      setInnerHeight(window.innerHeight);
+    const jump = () => {
       let id = window.location.hash.substr(1);
       if (id === '') id = 'home';
       const ele = document.getElementById(id);
-      console.log(ele.offsetTop, id);
       window.scroll(0, ele.offsetTop);
+    }
+
+    setInnerHeight(window.innerHeight);
+    setHash(window.location.hash);
+
+    window.addEventListener('hashchange', () => {
+      setHash(window.location.hash);
+      jump();
+    };
+    window.addEventListener('resize', () => {
+      setInnerHeight(window.innerHeight);
+      jump();
     });
   }, []);
 
