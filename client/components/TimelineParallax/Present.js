@@ -13,7 +13,7 @@ const Container = styled.div`
   // height: 100%;
   z-index: 1;
   overflow: hidden;
-  margin-bottom: -5em;
+  // margin-bottom: -5em;
   @media (max-width: ${SMALL_WIDTH}) {
     z-index: 10;
   }

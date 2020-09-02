@@ -34,10 +34,6 @@ Particle.max = 7;
 Particle.cos = Array(1 / 0.05).fill(0).map((_, i) => Math.cos(i * 0.05 * Math.PI * 2));
 Particle.sin = Array(1 / 0.05).fill(0).map((_, i) => Math.sin(i * 0.05 * Math.PI * 2));
 
-Particle.prototype.step = function() {
-  this.theta = (this.theta + 1) % 20;
-}
-
 const WordCloud = function(ctx, width, height, text, x, y, stationary, size) {
   this.vx = 0;
   this.vy = 0;
@@ -50,7 +46,6 @@ const WordCloud = function(ctx, width, height, text, x, y, stationary, size) {
   this.width = width;
   this.height = height;
   this.text = text;
-  // this.ctx.textBaseline = 'ideographic';
   this.ctx.font = `${size} sans-serif`;
   this.ctx.fillStyle = 'rgb(232,232,232)';
   const measure = this.ctx.measureText(this.text)
@@ -61,91 +56,79 @@ const WordCloud = function(ctx, width, height, text, x, y, stationary, size) {
   this.y = y - this.top - this.bottom;
   this.states = [];
   this.state = 0;
-  this.particles = this.getParticles();
-  this.createStates();
+};
+
+WordCloud.prototype.init = function() {
+  return this.getParticles()
+  .then((particles) => this.particles = particles)
+  .then(() => this.preRender());
 };
 
 WordCloud.prototype.getParticles = function() {
-  const particles = {};
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const particles = {};
 
-  this.ctx.clearRect(0, 0, this.width, this.height);
-  this.ctx.fillText(this.text, this.x, this.y, this.width);
+      this.ctx.clearRect(0, 0, this.width, this.height);
+      this.ctx.fillText(this.text, this.x, this.y, this.width);
 
-  const myImageData = this.ctx.getImageData(
-    this.x,
-    this.y - (this.bottom + this.top),
-    this.wide,
-    this.bottom + this.top);
-  const data = myImageData.data;
+      const { width, data } = this.ctx.getImageData(
+        this.x,
+        this.y - (this.bottom + this.top),
+        this.wide,
+        this.bottom + this.top);
 
-  // create particles
-  for (let i=0; i< data.length; i += 4) {
-    if (data[i] > 0 && Math.random() > 0.95) {
-      const x = (i / 4) % myImageData.width;
-      const y = Math.floor((i / 4) / myImageData.width);
-      const particle = new Particle(x, y);
-      if (!particles[particle.alpha]) particles[particle.alpha] = [];
-      particles[particle.alpha].push(particle);
-    }
-  }
+      for (let i=0; i< data.length; i += 4) {
+        if (data[i] > 0 && Math.random() > 0.95) {
+          const x = (i / 4) % width;
+          const y = Math.floor((i / 4) / width);
+          const particle = new Particle(x, y);
+          if (!particles[particle.alpha]) particles[particle.alpha] = [];
+          particles[particle.alpha].push(particle);
+        }
+      }
 
-  return particles;
+      resolve(particles)
+    }, 0);
+  });
 };
 
-WordCloud.prototype.createStates = function() {
+WordCloud.prototype.preRender = function() {
   const ROT_RADIUS = 2;
   const { cos } = Particle;
-  const promises = [];
-  let copy = ('createImageBitmap' in window)
-    ? createImageBitmap
-    : function(data, x, y, width, height) {
-      const canvas = document.createElement('canvas');
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext('2d', { alpha: true });
-      ctx.putImageData(data, x, y);
-      return new Promise((resolve) => resolve(canvas));
-    };
 
-  for (let i=0; i < cos.length; i++) {
-
-    this.ctx.clearRect(0, 0, this.width, this.height);
+  const drawState = (i) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = this.wide + 2 * (Particle.max + ROT_RADIUS);
+    canvas.height = this.bottom + this.top + 2 * (Particle.max + ROT_RADIUS);
+    const ctx = canvas.getContext('2d', { alpha: true });
 
     for (const alpha in this.particles) {
-      this.ctx.beginPath();
-      this.ctx.fillStyle = `rgb(30,144,255,${alpha})`;
+      ctx.beginPath();
+      ctx.fillStyle = `rgb(30,144,255,${alpha})`;
 
       this.particles[alpha].forEach((particle) => {
         const {x, y, radius, theta, dir} = particle;
-        particle.step();
-        const xShift = ROT_RADIUS * Particle.cos[(dir) ? theta : 19 - theta];
-        const yShift = ROT_RADIUS * Particle.sin[(dir) ? theta : 19 - theta];
-        const xPos = ~~(this.x + x + xShift);
-        const yPos = ~~(this.y + y + yShift);
-        this.ctx.moveTo(xPos, yPos);
-        this.ctx.arc(
+        const thetaShift = (theta + i) % cos.length;
+        const xShift = ROT_RADIUS * Particle.cos[(dir) ? thetaShift : 19 - thetaShift];
+        const yShift = ROT_RADIUS * Particle.sin[(dir) ? thetaShift : 19 - thetaShift];
+        const xPos = ~~(x + xShift);
+        const yPos = ~~(y + yShift);
+        ctx.moveTo(xPos, yPos);
+        ctx.arc(
           xPos,
           yPos,
           radius,
           0,
           Math.PI * 2);
       });
-      this.ctx.fill();
+      ctx.fill();
     }
 
-    const imageData = this.ctx.getImageData(
-      this.x - Particle.max + ROT_RADIUS,
-      this.y - Particle.max - ROT_RADIUS,
-      this.wide + 2 * (Particle.max + ROT_RADIUS),
-      this.bottom + this.top + 2 * (Particle.max + ROT_RADIUS));
-
-    promises.push(copy(
-      imageData, 0, 0,
-      this.wide + 2 * (Particle.max + ROT_RADIUS),
-      this.bottom + this.top + 2 * (Particle.max + ROT_RADIUS)));
+    return canvas;
   }
 
-  Promise.all(promises)
+  return Promise.all(cos.map((_, i) => new Promise((resolve) => setTimeout(() => resolve(drawState(i)), 0))))
   .then((bitmaps) => this.states = bitmaps);
 }
 
@@ -168,38 +151,41 @@ WordCloud.prototype.draw = function() {
   this.ctx.drawImage(this.states[this.state], this.x, this.y);
 };
 
-export default ({ words, stationary, size = '5em' }) => {
+export default ({ active, words, stationary, size = '5em' }) => {
   const ref = useRef();
+  const [wordClouds, setWordClouds] = useState([]);
+
+  const animate = (active) => {
+    const ctx = ref.current.getContext('2d', { alpha: true });
+    if (active) requestAnimationFrame(animate);
+    // ctx.clearRect(0, 0, ref.current.width, ref.current.height);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.fillRect(0, 0, ref.current.width, ref.current.height);
+    ctx.fill();
+    wordClouds.forEach((wordCloud) => wordCloud.draw());
+  };
+
+  useEffect(() => animate(active), [active]);
+  useEffect(() => {
+    Promise.all(wordClouds.map((cloud) => cloud.init()))
+    .then(() => animate(active));
+  }, [wordClouds]);
 
   useEffect(() => {
     ref.current.width = window.innerWidth;
     ref.current.height = window.innerHeight;
     const ctx = ref.current.getContext('2d', { alpha: true });
 
-    const wordClouds = [];
-    words.forEach((word) => {
-      wordClouds.push(new WordCloud(
-        ctx,
-        window.innerWidth,
-        window.innerHeight,
-        word,
-        ref.current.width / 2,
-        ref.current.height / 2,
-        stationary,
-        size
-      ));
-    });
-
-    const animate = () => {
-      requestAnimationFrame(animate);
-      // ctx.clearRect(0, 0, ref.current.width, ref.current.height);
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-      ctx.fillRect(0, 0, ref.current.width, ref.current.height);
-      ctx.fill();
-      wordClouds.forEach((wordCloud) => wordCloud.draw());
-    };
-
-    animate();
+    setWordClouds(() => words.map((word) =>  new WordCloud(
+      ctx,
+      window.innerWidth,
+      window.innerHeight,
+      word,
+      ref.current.width / 2,
+      ref.current.height / 2,
+      stationary,
+      size
+    )));
   }, []);
 
   return (

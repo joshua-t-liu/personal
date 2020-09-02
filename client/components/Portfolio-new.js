@@ -244,7 +244,7 @@ export default ({ active }) => {
   return (
     <Container id='work'>
       {currPortfolio && <PortfolioModal portfolio={currPortfolio} close={() => setPortfolio(null)}/>}
-      <Title className={active && 'active'}>Works</Title>
+      <Title className={active && 'active'}>Work</Title>
       <Carousel ref={ref}>
         <Space left={true} className={active && 'active'}>
           <ArrowContainer>

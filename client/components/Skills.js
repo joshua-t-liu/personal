@@ -7,7 +7,8 @@ const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
 
 const Container = styled.div`
-  height: ${({ innerHeight }) => `calc(min(100vh, ${innerHeight}px) - 8em)`};
+  // height: ${({ innerHeight }) => `calc(min(100vh, ${innerHeight}px) - 8em)`};
+  height: ${({ innerHeight }) => `calc(${innerHeight}px - 8em)`};
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;

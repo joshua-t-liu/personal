@@ -80,27 +80,29 @@ const Title = styled.div`
 `;
 
 const NavBar = styled.div`
-  position: sticky;
-  top: 0;
-  left: 0;
+  position: relative;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  &:before, &:after {
+    content: "";
+    display: block;
+  }
   align-items: center;
   z-index: 1000;
   &.active {
     background-color: rgb(255,255,255);
     border-bottom: 1px solid rgb(218, 218, 218);
   }
-  // @media (max-width: ${MEDIUM_WIDTH}) {
-  //   flex-wrap: wrap
-  // }
 `;
 
 const Line = styled.div`
   position: absolute;
   background-color: rgb(51,51,51);
-  width: 90%;
+  width: 80%;
   height: 0.1em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   @media (max-width: ${SMALL_WIDTH}) {
     width: 80%;
   }

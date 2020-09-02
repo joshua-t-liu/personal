@@ -10,7 +10,6 @@ const MEDIUM_WIDTH_INT = 1248;
 
 const TimeLine = styled.div`
   position: absolute;
-  top: -5em;
   height: 100vh;
   left: 50%;
   width: 0.1em;
@@ -31,14 +30,15 @@ const TimeLine = styled.div`
 const HeadContainer = styled.div`
   position: sticky;
   top: 0;
-  height: 100%;
+  // height: 100%;
+  height: ${({ innerHeight }) => `${innerHeight}px`};
   width: 100%;
   font-weight: bold;
 `;
 
 const ScrollNote = styled.div`
   position: absolute;
-  bottom: 0;
+  bottom: 5em;
   left: 50%;
   transform: translate(-50%);
   opacity: 1;
@@ -61,16 +61,16 @@ const Mobile = styled.div`
   }
 `;
 
-export default ({ offset }) => {
+export default ({ offset, active, innerHeight }) => {
   const ref = useRef();
 
   const words = ['ABOUT'];
 
   return (
-    <HeadContainer id='head' ref={ref}>
+    <HeadContainer id='head' ref={ref} innerHeight={innerHeight}>
       <TimeLine className={ref.current && offset && 'active'} />
-      <Mobile><Background words={words} stationary={true} size='7em' /></Mobile>
-      <Desktop><Background words={words} stationary={true} size='15em' /></Desktop>
+      <Mobile><Background words={words} stationary={true} size='7em' active={active} /></Mobile>
+      <Desktop><Background words={words} stationary={true} size='15em' active={active} /></Desktop>
       <ScrollNote className={ref.current && offset && 'active'}>scroll down</ScrollNote>
     </HeadContainer>
   )
