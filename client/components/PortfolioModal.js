@@ -102,70 +102,64 @@ const Portfolio = (props) => {
 
   return (
     <Layout>
-      {props.isMobile && <Title>{props.title}</Title>}
-      {/* <Subheader>Overview</Subheader> */}
-      <Info>{props.situation}</Info>
-      <Subheader>Technology</Subheader>
-      <Info>{props.technology.join(', ')}</Info>
-      <Subheader>My Work</Subheader>
-      <ActionList>
-        {props.actions.map((action, idx) => <Bullet key={idx}>{action}</Bullet>)}
-      </ActionList>
-      <Subheader>Outcome</Subheader>
-      <Info>{props.result}</Info>
-      <Component />
-      {props.href && (
-        <div style={{ margin: 'auto', marginTop: '3em' }}>
-          <GitHubButton href={props.href} />
-        </div>
+      {Component && (
+        <React.Fragment>
+        {props.isMobile && <Title>{props.title}</Title>}
+        {/* <Subheader>Overview</Subheader> */}
+        <Info>{props.situation}</Info>
+        <Subheader>Technology</Subheader>
+        <Info>{props.technology.join(', ')}</Info>
+        <Subheader>My Work</Subheader>
+        <ActionList>
+          {props.actions.map((action, idx) => <Bullet key={idx}>{action}</Bullet>)}
+        </ActionList>
+        <Subheader>Outcome</Subheader>
+        <Info>{props.result}</Info>
+        {Component && <Component />}
+        {props.href && (
+          <div style={{ margin: 'auto', marginTop: '3em' }}>
+            <GitHubButton href={props.href} />
+          </div>
+        )}
+      </React.Fragment>
       )}
     </Layout>
   )
 };
 
-const slide = (top = 0) => keyframes`
+const slide = (offsetHeight, top = 0) => keyframes`
   from {
-    height: 0%;
+    opacity: 0;
     transform: translate(0, ${50 + top}%);
   }
   to {
-    height: 100%;
-    visibility: visible;
     opacity: 1;
     transform: translate(0,0);
   }
 `;
 
 const Container = styled.div`
-  visibility: hidden;
   width: calc(100vw - 20em);
   padding: 0 10em;
-  margin: auto;
+  margin: 0;
   opacity: 0;
-  height: 0%;
   transform: translate(0, 50%);
-  animation: ${slide()} 0.1s ease-in-out 0s forwards;
-  &.reverse {
-    animation: ${slide(1)} 0.1s ease-in-out 0s reverse;
+  &.active {
+    animation: ${({ offsetHeight }) => css`${slide(offsetHeight / 2)} 0.1s ease-in-out 0s forwards`};
   }
-  &.hide {
-    display: none;
+  &.reverse {
+    animation: ${({ offsetHeight }) => css`${slide(offsetHeight / 2, 1)} 0.1s ease-in-out 0s reverse`};
   }
 `;
 
-const PortfolioDesktop = ({ active, portfolio, reverse }) => {
-  const Component = portfolio.Component;
-  const [hide, setHide] = useState(false);
+const PortfolioDesktop = ({ active, portfolio = {}, reverse, offsetHeight }) => {
   return (
     <Container
+      offsetHeight={offsetHeight}
       className={computeClassNames({
         reverse,
-        hide,
-      })}
-      onClick={(event) => event.stopPropagation()}
-      onAnimationEnd={() => {
-        if (reverse) setHide(true);
-      }}>
+        active: portfolio.Component,
+      })}>
       <Portfolio {...portfolio} />
     </Container>
   )

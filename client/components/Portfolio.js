@@ -53,6 +53,7 @@ const Carousel = styled.div`
   flex-shrink: 0;
   margin: auto 0;
   height: 60vh;
+  z-index: 10;
   @media (max-width: ${SMALL_WIDTH}) {
     flex-wrap: wrap;
     height: 100%;
@@ -76,8 +77,10 @@ const Space = styled.div`
   z-index:10;
   opacity: 0;
   transition: opacity 0.1s 0.5s ease-in-out;
+  pointer-events: none;
   &.active {
     opacity: 1;
+    pointer-events: auto;
   }
   @media (max-width: ${SMALL_WIDTH}) {
     display: none;
@@ -110,6 +113,7 @@ const CarouselInner = styled.div`
   &.shift-left {
     transform: ${({ $shift }) => `translate(${$shift - 50}%, 0)`};
     transition-duration: 0.25s, 0.5s;
+    animation
   }
   @media (max-width: ${SMALL_WIDTH}) {
     flex-wrap: wrap;
@@ -152,28 +156,20 @@ const WorkTitle = styled.div`
   }
 `;
 
-const openPortfolio = (top) => keyframes`
+const openPortfolio = (top, offsetWidth) => keyframes`
   0% {
-    margin: 0 ${PADDING}em;
-    transform: translate(0px, 0px);
     width: calc(50% - ${2 * PADDING}em);
     height: 100%;
   }
   50% {
-    margin-right: 50%;
-    margin-left: calc(25% + ${PADDING}em + 1em);
-    transform: translate(0px, 0px);
-    width: 50%;
+    transform: translate(calc(${offsetWidth}px), 0px);
+    width: calc(50% - ${2 * PADDING}em);
     height: 100%;
-    // padding: 0;
   }
   100% {
-    margin-right: 50%;
-    margin-left: 8em;
-    transform: translate(0, calc(-${top}px + 3em));
+    transform: translate(5em, calc(-${top}px + 3em));
     width: calc(100vw - 20em);
     height: 50%;
-    // padding: 0 10em;
   }
 `;
 
@@ -183,6 +179,15 @@ const openPortfolioMobile = (shift = 0) => keyframes`
   }
   to {
     transform: translate(0, -${200 + shift}vh);
+  }
+`;
+
+const shiftRight = keyframes`
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(calc(100% + ${2 * PADDING}em), 0);
   }
 `;
 
@@ -212,18 +217,25 @@ const Portfolio = styled.div`
       background: linear-gradient(transparent, transparent);
     }
     &.active {
-      animation: ${({ $inactive, $top }) =>  !$inactive ? css`${openPortfolio($top)} 1s ease-in-out 0s forwards` : ''};
+      animation: ${({ $inactive, $top, $offsetWidth }) =>  !$inactive ? css`${openPortfolio($top, $offsetWidth)} 1s ease-in-out 0s forwards` : ''};
+    }
+    &.active + & {
+      animation: ${shiftRight} 0.5s ease-in-out 0s forwards;
+    }
+    &.still + & {
+      transform: translate(calc(100% + ${2 * PADDING}em), 0);
+    }
+    &.deactive + & {
+      transform: translate(calc(100% + ${2 * PADDING}em), 0);
+      animation: ${shiftRight} 0.5s ease-in-out 0.5s reverse;
     }
     &.still {
-      margin-right: 50%;
       width: calc(100vw - 20em);
-      // padding: 0 10em;
-      margin-left: 8em;
       height: 50%;
-      transform: ${({ $inactive, $top }) => $inactive ? `translate(0, calc(-${$top}px + 3em))` : ''};
+      transform: ${({ $inactive, $top }) => $inactive ? `translate(5em, calc(-${$top}px + 3em))` : ''};
     }
     &.deactive {
-      animation: ${({ $inactive, $top }) => !$inactive ? css`${openPortfolio($top)} 1s ease-in-out 0s reverse` : ''};
+      animation: ${({ $inactive, $top, $offsetWidth }) => !$inactive ? css`${openPortfolio($top, $offsetWidth)} 1s ease-in-out 0s reverse` : ''};
     }
   }
   @media (max-width: ${SMALL_WIDTH}) {
@@ -276,26 +288,40 @@ const Button = styled.div`
   }
 `;
 
+const PortfolioWrapper = styled.div`
+  opacity: 0;
+  pointer-events: none;
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+`;
+
 export default ({ active }) => {
   const [shift, setShift] = useState(0);
   const [shiftLeft, setShiftLeft] = useState(null);
   const [offsetTop, setoffsetTop] = useState({});
   const [offsetHeight, setoffsetHeight] = useState({});
+  const [offsetWidth, setoffsetWidth] = useState(null);
   const [width, setWidth] = useState(window.innerWidth);
 
   const [activePortfolio, setActivePortfolio] = useState(null);
-  const [still, setStill] = useState(true);
+  const [still, setStill] = useState(null);
   const [deactivePortfolio, setDeactivePortfolio] = useState(null);
   const ref = useRef();
 
+  const getOffsets = () => {
+    setoffsetTop(ref.current.offsetTop);
+    setoffsetHeight(ref.current.offsetHeight);
+    setoffsetWidth(ref.current.offsetWidth / 4);
+    setWidth(window.innerWidth);
+  }
+
   useEffect(() => {
-    const refresh = () => {
-      requestAnimationFrame(refresh);
-      setoffsetTop(ref.current.offsetTop);
-      setoffsetHeight(ref.current.offsetHeight);
-      setWidth(window.innerWidth);
-    }
-    refresh();
+    const resizeObserver = new ResizeObserver(entries => {
+      if (entries[0].target === ref.current) getOffsets();
+    });
+    resizeObserver.observe(ref.current);
   }, []);
 
   const close = () => {
@@ -335,6 +361,7 @@ export default ({ active }) => {
                   ref={portfolioRef}
                   $inactive={still !== null}
                   $top={offsetTop}
+                  $offsetWidth={offsetWidth}
                   className={computeClassNames({
                     'active': activePortfolio === idx && still !== idx,
                     'still': still === idx,
@@ -348,6 +375,7 @@ export default ({ active }) => {
                       if (width <= SMALL_WIDTH_INT) setStill(idx);
                     }
                   }}
+                  onAnimationStart={getOffsets}
                   onAnimationEnd={() => {
                     if (activePortfolio === idx) setStill(idx);
                     if (deactivePortfolio === idx) setDeactivePortfolio(null);
@@ -356,6 +384,16 @@ export default ({ active }) => {
                     <ImageWrapper>
                       <Work.Image />
                     </ImageWrapper>
+
+
+                    {width > SMALL_WIDTH_INT && (still === idx) && (
+                      <PortfolioWrapper className={still !== null && 'active'} offsetHeight={offsetHeight}>
+                        <PortfolioDesktop
+                          offsetHeight={offsetHeight}
+                          reverse={deactivePortfolio !== null && activePortfolio === null}
+                          portfolio={portfolios[parseInt(still) > -1 ? still : deactivePortfolio]} />
+                      </PortfolioWrapper>)}
+
                 </Portfolio>
             )
           })}
@@ -368,18 +406,15 @@ export default ({ active }) => {
         </Space>
 
       </Carousel>
-      {parseInt(still) > -1 && width > SMALL_WIDTH_INT && <div style={{ marginTop: `calc(3em - ${offsetTop}px - ${offsetHeight / 2}px)`, height: '100%' }}>
-            <PortfolioDesktop reverse={activePortfolio === null} portfolio={portfolios[parseInt(still) > -1 ? still : deactivePortfolio]} />
-          </div>}
 
       {(parseInt(still) > -1 || parseInt(deactivePortfolio) > -1) && width <= SMALL_WIDTH_INT && (
         <PortfolioMobile reverse={activePortfolio === null} portfolio={portfolios[parseInt(still) > -1 ? still : deactivePortfolio]} close={close} />
       )}
 
-      <Buttons className={(active && activePortfolio === null) && 'active'}>
+      {/* <Buttons className={(active && activePortfolio === null) && 'active'}>
         <Button className={!shift && 'active'} onClick={() => setShift(0)}></Button>
         <Button className={shift && 'active'} onClick={() => setShift(-50)}></Button>
-      </Buttons>
+      </Buttons> */}
 
     </Container>
   )
