@@ -154,25 +154,26 @@ const WorkTitle = styled.div`
 
 const openPortfolio = (top) => keyframes`
   0% {
-    width: calc(50% - ${2 * PADDING}em);
-    height: 100%;
     margin: 0 ${PADDING}em;
     transform: translate(0px, 0px);
+    width: calc(50% - ${2 * PADDING}em);
+    height: 100%;
   }
   50% {
     margin-right: 50%;
     margin-left: calc(25% + ${PADDING}em + 1em);
+    transform: translate(0px, 0px);
     width: 50%;
     height: 100%;
-    transform: translate(0px, 0px);
-    padding: 0;
+    // padding: 0;
   }
   100% {
+    margin-right: 50%;
+    margin-left: 8em;
     transform: translate(0, calc(-${top}px + 3em));
     width: calc(100vw - 20em);
-    padding: 0 10em;
-    margin-left: -2em;
     height: 50%;
+    // padding: 0 10em;
   }
 `;
 
@@ -214,9 +215,10 @@ const Portfolio = styled.div`
       animation: ${({ $inactive, $top }) =>  !$inactive ? css`${openPortfolio($top)} 1s ease-in-out 0s forwards` : ''};
     }
     &.still {
+      margin-right: 50%;
       width: calc(100vw - 20em);
-      padding: 0 10em;
-      margin-left: -2em;
+      // padding: 0 10em;
+      margin-left: 8em;
       height: 50%;
       transform: ${({ $inactive, $top }) => $inactive ? `translate(0, calc(-${$top}px + 3em))` : ''};
     }
