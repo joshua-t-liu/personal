@@ -7,7 +7,6 @@ const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
 
 const Container = styled.div`
-  // height: ${({ innerHeight }) => `calc(min(100vh, ${innerHeight}px) - 8em)`};
   height: ${({ innerHeight }) => `calc(${innerHeight}px - 8em)`};
   overflow-y: auto;
   overflow-x: hidden;
@@ -16,7 +15,6 @@ const Container = styled.div`
   padding: 4em 1em;
   align-items: stretch;
   text-align: center;
-  // background-color: rgb(247,247,247);
   @media (max-width: ${SMALL_WIDTH}) {
     font-size: 0.75em;
   }
@@ -90,15 +88,12 @@ const SkillSet = styled.div`
     }
   }
   @media (max-width: ${SMALL_WIDTH}) {
-    // width: calc(33% - 0.3em);
-    // margin: 0.15em;
-    // flex-grow: 1;
     width: calc(100% - 2em);
     text-align: center;
   }
 `;
 
-const List = ({ skillset, skills, reverse, active }) => {
+const List = ({ skillset, skills, active }) => {
   const ref = useRef();
 
   return (

@@ -1,11 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { Link } from 'react-router-dom';
 
-import Background from './Background';
-import Navigation from './Navigation-new';
-import { ChatButton, Social } from './Buttons';
-import SKILLS from '../skill_data';
+import Navigation from './Navigation';
+import { Social } from './Buttons';
 
 const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
@@ -17,12 +14,10 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 3em 1em;
-  // height: ${({ innerHeight }) => `calc(min(100vh, ${innerHeight}px) - 6em)`};
   height: calc(100vh - 6em);
   @media (max-width: ${MEDIUM_WIDTH}) {
     padding: 2em 0;
     height: calc(100vh - 4em);
-    // height: ${({ innerHeight }) => `calc(min(100vh, ${innerHeight}px) - 4em)`};
     font-size: 0.75em;
   }
 `;
@@ -84,45 +79,12 @@ const appear = keyframes`
 
 const Title = styled.h1`
   font-size: 5em;
-  // margin: 0.2em auto;
   margin: 0;
   text-align: center;
   white-space: pre;
   @media (max-width: ${SMALL_WIDTH}) {
     font-size: 4em;
   }
-  // visibility: hidden;
-  // animation: ${({ delay }) => css`${appear} 0.5s ease-in ${0.5 / 2 * delay}s forwards`};
-`;
-
-const highlight = keyframes`
-  0%{
-    left: 0;
-  }
-  20% {
-    width: 100%;
-    left: 0;
-  }
-  80% {
-    width: 100%;
-    left: 0;
-  }
-  100% {
-    width: 0%;
-    left: 100%;
-  }
-`;
-
-const HighLight = styled(Title)`
-  position: absolute;
-  top: 0;
-  margin: auto;
-  background-color: #333;
-  color: transparent;
-  width: 0%;
-  visibility: visible;
-  overflow: hidden;
-  animation: ${({ delay }) => css`${highlight} 0.5s ease-in ${0.5 / 2 * delay}s forwards`};
 `;
 
 const shiftUp = keyframes`
@@ -142,7 +104,6 @@ const HeadLine = ({ title, delay }) => {
   return (
     <div style={{ position: 'relative' }}>
       <Title delay={delay}>{title}</Title>
-      {/* <HighLight delay={delay}>{title}</HighLight> */}
     </div>
   )
 }
@@ -157,15 +118,12 @@ const HeadLines = styled.div`
 `;
 
 export default ({ innerHeight }) => {
-  const title = useRef();
-  const chat = useRef();
 
   return (
     <Container id='home' innerHeight={innerHeight}>
-      {/* <Background /> */}
       <Banner>
         <Name>Full Stack Engineer </Name>
-        <HeadLines ref={title}>
+        <HeadLines>
           {['JOSHUA LIU'].map((title, idx) => (
             <HeadLine key={idx} title={title} delay={idx} />
           ))}

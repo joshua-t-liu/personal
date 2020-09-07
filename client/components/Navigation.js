@@ -21,18 +21,39 @@ const contacts = [
 const WideMenu = styled.div`
   flex-grow: 1;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
 `;
 
-// const StyledLink = styled(Link)`
 const StyledLink = styled.div`
-  cursor: pointer;
   margin: ${({ margin }) => margin || '1.75em'};
+  border: solid 0.1em rgb(51,51,51);
+  border-radius: 2em;
+  padding: 0.5em 1em;
+  font-weight: bold;
+  color: rgb(51,51,51);
+  cursor: pointer;
   text-decoration: none;
-  color: ${({ active, brighter }) => {
-    if (brighter) return (active) ? 'rgb(183,183,183)' : 'rgb(255,255,255)';
-    return (active) ? 'rgb(187,187,187)' : 'rgb(74,74,74)';
-  }};
+  background-color: rgb(255,255,255);
+  z-index: 1;
+  position: relative;
+  &:before {
+    background-color: white;
+    content: "";
+    width: 1em;
+    left: -1.1em;
+    position: absolute;
+    height: 100%;
+    top: 0;
+  }
+  &:after {
+    background-color: white;
+    content: "";
+    width: 1em;
+    right: -1.1em;
+    position: absolute;
+    height: 100%;
+    top: 0;
+  }
   &:hover {
     text-decoration: ${({ active }) => (!active) ? 'underline' : null};
   }
@@ -59,103 +80,33 @@ const Title = styled.div`
 `;
 
 const NavBar = styled.div`
-  position: sticky;
-  top: 0;
-  left: 0;
+  position: relative;
   display: flex;
   justify-content: space-between;
+  &:before, &:after {
+    content: "";
+    display: block;
+  }
   align-items: center;
   z-index: 1000;
   &.active {
     background-color: rgb(255,255,255);
     border-bottom: 1px solid rgb(218, 218, 218);
   }
-  @media (max-width: ${MEDIUM_WIDTH}) {
-    & ${Contact} {
-      display: none;
-    }
-  }
-  @media (max-width: ${MEDIUM_WIDTH}) {
-    & ${StyledLink} {
-      display: none;
-    }
-  }
 `;
 
-const slide = keyframes`
-  from {
-    margin-left: -280px;
-  }
-  to {
-    margin-left: 0;
-  }
-`;
-
-const Overlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  //bottom: 0;
-  //right: 0;
-  height: ${({ height }) => `${height}px` || '100%'};
-  width: 100vw;
-  &.close {
-    animation: ${slide} 0.25s ease-in 0s reverse forwards;
-  }
-`;
-
-const StyledMoreMenu = styled.div`
+const Line = styled.div`
   position: absolute;
-  top: 0;
-  left 0;
-  right: 0;
-  width: 280px;
-  bottom: 0;
-  height: 100%;
-  margin-left: -280px;
-  display: flex;
-  flex-direction: column;
-  background-color: rgb(49,49,49);
-  color: white;
-  @media (max-width: ${MEDIUM_WIDTH}) {
-    & ${StyledLink}{
-      display: block;
-    }
+  background-color: rgb(51,51,51);
+  width: 80%;
+  height: 0.1em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  @media (max-width: ${SMALL_WIDTH}) {
+    width: 80%;
   }
-  animation: ${slide} 0.25s ease-in 0s forwards;
 `;
-
-const MoreMenu = ({ onClick }) => {
-  const [height, setHeight] = useState(window.innerHeight);
-  let location = useLocation();
-  const [slideBack, setSlideBack] = useState(false);
-
-  useEffect(() => {
-    window.addEventListener('resize', () => setHeight(window.innerHeight));
-  }, []);
-
-  return (
-    <Overlay height={height} className={slideBack && 'close'} onClick={() => setSlideBack(true)} onAnimationEnd={() => {if(slideBack) onClick()}}>
-      <StyledMoreMenu>
-        <div style={{ alignSelf: 'flex-end' }}>
-          <Close onClick={() => setSlideBack(true)} />
-        </div>
-        {['works', 'skills', 'about'].map((title) => (
-          <StyledLink
-            as='a'
-            href={`#${title}`}
-            key={title}
-            brighter={true}
-            margin='1em'
-            active={(`/${(title !== 'home') ? title : ''}` === location.pathname) ? 1 : 0}>
-            {capitalizeFirstLetter(title)}
-          </StyledLink>
-        ))}
-        <Social />
-      </StyledMoreMenu>
-    </Overlay>
-  )
-};
 
 const capitalizeFirstLetter = (str) => {
   if (!str.length) return;
@@ -169,27 +120,16 @@ export default forwardRef(({ stickyTitle, stickyChat }, ref) => {
 
   return (
     <NavBar ref={ref} className={(stickyTitle || isActive) && 'active'}>
-
-      <WideMenu style={{ justifyContent: 'flex-start' }}>
-       <More onClick={() => setShowMore(!showMore)} />
-        {showMore && <MoreMenu onClick={() => setShowMore(!showMore)} />}
-
-        {['works', 'skills', 'about', 'contact'].map((title) => (
+      <Line />
+      {['work', 'skills', 'about'].map((title) => (
           <StyledLink
             as='a'
             href={`#${title}`}
             key={title}
             active={(`/${(title !== 'home') ? title : ''}` === location.pathname) ? 1 : 0}>
-            {capitalizeFirstLetter(title)}
+            {title.toUpperCase()}
           </StyledLink>
         ))}
-        {/* {contacts.map(({ title, href}) => <Contact key={title} href={href}>{title}</Contact>)} */}
-      </WideMenu>
-
-      <WideMenu style={{ justifyContent: 'flex-end' }}>
-        <ChatNavButton className={(stickyChat || isActive) && 'active'} />
-      </WideMenu>
-
     </NavBar>
   )
 });

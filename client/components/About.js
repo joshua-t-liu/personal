@@ -1,15 +1,14 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
-import TimeLineParalax from './TimelineParallax';
+import TimeLineParalax from './TimelineParallax/';
 import Form from './Form';
 import Home from './Home';
 import Skills from './Skills';
-import Experience from './Experience';
-import Portfolio from './Portfolio-new';
+import Portfolio from './Portfolio';
 import { HomeButton, CloseV2 } from './Buttons';
 
-export default ({ stickyTitle, setStickyTitle, stickyChat, setStickyChat }) => {
+export default () => {
   const [innerHeight, setInnerHeight] = useState(100000);
   const [hash, setHash] = useState('#home');
 

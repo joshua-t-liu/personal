@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect, forwardRef } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
-import Head from './TimelineParallax/Head';
-import Event from './TimelineParallax/Event';
-import Present from './TimelineParallax/Present';
-import events from '../timeline_data';
+import Head from './Head';
+import Event from './Event';
+import Present from './Present';
+import events from '../../timeline_data';
 
 const Container = styled.div`
   position: relative;

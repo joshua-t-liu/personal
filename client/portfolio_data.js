@@ -6,9 +6,9 @@ import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 
 export default [
   {
-    title: 'Developing A Photo Gallery Microservice',
+    title: 'TRULIO',
     technology: ['React', 'Styled Components', 'React Router',  'HTML', 'CSS', 'Node', 'Express', 'MongoDB', 'Webpack', 'AWS', 'Docker'],
-    situation: 'Worked with a team of 3 other developers to create a product page for real estate properties that combined 4 microservices.',
+    situation: 'Trulio is a website that markets real estate properties. The product page combines 4 microservices that provide property information to prosepctive buyers/agents.  I worked on a team of 3 other developers where I developed a micro-service that served a photo gallery component.',
     actions: [
       'Created photo gallery front end. UI included a modal image carousel, a form for requesting more information, and additional tabs for geo-spatial information.',
       'Created responsive user experience by implementing media queries and testing across browsers and devices.',
@@ -19,7 +19,7 @@ export default [
     ],
     result: 'Deployed product page has first meaningful paint under 2s.',
     href: 'https://github.com/joshua-t-liu/image-gallery',
-    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover' }} data-src='https://static.trulia-cdn.com/pictures/thumbs_5/zillowstatic/ISnic0adawu8z90000000000.jpg' />,
+    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover' }} data-src='https://www.coldwellbanker.com/images_brand/CB/72508062.jpg' />,
     Component: ({ isDesktop }) => {
 
       useEffect(() => {
@@ -30,11 +30,11 @@ export default [
       }
       loadScript();
 
-      window.addEventListener('resize', () => {
-        setIsDesktop(window.innerWidth > SMALL_WIDTH_NUM);
-        setIsMobile(window.innerWidth <= SMALL_WIDTH_NUM);
-        if (!document.getElementById('image-gallery').childElementCount) loadScript();
-      });
+      // window.addEventListener('resize', () => {
+      //   setIsDesktop(window.innerWidth > SMALL_WIDTH_NUM);
+      //   setIsMobile(window.innerWidth <= SMALL_WIDTH_NUM);
+      //   if (!document.getElementById('image-gallery').childElementCount) loadScript();
+      // });
       }, []);
 
       return(
@@ -43,30 +43,31 @@ export default [
     },
   },
   {
-    title: 'Designing and Scaling Microservice For  Customer Reviews',
+    title: 'ADDIDOS',
     technology: ['Node', 'Express', 'Nginx', 'PostgreSQL', 'Redis', 'AWS', 'Loader.io', 'New Relic'],
-    situation: 'Worked on designing and scaling a customer reviews microservice for an apparel web application. Goal was to scale microservice service to handle 1000 RPS under load with average load times under 50ms. Database included 50 million customer review records, and frontend was developed by a team member.',
+    situation: 'Addidos is a website for marketing apparel. I worked on designing and scaling a micro-service that servers a customer reviews component. The goal was to scale the micro-service to handle 1000 RPS under load with an average load times under 50ms. The database included 50 million customer review records.  I inherited the frontend from a team member.',
     actions: [
       'Desgined schema for PostgreSQL database.',
       'Benchmarked database on local machine.',
       'Designed RESTful APIs for microservice.',
       'Deployed microservice on AWS.',
-      'Tested performance using Loader.io and New Relic.',
+      'Tested performance and identified bottlenecks using Loader.io and New Relic.',
       'Implemented optimization strategies such as load balancing (Nginx) and caching (Redis).'
     ],
     result: 'Service handles 1200 RPS under load with an average load time of 50ms delay.',
     href: 'https://github.com/joshua-t-liu/reviews-module',
-    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', transform: 'scale(1.5)', objectFit: 'contain' }} data-src='https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy/15cb47f732c84b8b999aaaea00f31c0d_9366/Ultraboost_20_Shoes_Orange_FV8449_01_standard.jpg' />,
+    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover' }} data-src='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/rw-best-adidas-1590161486.jpg' />,
     Component: () => (
-      <img className='lazyload' style={{ width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} data-src='./customer_reviews.png' />
+      <div style={{ textAlign: 'center' }}>
+        <img className='lazyload' style={{  maxWidth: '750px', width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} data-src='./customer_reviews.png' />
+      </div>
     )
   },
   {
-    title: 'Developing Portfolio Website',
+    title: 'PORTFOLIO',
     technology: ['React', 'React Router', 'Node', 'Express', 'AWS', 'Server Side Rendering', 'Webpack'],
-    situation: 'Designed and developed personal website.',
+    situation: 'I desgined and coded my portfolio website from scratch.',
     actions: [
-      'Desgined website and coded from scratch.',
       'Delivered a responsive experience by implementing media queries and testing cross-browsers and cross-devices.',
       'Implemented server side rendering using React.',
       'Implemented parallax and animation effects from scratch.',
@@ -77,9 +78,9 @@ export default [
     Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover', display: 'block' }} data-src='./website-new.png' />,
     Component: () => {
       return (
-        <div>
-          {<img className='lazyload' style={{ width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} data-src='./website-new.png' />}
-          {false && <img style={{ border: '1px solid rgb(196, 196, 196)', borderRadius: '2em', objectFit: 'contain', height: '80%', margin: 'auto' }} src='./website-new.png' />}
+        <div style={{ textAlign: 'center' }}>
+          {<img className='lazyload' style={{ maxWidth: '750px', width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} data-src='./website-new.png' />}
+          {false && <img style={{ border: '1px solid rgb(196, 196, 196)', borderRadius: '2em', objectFit: 'cover', height: '80%', margin: 'auto' }} src='./website-new.png' />}
         </div>
       )
     }
