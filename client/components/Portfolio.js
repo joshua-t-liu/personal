@@ -50,6 +50,7 @@ const PADDING = 3;
 const Carousel = styled.div`
   position: relative;
   display: flex;
+  flex-shrink: 0;
   margin: auto 0;
   height: 60vh;
   @media (max-width: ${SMALL_WIDTH}) {
@@ -296,10 +297,10 @@ export default ({ active }) => {
   }, []);
 
   const close = () => {
-    if (shiftLeft) setTimeout(() => setShiftLeft(null), 500)
     setActivePortfolio(null);
     setDeactivePortfolio(activePortfolio);
     setStill(null);
+    if (shiftLeft) setTimeout(() => setShiftLeft(null), 500);
   };
 
   return (
@@ -365,7 +366,7 @@ export default ({ active }) => {
         </Space>
 
       </Carousel>
-      {parseInt(still) > -1 && width > SMALL_WIDTH_INT && <div style={{ marginTop: `-${offsetHeight * 3 / 4}px`, height: '100%' }}>
+      {parseInt(still) > -1 && width > SMALL_WIDTH_INT && <div style={{ marginTop: `calc(3em - ${offsetTop}px - ${offsetHeight / 2}px)`, height: '100%' }}>
             <PortfolioDesktop reverse={activePortfolio === null} portfolio={portfolios[parseInt(still) > -1 ? still : deactivePortfolio]} />
           </div>}
 
