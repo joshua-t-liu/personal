@@ -10,24 +10,11 @@ const StyledImage = styled.img`
   width: 100%;
   object-fit: cover;
   transform: scale(1, 1);
-  transistion: transform 0.5s ease-in-out 0.5s;
-  &.active {
-    transform: scale(1, 2);
-  }
-  &.deactive {
-    transistion: transform 0.5s ease-in-out 0s;
-    transform: scale(1, 1);
-  }
 `;
 
 const Image = ({ active, deactive, link }) => {
   return (
-    <StyledImage className={computeClassNames({
-      active,
-      deactive,
-      lazyload : true,
-    })}
-    data-src={link} />
+    <StyledImage className='lazyload' data-src={link} />
   )
 }
 

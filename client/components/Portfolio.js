@@ -149,7 +149,7 @@ const WorkTitle = styled.div`
   }
 `;
 
-const openPortfolio = (top, offsetWidth) => keyframes`
+const openPortfolio = (top, offsetWidth, width) => keyframes`
   0% {
     transform: translate(0px, 0px);
   }
@@ -157,7 +157,7 @@ const openPortfolio = (top, offsetWidth) => keyframes`
     transform: translate(calc(${offsetWidth}px), 0px);
   }
   100% {
-    transform: translate(calc(50% + 3em), calc(-${top}px + 3em)) scale(1, 0.5);
+    transform: translate(calc(50% + 3em), calc(-${top}px + 3em)) scale(2, 0.5);
   }
 `;
 
@@ -218,16 +218,16 @@ const Portfolio = styled.div`
       animation: ${shiftRight} 0.5s ease-in-out 0.5s reverse;
     }
     &.active {
-      animation: ${({ $inactive, $top, $offsetWidth }) =>  !$inactive ? css`${openPortfolio($top, $offsetWidth)} 1s ease-in-out 0s forwards` : ''};
+      animation: ${({ $inactive, $top, $offsetWidth, $width }) =>  !$inactive ? css`${openPortfolio($top, $offsetWidth, $width)} 1s ease-in-out 0s forwards` : ''};
       & > ${ImageWrapper} > img {
-        transform: scale(1, 2);
+        transform: scale(1, 4);
         transition: transform 0.5s ease-in-out 0.5s;
       }
     }
     &.still {
-      transform: ${({ $inactive, $top }) => $inactive ? `translate(calc(50% + 3em), calc(-${$top}px + 3em)) scale(1, 0.5)` : ''};
+      transform: ${({ $inactive, $top, $offsetWidth, $width }) => `translate(calc(50% + 3em), calc(-${$top}px + 3em)) scale(2, 0.5)`};
       & > ${ImageWrapper} > img {
-        transform: scale(1, 2);
+        transform: scale(1, 4);
       }
     }
     &.deactive {
@@ -367,6 +367,7 @@ export default ({ active }) => {
                   $inactive={still !== null}
                   $top={offsetTop}
                   $offsetWidth={offsetWidth}
+                  $width={width}
                   className={computeClassNames({
                     'active': activePortfolio === idx && still !== idx,
                     'still': still === idx,
@@ -416,10 +417,10 @@ export default ({ active }) => {
         <PortfolioMobile reverse={activePortfolio === null} portfolio={portfolios[parseInt(still) > -1 ? still : deactivePortfolio]} close={close} />
       )}
 
-      {/* <Buttons className={(active && activePortfolio === null) && 'active'}>
+      <Buttons className={(active && activePortfolio === null) && 'active'}>
         <Button className={!shift && 'active'} onClick={() => setShift(0)}></Button>
         <Button className={shift && 'active'} onClick={() => setShift(-50)}></Button>
-      </Buttons> */}
+      </Buttons>
 
     </Container>
   )
