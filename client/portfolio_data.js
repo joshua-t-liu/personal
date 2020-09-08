@@ -19,7 +19,7 @@ export default [
     ],
     result: 'Deployed product page has first meaningful paint under 2s.',
     href: 'https://github.com/joshua-t-liu/image-gallery',
-    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover' }} data-src='https://www.coldwellbanker.com/images_brand/CB/72508062.jpg' />,
+    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover' }} data-src='./image-gallery.jpg' />,
     Component: ({ isDesktop }) => {
 
       useEffect(() => {
@@ -56,7 +56,7 @@ export default [
     ],
     result: 'Service handles 1200 RPS under load with an average load time of 50ms delay.',
     href: 'https://github.com/joshua-t-liu/reviews-module',
-    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover' }} data-src='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/rw-best-adidas-1590161486.jpg' />,
+    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover' }} data-src='./customer-reviews.jpg' />,
     Component: () => (
       <div style={{ textAlign: 'center' }}>
         <img className='lazyload' style={{  maxWidth: '750px', width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} data-src='./customer_reviews.png' />
