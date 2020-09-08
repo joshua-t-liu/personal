@@ -151,19 +151,13 @@ const WorkTitle = styled.div`
 
 const openPortfolio = (top, offsetWidth) => keyframes`
   0% {
-    // width: calc(50% - ${2 * PADDING}em);
-    height: 100%;
+    transform: translate(0px, 0px);
   }
   50% {
     transform: translate(calc(${offsetWidth}px), 0px);
-    // width: calc(50% - ${2 * PADDING}em);
-    height: 100%;
   }
   100% {
-    // transform: translate(5em, calc(-${top}px + 3em));
-    // width: calc(100vw - 20em);
-    transform: translate(calc(50% + 3em), calc(-${top}px + 3em));
-    height: 50%;
+    transform: translate(calc(50% + 3em), calc(-${top}px + 3em)) scale(1, 0.5);
   }
 `;
 
@@ -197,6 +191,7 @@ const Portfolio = styled.div`
   align-items: center;
   background-color: rgb(0,0,0);
   cursor: pointer;
+  transform-origin: top;
   &:not(.active):not(.still):not(.deactive):hover {
     & > ${ImageWrapper} {
       opacity: 0.8;
@@ -224,15 +219,23 @@ const Portfolio = styled.div`
     }
     &.active {
       animation: ${({ $inactive, $top, $offsetWidth }) =>  !$inactive ? css`${openPortfolio($top, $offsetWidth)} 1s ease-in-out 0s forwards` : ''};
+      & > ${ImageWrapper} > img {
+        transform: scale(1, 2);
+        transition: transform 0.5s ease-in-out 0.5s;
+      }
     }
     &.still {
-      // width: calc(100vw - 20em);
-      // transform: ${({ $inactive, $top }) => $inactive ? `translate(5em, calc(-${$top}px + 3em))` : ''};
-      height: 50%;
-      transform: ${({ $inactive, $top }) => $inactive ? `translate(calc(50% + 3em), calc(-${$top}px + 3em))` : ''};
+      transform: ${({ $inactive, $top }) => $inactive ? `translate(calc(50% + 3em), calc(-${$top}px + 3em)) scale(1, 0.5)` : ''};
+      & > ${ImageWrapper} > img {
+        transform: scale(1, 2);
+      }
     }
     &.deactive {
       animation: ${({ $inactive, $top, $offsetWidth }) => !$inactive ? css`${openPortfolio($top, $offsetWidth)} 1s ease-in-out 0s reverse` : ''};
+      & > ${ImageWrapper} > img {
+        transform: scale(1, 1);
+        transition: transform 0.5s ease-in-out 0s;
+      }
     }
   }
   @media (max-width: ${SMALL_WIDTH}) {

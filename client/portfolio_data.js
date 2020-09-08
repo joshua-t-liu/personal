@@ -1,8 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import 'lazysizes';
-// import a plugin
+
 import 'lazysizes/plugins/parent-fit/ls.parent-fit';
+import { computeClassNames } from './helper';
+
+const StyledImage = styled.img`
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transform: scale(1, 1);
+  transistion: transform 0.5s ease-in-out 0.5s;
+  &.active {
+    transform: scale(1, 2);
+  }
+  &.deactive {
+    transistion: transform 0.5s ease-in-out 0s;
+    transform: scale(1, 1);
+  }
+`;
+
+const Image = ({ active, deactive, link }) => {
+  return (
+    <StyledImage className={computeClassNames({
+      active,
+      deactive,
+      lazyload : true,
+    })}
+    data-src={link} />
+  )
+}
+
 
 export default [
   {
@@ -19,7 +47,7 @@ export default [
     ],
     result: 'Deployed product page has first meaningful paint under 2s.',
     href: 'https://github.com/joshua-t-liu/image-gallery',
-    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover' }} data-src='./image-gallery.jpg' />,
+    Image: ({ active, deactive }) => <Image link='./image-gallery.jpg' />,
     Component: ({ isDesktop }) => {
 
       useEffect(() => {
@@ -56,7 +84,7 @@ export default [
     ],
     result: 'Service handles 1200 RPS under load with an average load time of 50ms delay.',
     href: 'https://github.com/joshua-t-liu/reviews-module',
-    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover' }} data-src='./customer-reviews.jpg' />,
+    Image: ({ active, deactive }) => <Image link='./customer-reviews.jpg' />,
     Component: () => (
       <div style={{ textAlign: 'center' }}>
         <img className='lazyload' style={{  maxWidth: '750px', width: '100%', border: 'solid 1px rgb(196,196,196)' }} data-src='./customer_reviews.png' />
@@ -76,7 +104,7 @@ export default [
     ],
     result: 'Responsive site with first contentful paint under 2 seconds.',
     href: 'https://github.com/joshua-t-liu/personal',
-    Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover', display: 'block' }} data-src='./website-new.png' />,
+    Image: ({ active, deactive }) => <Image link='./website-new.png' />,
     Component: () => {
       return (
         <div style={{ textAlign: 'center' }}>

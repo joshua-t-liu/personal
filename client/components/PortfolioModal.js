@@ -118,11 +118,11 @@ const Portfolio = (props) => {
 const slide = (top = 0) => keyframes`
   from {
     opacity: 0;
-    transform: translate(0, ${50 + top}%);
+    transform: translate(0, ${50 + top}%)  scale(1, 2);
   }
   to {
     opacity: 1;
-    transform: translate(0,0);
+    transform: translate(0,0)  scale(1, 2);
   }
 `;
 
@@ -131,7 +131,8 @@ const Container = styled.div`
   padding: 0 10em;
   margin: 0;
   opacity: 0;
-  transform: translate(0, 50%);
+  transform: translate(0, 50%) scale(1, 2);
+  transform-origin: top;
   &.active {
     animation: ${slide()} 0.1s ease-in-out 0s forwards;
   }
