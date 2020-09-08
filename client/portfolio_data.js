@@ -8,12 +8,12 @@ export default [
   {
     title: 'TRULIO',
     technology: ['React', 'Styled Components', 'React Router',  'HTML', 'CSS', 'Node', 'Express', 'MongoDB', 'Webpack', 'AWS', 'Docker'],
-    situation: 'Trulio is a website that markets real estate properties. The product page combines 4 microservices that provide property information to prosepctive buyers/agents.  I worked on a team of 3 other developers where I developed a micro-service that served a photo gallery component.',
+    situation: 'Trulio is a website that markets real estate properties. The product page combines 4 microservices that provide property information to prosepctive buyers/agents.  I worked on a team of 3 other developers where I developed a micro-service that serves a photo gallery component.',
     actions: [
       'Created photo gallery front end. UI included a modal image carousel, a form for requesting more information, and additional tabs for geo-spatial information.',
       'Created responsive user experience by implementing media queries and testing across browsers and devices.',
       'Implemented RESTful APIs and designed schema for MongoDB.',
-      'Created proxy server that combined microservices and that served the product page.',
+      'Created proxy server that combined the microservices and that served the product page.',
       'Deployed microservices and proxy server on AWS.',
       'Optimized product page performance for load time and accessibility using Lighthouse.'
     ],
@@ -45,10 +45,10 @@ export default [
   {
     title: 'ADDIDOS',
     technology: ['Node', 'Express', 'Nginx', 'PostgreSQL', 'Redis', 'AWS', 'Loader.io', 'New Relic'],
-    situation: 'Addidos is a website for marketing apparel. I worked on designing and scaling a micro-service that servers a customer reviews component. The goal was to scale the micro-service to handle 1000 RPS under load with an average load times under 50ms. The database included 50 million customer review records.  I inherited the frontend from a team member.',
+    situation: 'Addidos is a website for marketing apparel. I worked on designing and scaling a micro-service that serves a customer reviews component. The goal was to scale the micro-service to handle 1000 RPS under load with an average load time under 50ms. The database includes 50 million customer review records.  I inherited the frontend from a team member.',
     actions: [
       'Desgined schema for PostgreSQL database.',
-      'Benchmarked database on local machine.',
+      'Benchmarked database using pgbench.',
       'Designed RESTful APIs for microservice.',
       'Deployed microservice on AWS.',
       'Tested performance and identified bottlenecks using Loader.io and New Relic.',
@@ -71,6 +71,7 @@ export default [
       'Delivered a responsive experience by implementing media queries and testing cross-browsers and cross-devices.',
       'Implemented server side rendering using React.',
       'Implemented parallax and animation effects from scratch.',
+      'Optimized animations to meet 60 fps (in progress).'
       'Deployed website on AWS.',
     ],
     result: 'Responsive site with first contentful paint under 2 seconds.',
