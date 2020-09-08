@@ -203,7 +203,7 @@ const Portfolio = styled.div`
   @media (min-width: ${SMALL_WIDTH}) {
     &.active, &.still, &.deactive {
       cursor: auto;
-      & > ${WorkTitle} {
+      &:not(&.still) > ${WorkTitle} {
         display: none;
       }
     }
@@ -228,6 +228,19 @@ const Portfolio = styled.div`
       transform: ${({ $inactive, $top, $offsetWidth, $width }) => `translate(calc(50% + 3em), calc(-${$top}px + 3em)) scale(2, 0.5)`};
       & > ${ImageWrapper} > img {
         transform: scale(1, 4);
+      }
+      & > ${ImageWrapper} {
+        opacity: 0.8;
+      }
+      & > ${WorkTitle} {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.5, 2);
+        transition-property: transform, opacity;
+        transition-duration: 0.2s;
+        transistion-timing-function: ease-in-out;
+        &:after {
+          content: "";
+        }
       }
     }
     &.deactive {

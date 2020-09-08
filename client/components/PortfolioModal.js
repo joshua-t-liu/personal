@@ -73,7 +73,6 @@ const Subheader = styled.p`
   font-weight: 900;
   font-size: 2em;
   text-align: left;
-  // margin-top: 2em;
   margin-bottom: 0;
   @media (max-width: ${SMALL_WIDTH}) {
     text-align: left;
@@ -83,6 +82,7 @@ const Subheader = styled.p`
 const ActionList = styled.ul`
   padding: 1.5em;
   padding-top: 1em;
+  margin-bottom: 0;
 `;
 
 const Portfolio = (props) => {
@@ -103,7 +103,9 @@ const Portfolio = (props) => {
         </ActionList>
         <Subheader>Outcome</Subheader>
         <Info>{props.result}</Info>
-        {Component && <Component />}
+        <div style={{ marginTop: '3em' }}>
+          <Component />
+        </div>
         {props.href && (
           <div style={{ margin: 'auto', marginTop: '3em' }}>
             <GitHubButton href={props.href} />
