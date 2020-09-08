@@ -59,7 +59,7 @@ export default [
     Image: () => <img className='lazyload' style={{ height: '100%', width: '100%', objectFit: 'cover' }} data-src='./customer-reviews.jpg' />,
     Component: () => (
       <div style={{ textAlign: 'center' }}>
-        <img className='lazyload' style={{  maxWidth: '750px', width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} data-src='./customer_reviews.png' />
+        <img className='lazyload' style={{  maxWidth: '750px', width: '100%', border: 'solid 1px rgb(196,196,196)' }} data-src='./customer_reviews.png' />
       </div>
     )
   },
@@ -71,7 +71,7 @@ export default [
       'Delivered a responsive experience by implementing media queries and testing cross-browsers and cross-devices.',
       'Implemented server side rendering using React.',
       'Implemented parallax and animation effects from scratch.',
-      'Optimized animations to meet 60 fps (in progress).'
+      'Optimized animations to meet 60 fps (in progress).',
       'Deployed website on AWS.',
     ],
     result: 'Responsive site with first contentful paint under 2 seconds.',
@@ -80,8 +80,8 @@ export default [
     Component: () => {
       return (
         <div style={{ textAlign: 'center' }}>
-          {<img className='lazyload' style={{ maxWidth: '750px', width: '100%', border: 'solid 1px rgb(196,196,196)', borderRadius: '0.5em' }} data-src='./website-new.png' />}
-          {false && <img style={{ border: '1px solid rgb(196, 196, 196)', borderRadius: '2em', objectFit: 'cover', height: '80%', margin: 'auto' }} src='./website-new.png' />}
+          {<img className='lazyload' style={{ maxWidth: '750px', width: '100%', border: 'solid 1px rgb(196,196,196)' }} data-src='./website-new.png' />}
+          {false && <img style={{ border: '1px solid rgb(196, 196, 196)', objectFit: 'cover', height: '80%', margin: 'auto' }} src='./website-new.png' />}
         </div>
       )
     }
