@@ -151,17 +151,18 @@ const WorkTitle = styled.div`
 
 const openPortfolio = (top, offsetWidth) => keyframes`
   0% {
-    width: calc(50% - ${2 * PADDING}em);
+    // width: calc(50% - ${2 * PADDING}em);
     height: 100%;
   }
   50% {
     transform: translate(calc(${offsetWidth}px), 0px);
-    width: calc(50% - ${2 * PADDING}em);
+    // width: calc(50% - ${2 * PADDING}em);
     height: 100%;
   }
   100% {
-    transform: translate(5em, calc(-${top}px + 3em));
-    width: calc(100vw - 20em);
+    // transform: translate(5em, calc(-${top}px + 3em));
+    // width: calc(100vw - 20em);
+    transform: translate(calc(50% + 3em), calc(-${top}px + 3em));
     height: 50%;
   }
 `;
@@ -225,9 +226,10 @@ const Portfolio = styled.div`
       animation: ${({ $inactive, $top, $offsetWidth }) =>  !$inactive ? css`${openPortfolio($top, $offsetWidth)} 1s ease-in-out 0s forwards` : ''};
     }
     &.still {
-      width: calc(100vw - 20em);
+      // width: calc(100vw - 20em);
+      // transform: ${({ $inactive, $top }) => $inactive ? `translate(5em, calc(-${$top}px + 3em))` : ''};
       height: 50%;
-      transform: ${({ $inactive, $top }) => $inactive ? `translate(5em, calc(-${$top}px + 3em))` : ''};
+      transform: ${({ $inactive, $top }) => $inactive ? `translate(calc(50% + 3em), calc(-${$top}px + 3em))` : ''};
     }
     &.deactive {
       animation: ${({ $inactive, $top, $offsetWidth }) => !$inactive ? css`${openPortfolio($top, $offsetWidth)} 1s ease-in-out 0s reverse` : ''};
