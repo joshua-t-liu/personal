@@ -40,23 +40,11 @@ const Layout = styled.div`
   width: 100%;
   padding: 3em 0;
   background-color: white;
-  &.sticky {
-    overflow-y: hidden;
-    position: sticky;
-    height: 100%;
-    top: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
   @media (max-width: ${MEDIUM_WIDTH}) {
     font-size: 0.75em;
   }
   @media (max-width: ${SMALL_WIDTH}) {
     width: 100%;
-    &.sticky {
-      display: none;
-    }
   }
 `;
 
@@ -127,7 +115,7 @@ const Portfolio = (props) => {
   )
 };
 
-const slide = (offsetHeight, top = 0) => keyframes`
+const slide = (top = 0) => keyframes`
   from {
     opacity: 0;
     transform: translate(0, ${50 + top}%);
@@ -145,20 +133,20 @@ const Container = styled.div`
   opacity: 0;
   transform: translate(0, 50%);
   &.active {
-    animation: ${({ offsetHeight }) => css`${slide(offsetHeight / 2)} 0.1s ease-in-out 0s forwards`};
+    animation: ${slide()} 0.1s ease-in-out 0s forwards;
   }
   &.reverse {
-    animation: ${({ offsetHeight }) => css`${slide(offsetHeight / 2, 1)} 0.1s ease-in-out 0s reverse`};
+    animation: ${slide(1)} 0.1s ease-in-out 0s forwards;
   }
 `;
 
-const PortfolioDesktop = ({ active, portfolio = {}, reverse, offsetHeight }) => {
+const PortfolioDesktop = ({ active, portfolio, reverse }) => {
   return (
     <Container
-      offsetHeight={offsetHeight}
+      onAnimationEnd={(event) => event.stopPropagation()}
       className={computeClassNames({
         reverse,
-        active: portfolio.Component,
+        active,
       })}>
       <Portfolio {...portfolio} />
     </Container>

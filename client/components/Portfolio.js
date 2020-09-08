@@ -19,10 +19,6 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 2em;
-  &.stop-animations * {
-    animation: none !important;
-    transistion: none !important;
-  }
 `;
 
 const Title = styled.h2`
@@ -31,12 +27,15 @@ const Title = styled.h2`
   opacity: 0;
   transform: translate(0, 300%);
   transition-property: opacity, transform;
-  transition-delay: 0s, 0s;
-  transition-duration: 0.33s, 0.33s;
-  transition-timing-function: ease-in, ease-in;
+  transition-delay: 0s;
+  transition-duration: 0.33s;
+  transition-timing-function: ease-in;
   &.active {
     opacity: 1;
     transform: translate(0, 0);
+  }
+  &.reverse {
+    transform: translate(0, -300%);
   }
   @media (max-width: ${SMALL_WIDTH}) {
     margin: 0;
@@ -97,27 +96,22 @@ const ArrowContainer = styled.div`
 const CarouselInner = styled.div`
   width: calc(100vw - 4em);
   display: flex;
-  visibility: hidden;
   opacity: 0;
   transform: ${({ $shift }) => `translate(${$shift}%, -125%)`};
   transition-property: opacity, transform;
-  transition-delay: 0s, 0s;
-  transition-duration: 0.25s, 0.5s;
-  transition-timing-function: ease-in, ease-in-out;
+  transition-delay: 0s;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
   &.active {
-    visibility: visible;
     opacity: 1;
     transform: ${({ $shift }) => `translate(${$shift}%, 0)`};
-    transition-duration: 0.25s, 0.5s;
   }
   &.shift-left {
     transform: ${({ $shift }) => `translate(${$shift - 50}%, 0)`};
-    transition-duration: 0.25s, 0.5s;
-    animation
   }
   @media (max-width: ${SMALL_WIDTH}) {
     flex-wrap: wrap;
-    visibility: visible;
+    opacity: 1;
     transform: ${({ $shift }) => `translate(0, 25%)`};
     &.active {
       transform: ${({ $shift }) => `translate(0, 0)`};
@@ -137,10 +131,9 @@ const WorkTitle = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: calc(100% - 0.5em);
   padding: 0.25em;
   z-index: 5;
-  visibility: hidden;
+  opacity: 0;
   font-size: 5em;
   font-weight: 900;
   color: rgb(255,255,255);
@@ -201,23 +194,22 @@ const Portfolio = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(rgb(0,0,0), rgb(0,0,0));
+  background-color: rgb(0,0,0);
   cursor: pointer;
   &:not(.active):not(.still):not(.deactive):hover {
     & > ${ImageWrapper} {
       opacity: 0.8;
     }
     & > ${WorkTitle} {
-      visibility: visible;
+      opacity: 1;
     }
   }
   @media (min-width: ${SMALL_WIDTH}) {
     &.active, &.still, &.deactive {
       cursor: auto;
-      background: linear-gradient(transparent, transparent);
-    }
-    &.active {
-      animation: ${({ $inactive, $top, $offsetWidth }) =>  !$inactive ? css`${openPortfolio($top, $offsetWidth)} 1s ease-in-out 0s forwards` : ''};
+      & > ${WorkTitle} {
+        display: none;
+      }
     }
     &.active + & {
       animation: ${shiftRight} 0.5s ease-in-out 0s forwards;
@@ -228,6 +220,9 @@ const Portfolio = styled.div`
     &.deactive + & {
       transform: translate(calc(100% + ${2 * PADDING}em), 0);
       animation: ${shiftRight} 0.5s ease-in-out 0.5s reverse;
+    }
+    &.active {
+      animation: ${({ $inactive, $top, $offsetWidth }) =>  !$inactive ? css`${openPortfolio($top, $offsetWidth)} 1s ease-in-out 0s forwards` : ''};
     }
     &.still {
       width: calc(100vw - 20em);
@@ -246,7 +241,7 @@ const Portfolio = styled.div`
       opacity: 0.8;
     }
     & > ${WorkTitle} {
-      visibility: visible;
+      opacity: 1;
     }
     &.active {
       animation: unset;
@@ -291,9 +286,11 @@ const Button = styled.div`
 const PortfolioWrapper = styled.div`
   opacity: 0;
   pointer-events: none;
+  transform: scale(0);
   &.active {
     opacity: 1;
     pointer-events: auto;
+    transform: scale(1);
   }
 `;
 
@@ -336,7 +333,10 @@ export default ({ active }) => {
 
       {activePortfolio !== null && <HomeButton type='div' onClick={close} />}
 
-      <Title className={active ? 'active' : ''}>Work</Title>
+      <Title className={computeClassNames({
+        active,
+        reverse: activePortfolio !== null || still !== null || deactivePortfolio !== null,
+      })}>Work</Title>
 
       <Carousel ref={ref} id='carousel'>
 
@@ -376,7 +376,7 @@ export default ({ active }) => {
                     }
                   }}
                   onAnimationStart={getOffsets}
-                  onAnimationEnd={() => {
+                  onAnimationEnd={(event) => {
                     if (activePortfolio === idx) setStill(idx);
                     if (deactivePortfolio === idx) setDeactivePortfolio(null);
                   }}>
@@ -386,12 +386,12 @@ export default ({ active }) => {
                     </ImageWrapper>
 
 
-                    {width > SMALL_WIDTH_INT && (still === idx) && (
-                      <PortfolioWrapper className={still !== null && 'active'} offsetHeight={offsetHeight}>
+                    {width > SMALL_WIDTH_INT && (
+                      <PortfolioWrapper className={still === idx && 'active'}>
                         <PortfolioDesktop
-                          offsetHeight={offsetHeight}
                           reverse={deactivePortfolio !== null && activePortfolio === null}
-                          portfolio={portfolios[parseInt(still) > -1 ? still : deactivePortfolio]} />
+                          active={portfolios[parseInt(still) > -1 ? still : deactivePortfolio]}
+                          portfolio={Work} />
                       </PortfolioWrapper>)}
 
                 </Portfolio>
