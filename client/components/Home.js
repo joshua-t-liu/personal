@@ -1,20 +1,16 @@
-import React, { useRef, useState, useEffect } from 'react';
-import styled, { css, keyframes } from 'styled-components';
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
 
 import Navigation from './Navigation';
 import { Social } from './Buttons';
-
-const SMALL_WIDTH = '768px';
-const MEDIUM_WIDTH = '1248px';
-const SMALL_HEIGHT = '414px';
+import { SMALL_WIDTH, MEDIUM_WIDTH, SMALL_HEIGHT } from '../helper';
 
 const Container = styled.div`
-  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   padding: 3em 1em;
   height: calc(100vh - 6em);
+  overflow-y: auto;
+  overflow-x: hidden;
   @media (max-width: ${MEDIUM_WIDTH}) {
     padding: 2em 0;
     height: calc(100vh - 4em);
@@ -23,68 +19,19 @@ const Container = styled.div`
 `;
 
 const Banner = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
+  margin: auto;
   width: 60%;
   @media (max-width: ${SMALL_WIDTH}) {
     width: 90%;
   }
-  @media (max-height: ${SMALL_HEIGHT}) {
-    position: relative;
-    top: 0;
-    left: 0;
-    transform: none;
-    margin: auto;
-  }
 `;
 
-const AboutText = styled.p`
-  font-size: 1.25em;
-  line-height: 1.5em;
-  width: 60%;
-  margin: 0 auto;
-  text-align: center;
-  & + & {
-    margin-top: 1em;
-  }
-  @media (max-width: ${MEDIUM_WIDTH}) {
-    width: 90%;
-  }
-`;
-
-const Name = styled(AboutText)`
+const Role = styled.p`
   color: dodgerblue;
   font-weight: bold;
   font-size: 1.75em;
-`;
-
-const StyledLink = styled.div`
-  color: dodgerblue;
-  text-decoration: none;
-`;
-
-const appear = keyframes`
-  20% {
-    visibility: hidden;
-  }
-  21% {
-    visibility: visible;
-  }
-  100% {
-    visibility: visible;
-  }
-`;
-
-const Title = styled.h1`
-  font-size: 5em;
-  margin: 0;
+  margin: 0 auto;
   text-align: center;
-  white-space: pre;
-  @media (max-width: ${SMALL_WIDTH}) {
-    font-size: 4em;
-  }
 `;
 
 const shiftUp = keyframes`
@@ -94,44 +41,31 @@ const shiftUp = keyframes`
   }
 `;
 
-const About = styled.div`
+const Menu = styled.div`
   transform: translateY(2em);
   opacity: 0;
   animation: ${shiftUp} 0.5s ease-in-out 0s forwards;
 `;
 
-const HeadLine = ({ title, delay }) => {
-  return (
-    <div style={{ position: 'relative' }}>
-      <Title delay={delay}>{title}</Title>
-    </div>
-  )
-}
-
-const HeadLines = styled.div`
+const Title = styled.h1`
+  font-size: 5em;
+  margin: 0.1em 0;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 1em 0;
-  color: rgb(51,51,51);
+  @media (max-width: ${SMALL_WIDTH}) {
+    font-size: 4em;
+  }
 `;
 
-export default ({ innerHeight }) => {
-
+export default () => {
   return (
-    <Container id='home' innerHeight={innerHeight}>
+    <Container id='home'>
       <Banner>
-        <Name>Full Stack Engineer </Name>
-        <HeadLines>
-          {['JOSHUA LIU'].map((title, idx) => (
-            <HeadLine key={idx} title={title} delay={idx} />
-          ))}
-        </HeadLines>
-        <About>
+        <Role>Full Stack Engineer </Role>
+        <Title>JOSHUA LIU</Title>
+        <Menu>
           <Navigation />
           <Social justifyContent='center'/>
-        </About>
+        </Menu>
       </Banner>
     </Container>
   )

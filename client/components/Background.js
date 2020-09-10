@@ -45,6 +45,7 @@ const WordCloud = function(ctx, width, height, text, x, y, stationary, size) {
   this.ctx = ctx;
   this.width = width;
   this.height = height;
+
   this.text = text;
   this.ctx.font = `${size} sans-serif`;
   this.ctx.fillStyle = 'rgb(232,232,232)';
@@ -59,9 +60,11 @@ const WordCloud = function(ctx, width, height, text, x, y, stationary, size) {
 };
 
 WordCloud.prototype.init = function() {
-  return this.getParticles()
-  .then((particles) => this.particles = particles)
-  .then(() => this.preRender());
+  return (
+    this.getParticles()
+    .then((particles) => this.particles = particles)
+    .then(() => this.preRender())
+  );
 };
 
 WordCloud.prototype.getParticles = function() {
@@ -70,11 +73,12 @@ WordCloud.prototype.getParticles = function() {
       const particles = {};
 
       this.ctx.clearRect(0, 0, this.width, this.height);
+      this.ctx.textBaseline = 'top';
       this.ctx.fillText(this.text, this.x, this.y, this.width);
 
       const { width, data } = this.ctx.getImageData(
         this.x,
-        this.y - (this.bottom + this.top),
+        this.y,
         this.wide,
         this.bottom + this.top);
 
@@ -99,8 +103,8 @@ WordCloud.prototype.preRender = function() {
 
   const drawState = (i) => {
     const canvas = document.createElement('canvas');
-    canvas.width = this.wide + 2 * (Particle.max + ROT_RADIUS);
-    canvas.height = this.bottom + this.top + 2 * (Particle.max + ROT_RADIUS);
+    canvas.width = this.width;
+    canvas.height = this.height;
     const ctx = canvas.getContext('2d', { alpha: true });
 
     for (const alpha in this.particles) {
@@ -130,7 +134,7 @@ WordCloud.prototype.preRender = function() {
 
   return Promise.all(cos.map((_, i) => new Promise((resolve) => setTimeout(() => resolve(drawState(i)), 0))))
   .then((bitmaps) => this.states = bitmaps);
-}
+};
 
 WordCloud.prototype.draw = function() {
   if (!this.states.length) return;
@@ -155,31 +159,26 @@ export default ({ active, words, stationary, size = '5em' }) => {
   const ref = useRef();
   const [wordClouds, setWordClouds] = useState([]);
 
-  const animate = (active) => {
+  const animate = () => {
     const ctx = ref.current.getContext('2d', { alpha: true });
-    if (active) requestAnimationFrame(animate);
-    // ctx.clearRect(0, 0, ref.current.width, ref.current.height);
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-    ctx.fillRect(0, 0, ref.current.width, ref.current.height);
-    ctx.fill();
+    requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, ref.current.width, ref.current.height);
     wordClouds.forEach((wordCloud) => wordCloud.draw());
   };
 
-  useEffect(() => animate(active), [active]);
   useEffect(() => {
     Promise.all(wordClouds.map((cloud) => cloud.init()))
-    .then(() => animate(active));
+    .then(() => animate());
   }, [wordClouds]);
 
   useEffect(() => {
     ref.current.width = window.innerWidth;
     ref.current.height = window.innerHeight;
-    const ctx = ref.current.getContext('2d', { alpha: true });
 
     setWordClouds(() => words.map((word) =>  new WordCloud(
-      ctx,
-      window.innerWidth,
-      window.innerHeight,
+      ref.current.getContext('2d', { alpha: true }),
+      ref.current.width,
+      ref.current.height,
       word,
       ref.current.width / 2,
       ref.current.height / 2,
@@ -189,6 +188,6 @@ export default ({ active, words, stationary, size = '5em' }) => {
   }, []);
 
   return (
-    <canvas id='canvas' ref={ref} style={{ height: '100%', width: '100%' }}></canvas>
+    <canvas id='canvas' ref={ref}></canvas>
   )
 };

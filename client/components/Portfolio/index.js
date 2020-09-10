@@ -1,18 +1,21 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
-import { PortfolioDesktop, PortfolioMobile } from './PortfolioModal';
-import portfolios from '../portfolio_data';
-import { LeftArrow, RightArrow, HomeButton } from './Buttons';
-import { computeClassNames } from '../helper';
+// import { PortfolioDesktop, PortfolioMobile } from './PortfolioModal';
+import PortfolioInfo from './PortfolioModal';
+import portfolios from '../../portfolio_data';
+import { computeClassNames } from '../../helper';
+import { Buttons, Space } from './CarouselButtons';
+import { HomeButton } from '../Buttons';
 
 const SMALL_WIDTH = '768px';
 const SMALL_WIDTH_INT = 768;
 const MEDIUM_WIDTH = '1248px';
+const PADDING = 3;
 
 const Container = styled.div`
   position: relative;
-  height: calc(100vh - 4em);
+  height: ${({ innerHeight }) => `calc(${innerHeight}px - 4em)`};
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
@@ -44,8 +47,6 @@ const Title = styled.h2`
   }
 `;
 
-const PADDING = 3;
-
 const Carousel = styled.div`
   position: relative;
   display: flex;
@@ -63,34 +64,6 @@ const Carousel = styled.div`
       content: none;
     }
   }
-`;
-
-const Space = styled.div`
-  position: absolute;
-  top: 0;
-  left: ${({ left }) => left ? `-${PADDING}em` : null};
-  right: ${({ left }) => !left ? `-${PADDING}em` : null};
-  height: 100%;
-  width: ${() => `${2 * PADDING}em`};
-  background-color: rgb(255,255,255);
-  z-index:10;
-  opacity: 0;
-  transition: opacity 0.1s 0.5s ease-in-out;
-  pointer-events: none;
-  &.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  @media (max-width: ${SMALL_WIDTH}) {
-    display: none;
-  }
-`;
-
-const ArrowContainer = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 `;
 
 const CarouselInner = styled.div`
@@ -218,14 +191,14 @@ const Portfolio = styled.div`
       animation: ${shiftRight} 0.5s ease-in-out 0.5s reverse;
     }
     &.active {
-      animation: ${({ $inactive, $top, $offsetWidth, $width }) =>  !$inactive ? css`${openPortfolio($top, $offsetWidth, $width)} 1s ease-in-out 0s forwards` : ''};
+      animation: ${({ $inactive, $offsetTop, $offsetWidth, $width }) =>  !$inactive ? css`${openPortfolio($offsetTop, $offsetWidth, $width)} 1s ease-in-out 0s forwards` : ''};
       & > ${ImageWrapper} > img {
         transform: scale(1, 4);
         transition: transform 0.5s ease-in-out 0.5s;
       }
     }
     &.still {
-      transform: ${({ $inactive, $top, $offsetWidth, $width }) => `translate(calc(50% + 3em), calc(-${$top}px + 3em)) scale(2, 0.5)`};
+      transform: ${({ $offsetTop, $offsetWidth, $width }) => `translate(calc(50% + 3em), calc(-${$offsetTop}px + 3em)) scale(2, 0.5)`};
       & > ${ImageWrapper} > img {
         transform: scale(1, 4);
       }
@@ -244,7 +217,7 @@ const Portfolio = styled.div`
       }
     }
     &.deactive {
-      animation: ${({ $inactive, $top, $offsetWidth }) => !$inactive ? css`${openPortfolio($top, $offsetWidth)} 1s ease-in-out 0s reverse` : ''};
+      animation: ${({ $inactive, $offsetTop, $offsetWidth }) => !$inactive ? css`${openPortfolio($offsetTop, $offsetWidth)} 1s ease-in-out 0s reverse` : ''};
       & > ${ImageWrapper} > img {
         transform: scale(1, 1);
         transition: transform 0.5s ease-in-out 0s;
@@ -273,34 +246,6 @@ const Portfolio = styled.div`
   }
 `;
 
-const Buttons = styled.div`
-  display: flex;
-  opacity: 0;
-  transition-property: opacity;
-  transition-delay: 0s;
-  transition-duration: 1s;
-  transition-timing-function: ease-in;
-  margin-top: 1em;
-  &.active {
-    opacity: 1;
-  }
-  @media (max-width: ${SMALL_WIDTH}) {
-    display: none;
-  }
-`;
-
-const Button = styled.div`
-  position: relative;
-  margin: 1em 0.25em;
-  cursor: pointer;
-  width: 2em;
-  height: 0.2em;
-  background-color: rgb(192,192,192);
-  &.active {
-    background-color: rgb(74,74,74);
-  }
-`;
-
 const PortfolioWrapper = styled.div`
   opacity: 0;
   pointer-events: none;
@@ -312,64 +257,45 @@ const PortfolioWrapper = styled.div`
   }
 `;
 
-export default ({ active }) => {
+export default ({ active, innerHeight }) => {
   const [shift, setShift] = useState(0);
   const [shiftLeft, setShiftLeft] = useState(null);
-  const [offsetTop, setoffsetTop] = useState({});
-  const [offsetHeight, setoffsetHeight] = useState({});
-  const [offsetWidth, setoffsetWidth] = useState(null);
-  const [width, setWidth] = useState(window.innerWidth);
-
-  const [activePortfolio, setActivePortfolio] = useState(null);
-  const [still, setStill] = useState(null);
-  const [deactivePortfolio, setDeactivePortfolio] = useState(null);
+  const [offsets, setOffsets] = useState({ $width: window.innerWidth });
+  const [currPortfolio, setCurrPortfolio] = useState(null);
+  const [animState, setAnimState] = useState(null);
   const ref = useRef();
 
   const getOffsets = () => {
-    setoffsetTop(ref.current.offsetTop);
-    setoffsetHeight(ref.current.offsetHeight);
-    setoffsetWidth(ref.current.offsetWidth / 4);
-    setWidth(window.innerWidth);
-  }
+    setOffsets(() => {
+      const { offsetWidth, offsetTop } = ref.current;
+      return { $offsetWidth: offsetWidth / 4, $offsetTop: offsetTop, $width: window.innerWidth };
+    });
+  };
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver(entries => {
-      if (entries[0].target === ref.current) getOffsets();
+      if (entries[0].target === ref.current) getOffsets(ref.current);
     });
     resizeObserver.observe(ref.current);
   }, []);
 
   const close = () => {
-    setActivePortfolio(null);
-    setDeactivePortfolio(activePortfolio);
-    setStill(null);
+    setAnimState('deactive');
     if (shiftLeft) setTimeout(() => setShiftLeft(null), 500);
   };
 
   return (
-    <Container id='work'>
-
-      {activePortfolio !== null && <HomeButton type='div' onClick={close} />}
-
-      <Title className={computeClassNames({
-        active,
-        reverse: activePortfolio !== null || still !== null || deactivePortfolio !== null,
-      })}>Work</Title>
+    <Container id='work' innerHeight={innerHeight}>
+      {animState && <HomeButton type='div' onClick={close} />}
+      <Title className={computeClassNames({ active, reverse: animState })}>Work</Title>
 
       <Carousel ref={ref} id='carousel'>
-
-        <Space left={true} className={active && activePortfolio === null ? 'active' : ''}>
-          <ArrowContainer>
-            <LeftArrow active={active && shift} onClick={() => setShift(0)} />
-          </ArrowContainer>
-        </Space>
+        <Space {...{ left: true, active, animState, shift, onClick: () => setShift(0) }} />
 
         <CarouselInner
-          className={computeClassNames({
-            active,
-            'shift-left': shiftLeft,
-          })}
+          className={computeClassNames({ active, 'shift-left': shiftLeft })}
           $shift={shift}>
+
           {portfolios.map((Work, idx) => {
             const portfolioRef = useRef();
 
@@ -377,39 +303,38 @@ export default ({ active }) => {
                 <Portfolio
                   key={idx}
                   ref={portfolioRef}
-                  $inactive={still !== null}
-                  $top={offsetTop}
-                  $offsetWidth={offsetWidth}
-                  $width={width}
-                  className={computeClassNames({
-                    'active': activePortfolio === idx && still !== idx,
-                    'still': still === idx,
-                    'deactive':deactivePortfolio === idx,
-                  })}
+                  $inactive={animState === 'still'}
+                  {...offsets}
+                  className={currPortfolio === idx && animState}
                   onClick={() => {
-                    if (activePortfolio === null) {
-                      setStill(null);
+                    if (!animState) {
                       setShiftLeft(portfolioRef.current && portfolioRef.current.getBoundingClientRect().x / window.innerWidth > 0.5);
-                      setActivePortfolio(idx);
-                      if (width <= SMALL_WIDTH_INT) setStill(idx);
+                      setCurrPortfolio(idx);
+                      setAnimState(() => (offsets.$width <= SMALL_WIDTH_INT) ? 'still' : 'active');
                     }
                   }}
-                  onAnimationStart={getOffsets}
-                  onAnimationEnd={(event) => {
-                    if (activePortfolio === idx) setStill(idx);
-                    if (deactivePortfolio === idx) setDeactivePortfolio(null);
+                  onAnimationEnd={() => {
+                    if (currPortfolio === idx) {
+                      if (animState === 'active') setAnimState('still');
+                      if (animState === 'deactive') {
+                        setAnimState(null);
+                        setCurrPortfolio(null);
+                      }
+                    }
                   }}>
                     <WorkTitle>{Work.title}</WorkTitle>
                     <ImageWrapper>
                       <Work.Image />
                     </ImageWrapper>
 
-
-                    {width > SMALL_WIDTH_INT && (
-                      <PortfolioWrapper className={still === idx && 'active'}>
-                        <PortfolioDesktop
-                          reverse={deactivePortfolio !== null && activePortfolio === null}
-                          active={portfolios[parseInt(still) > -1 ? still : deactivePortfolio]}
+                    {currPortfolio === idx && (
+                      <PortfolioWrapper
+                        className={animState && 'active'}>
+                        <PortfolioInfo
+                          {...offsets}
+                          active={animState === 'still'}
+                          reverse={animState === 'deactive'}
+                          close={close}
                           portfolio={Work} />
                       </PortfolioWrapper>)}
 
@@ -418,23 +343,10 @@ export default ({ active }) => {
           })}
         </CarouselInner>
 
-        <Space className={(active && activePortfolio === null) && 'active'}>
-          <ArrowContainer>
-            <RightArrow active={active && !shift} onClick={() => setShift(-50)}/>
-          </ArrowContainer>
-        </Space>
-
+        <Space {...{ active, animState, shift, onClick: () => setShift(-50) }} />
       </Carousel>
 
-      {(parseInt(still) > -1 || parseInt(deactivePortfolio) > -1) && width <= SMALL_WIDTH_INT && (
-        <PortfolioMobile reverse={activePortfolio === null} portfolio={portfolios[parseInt(still) > -1 ? still : deactivePortfolio]} close={close} />
-      )}
-
-      <Buttons className={(active && activePortfolio === null) && 'active'}>
-        <Button className={!shift && 'active'} onClick={() => setShift(0)}></Button>
-        <Button className={shift && 'active'} onClick={() => setShift(-50)}></Button>
-      </Buttons>
-
+      <Buttons {...{ active, animState, shift, setShift }} />
     </Container>
   )
 };

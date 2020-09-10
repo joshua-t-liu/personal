@@ -9,11 +9,9 @@ import events from '../../timeline_data';
 const Container = styled.div`
   position: relative;
   width: 100%;
-  // height: ${({ innerHeight }) => `calc(min(100vh, ${innerHeight}px) - 10em)`};
   height: ${({ innerHeight }) => `calc(${innerHeight}px)`};
   overflow-y: scroll;
   overflow-x: hidden;
-  // padding: 5em 0;
 `;
 
 export default ({ innerHeight }) => {
@@ -21,12 +19,12 @@ export default ({ innerHeight }) => {
   const [active, setActive] = useState(false);
   const [offset, setOffset] = useState(0);
   const [innerWidth, setInnerWidth] = useState(0);
-  const delay = 15;
 
   useEffect(() => {
     const adjustOffset = () => {
       if (active) requestAnimationFrame(adjustOffset);
-      if (ref.current) return setOffset((curr) => ref.current.scrollTop);
+      console.log(ref.current.scrollTop)
+      if (ref.current) setOffset(ref.current.scrollTop);
     };
 
     const adjustDim = () => setInnerWidth(window.innerWidth);
@@ -40,6 +38,8 @@ export default ({ innerHeight }) => {
       if (active) adjustOffset();
     });
 
+    setActive(window.location.hash === '#about');
+
     return () => window.removeEventListener('resize', adjustDim);
   }, [active]);
 
@@ -52,13 +52,15 @@ export default ({ innerHeight }) => {
   return (
     <React.Fragment>
       <div id='about'/>
-      <Container ref={ref} innerHeight={innerHeight} >
+      <Container id='container' ref={ref} innerHeight={innerHeight} >
         <Head offset={offset} active={active} />
         {events.map((event, idx) => (
           <Event
             key={idx}
             event={event}
-            {...dim}>
+            offset={offset}
+            innerHeight={innerHeight}
+            innerWidth={innerWidth}>
           </Event>
         ))}
         <Present />

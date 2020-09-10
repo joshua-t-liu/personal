@@ -119,8 +119,6 @@ const ImageFrame = styled.div`
   width: 33vw;
   max-width: 100%;
   height: 16vw;
-  // border-top-right-radius: 2em;
-  // border-bottom-left-radius: 2em;
   overflow: hidden;
   margin-bottom: 1em;
   @media (max-width: ${MEDIUM_WIDTH}) {
@@ -132,6 +130,7 @@ const ImageFrame = styled.div`
 const Image = styled.img`
   object-fit: none;
   width: 100%;
+  height: 100%;
 `;
 
 export default ({ event, offset, innerHeight, innerWidth }) => {
@@ -185,15 +184,12 @@ export default ({ event, offset, innerHeight, innerWidth }) => {
   };
 
   const getOpacity = () => {
-    if (ref.current && visible) return `calc(1 + (-${ref.current.offsetTop} + ${offset} + ${innerHeight / 2}) / ${innerWidth / 4})`;
+    if (ref.current && visible) return `calc(0.75 + (${offset} + ${innerHeight / 2} - ${ref.current.offsetTop}) /  ${innerHeight})`;
   };
 
   const getImgTranslation = () => {
-    let shift = 0.5;
-    if (innerWidth < MEDIUM_WIDTH_INT) {
-      shift = 0.5;
-    }
-    if (ref.current && visible) return `50% ${100 - (offset + innerHeight * shift - ref.current.offsetTop) * 50 / innerHeight}%`;
+    let shift = (innerWidth < MEDIUM_WIDTH_INT) ? 0.75 : shift = 0.75;
+    if (ref.current && visible) return `50% ${25 + 75 * (offset + innerHeight - ref.current.offsetTop) / innerHeight}%`;
   }
 
   const props = {
@@ -225,7 +221,7 @@ export default ({ event, offset, innerHeight, innerWidth }) => {
             {event.left.img && (
             <ImageFrame >
               <Image className='lazyload' data-src={event.left.img} style={{ objectPosition: getImgTranslation() }} />
-              </ImageFrame>
+            </ImageFrame>
             )}
             <Title>{event.left.title}</Title>
             <Role>{event.left.role}</Role>

@@ -30,8 +30,7 @@ const TimeLine = styled.div`
 const HeadContainer = styled.div`
   position: sticky;
   top: 0;
-  // height: 100%;
-  height: ${({ innerHeight }) => `${innerHeight}px`};
+  height: 100%;
   width: 100%;
   font-weight: bold;
 `;
@@ -61,13 +60,13 @@ const Mobile = styled.div`
   }
 `;
 
-export default ({ offset, active, innerHeight }) => {
+export default ({ offset, active }) => {
   const ref = useRef();
 
   const words = ['ABOUT'];
 
   return (
-    <HeadContainer id='head' ref={ref} innerHeight={innerHeight}>
+    <HeadContainer id='head' ref={ref}>
       <TimeLine className={ref.current && offset && 'active'} />
       <Mobile><Background words={words} stationary={true} size='7em' active={active} /></Mobile>
       <Desktop><Background words={words} stationary={true} size='15em' active={active} /></Desktop>

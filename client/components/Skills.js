@@ -46,10 +46,9 @@ const SkillSetTitle = styled.div`
   color: dodgerblue;
   transform: translateY(5em);
   opacity: 0;
-  background
-  @media (max-width: ${SMALL_WIDTH}) {
-    align-self: flex-start;
-  }
+  // @media (max-width: ${SMALL_WIDTH}) {
+  //   align-self: flex-start;
+  // }
   transition: transform 0.5s ease-in-out 0.11s,opacity 0.5s ease-in-out 0.11s;
   &:before {
     content: ${({ title }) => `"${title }"`};
@@ -78,11 +77,11 @@ const SkillSet = styled.div`
   margin: 1em;
   background-color: rgba(0,0,0,0.033);
   &.active {
-    & > div > ${SkillSetTitle} {
+    & > ${SkillSetTitle} {
       transform: translateY(0);
       opacity: 1;
     }
-    & > div > ${Skills} {
+    & > ${Skills} {
       transform: translateY(0);
       opacity: 1;
     }
@@ -90,27 +89,37 @@ const SkillSet = styled.div`
   @media (max-width: ${SMALL_WIDTH}) {
     width: calc(100% - 2em);
     text-align: center;
+    &.active {
+      & > ${SkillSetTitle} {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      & > ${Skills} {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
   }
 `;
 
 const List = ({ skillset, skills, active }) => {
+  useEffect(() => {
+
+  }, []);
+
   const ref = useRef();
 
   return (
     <SkillSet ref={ref} className={active && 'active'}>
-      <div>
-        <SkillSetTitle title={skillset} />
-        {skills.map((skill, idx) => <Skills key={idx} delay={idx}>{skill}</Skills>)}
-      </div>
+      <SkillSetTitle title={skillset} />
+      {skills.map((skill, idx) => <Skills key={idx} delay={idx}>{skill}</Skills>)}
     </SkillSet>
   );
 };
 
 export default ({ innerHeight, active }) => {
-  const ref = useRef();
-
   return (
-    <Container id='skills' ref={ref} innerHeight={innerHeight} >
+    <Container id='skills' innerHeight={innerHeight} >
       <Title className={active && 'active'} >Skills</Title>
       <SkillSets>
         {Object.entries(SKILLS.frameworks).map(([skillset, skills], idx) => (

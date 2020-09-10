@@ -16,8 +16,7 @@ const Image = ({ active, deactive, link }) => {
   return (
     <StyledImage className='lazyload' data-src={link} />
   )
-}
-
+};
 
 export default [
   {
@@ -78,12 +77,32 @@ export default [
       </div>
     )
   },
+  // {
+  //   title: 'IPHONE RESALE DASHBOARD',
+  //   technology: ['React', 'Node', 'Express', 'Puppeteer', 'AWS', 'Webpack', 'Babel'],
+  //   situation: 'Created a dashboard that pulls iphone re-sale values. Re-sale values were taken from Gazelle and SellYourMac.',
+  //   actions: [
+  //     'Scrapped Gazelle and SellYourMac to get the iphone re-sale price.',
+  //     'Created RESTful API implementation for dashboard.',
+  //     'Deployed website on AWS.',
+  //   ],
+  //   result: 'Streamlined process for collecting re-sale prices for iphones.',
+  //   href: 'https://github.com/joshua-t-liu/gazelle',
+  //   Image: ({ active, deactive }) => <Image link='' />,
+  //   Component: () => {
+  //     return (
+  //       <div style={{ textAlign: 'center' }}>
+  //         {<img className='lazyload' style={{ maxWidth: '750px', width: '100%', border: 'solid 1px rgb(196,196,196)' }} data-src='' />}
+  //       </div>
+  //     )
+  //   }
+  // },
   {
     title: 'PORTFOLIO',
     technology: ['React', 'React Router', 'Node', 'Express', 'AWS', 'Server Side Rendering', 'Webpack'],
-    situation: 'I desgined and coded my portfolio website from scratch.',
+    situation: 'I desgined and coded my portfolio website from scratch. Still working to create a better user experience for my portfolio.',
     actions: [
-      'Delivered a responsive experience by implementing media queries and testing cross-browsers and cross-devices.',
+      'Delivered a responsive experience by implementing media queries and testing cross-browsers (Chrome, Safari, Firefox) and cross-devices (iphone and Samsung).',
       'Implemented server side rendering using React.',
       'Implemented parallax and animation effects from scratch.',
       'Optimized animations to meet 60 fps (in progress).',

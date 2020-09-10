@@ -1,4 +1,3 @@
-// require("babel-polyfill");
 require('babel-register')({
   presets: ['env', 'react'],
   plugins: ['dynamic-import-node', 'babel-plugin-styled-components']
@@ -36,6 +35,7 @@ app.get(/\/$|\/portfolio$/, (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    res.status(404).send('Sorry, temporarily down.')
   } finally {
     sheet.seal();
   }
@@ -59,7 +59,10 @@ app.get(/.*/, (req, res) => {
     response.on('end', () => {
       res.send(Buffer.concat(body));
     });
-    response.on('error', () => console.log('error with imagage gallery micro-service'));
+    response.on('error', () => {
+      console.log('error with imagage gallery micro-service');
+      res.status(404).send('Image gallery is temporarily down.')
+    });
   });
 
   request.end();

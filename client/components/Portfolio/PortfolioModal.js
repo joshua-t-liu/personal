@@ -2,11 +2,11 @@ import React, { useRef, useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styled, { css, keyframes } from 'styled-components';
 
-import { GitHubButton, Close, CloseV2 } from './Buttons';
-import { computeClassNames } from '../helper';
+import { GitHubButton, Close, CloseV2 } from '../Buttons';
+import { computeClassNames } from '../../helper';
 
 const SMALL_WIDTH = '768px';
-const SMALL_WIDTH_NUM = 768;
+const SMALL_WIDTH_INT = 768;
 const MEDIUM_WIDTH = '1248px';
 
 const appear = (top = 0) => keyframes`
@@ -124,7 +124,7 @@ const slide = (top = 0) => keyframes`
   }
   to {
     opacity: 1;
-    transform: translate(0,0)  scale(0.5, 2);
+    transform: translate(0, 0)  scale(0.5, 2);
   }
 `;
 
@@ -139,7 +139,7 @@ const Container = styled.div`
     animation: ${slide()} 0.25s ease-in-out 0s forwards;
   }
   &.reverse {
-    animation: ${slide(1)} 0.25s ease-in-out 0s forwards;
+    animation: ${slide(1)} 0.25s ease-in-out 0s reverse;
   }
 `;
 
@@ -147,26 +147,37 @@ const PortfolioDesktop = ({ active, portfolio, reverse }) => {
   return (
     <Container
       onAnimationEnd={(event) => event.stopPropagation()}
-      className={computeClassNames({
-        reverse,
-        active,
-      })}>
+      className={computeClassNames({ reverse, active })}>
       <Portfolio {...portfolio} />
     </Container>
   )
 };
 
-const PortfolioMobile = ({ active, portfolio, close, reverse }) => {
-  const Component = portfolio.Component;
+const PortfolioMobile = ({ portfolio, close, reverse }) => {
   return createPortal((
-          <Modal className={reverse ? 'reverse' : ''} onClick={(event) => event.stopPropagation()}>
-              <div onClick={close}><CloseV2 type='div' position='absolute' onlyMobile={false}/></div>
+          <Modal
+            className={reverse ? 'reverse' : ''}
+            onClick={(event) => event.stopPropagation()}>
+              <CloseV2 type='div' position='fixed' onlyMobile={false} onClick={close}/>
               <Portfolio {...portfolio} isMobile={true}/>
           </Modal>
         ), document.getElementById('modal-portfolio'));
 };
 
-export {
-  PortfolioDesktop,
-  PortfolioMobile,
+export default ({ $width, active, portfolio, reverse, close }) => {
+  if ($width < SMALL_WIDTH_INT) {
+    return (
+      <PortfolioMobile
+        reverse={reverse}
+        portfolio={portfolio}
+        close={close} />
+        )
+  } else {
+    return (
+      <PortfolioDesktop
+        active={active}
+        reverse={reverse}
+        portfolio={portfolio}/>
+    )
+  }
 };

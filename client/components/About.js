@@ -1,18 +1,19 @@
-import React, { useRef, useState, useEffect } from 'react';
-import styled, { css, keyframes } from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
 import TimeLineParalax from './TimelineParallax/';
 import Form from './Form';
 import Home from './Home';
 import Skills from './Skills';
-import Portfolio from './Portfolio';
-import { HomeButton, CloseV2 } from './Buttons';
+import Portfolio from './Portfolio/';
+import { HomeButton } from './Buttons';
 
 export default () => {
   const [innerHeight, setInnerHeight] = useState(100000);
   const [hash, setHash] = useState('#home');
 
   useEffect(() => {
+
     const jump = () => {
       let id = window.location.hash.substr(1);
       if (id === '') id = 'home';
@@ -27,25 +28,24 @@ export default () => {
       setHash(window.location.hash);
       jump();
     });
+
     window.addEventListener('resize', () => {
       setInnerHeight(window.innerHeight);
       jump();
     });
+
+    window.addEventListener('load', () => jump());
+
   }, []);
 
   return (
     <React.Fragment>
-      {hash !== '#home' && hash !== '' && (
-        <React.Fragment>
-          <HomeButton />
-          <CloseV2 />
-        </React.Fragment>
-      )}
-      {/* <Form /> */}
-      <Home innerHeight={innerHeight} />
-      <Portfolio active={hash === '#work'} />
-      <Skills active={hash === '#skills'}  innerHeight={innerHeight} />
+      {(hash !== '#home' && hash.length > 0) && <HomeButton />}
+      <Home />
+      <Portfolio active={hash === '#work'} innerHeight={innerHeight} />
+      <Skills active={hash === '#skills'} innerHeight={innerHeight} />
       <TimeLineParalax innerHeight={innerHeight} />
+      {/* <Form /> */}
     </React.Fragment>
   );
 };

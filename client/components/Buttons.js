@@ -183,14 +183,18 @@ const StyledHomeButton = styled.div`
   & > svg {
     fill: rgb(30, 144, 255);
   }
-  &:hover {
-    background-color: rgb(30, 144, 255);
-    & > svg {
-      fill: rgb(255, 255, 255);
+  @media (min-width: ${SMALL_WIDTH}) {
+    &:hover {
+      background-color: rgb(30, 144, 255);
+      & > svg {
+        fill: rgb(255, 255, 255);
+      }
     }
   }
   @media (max-width: ${SMALL_WIDTH}) {
-    display: none;
+    top: 1em;
+    right: 1em;
+    border: none;
   }
 `;
 
@@ -199,11 +203,6 @@ const StyledHomeButtonMobile = styled(StyledHomeButton)`
   position: ${({ $position }) => $position};
   border: none;
   bottom: auto;
-  top: 1em;
-  right: 1em;
-  @media (max-width: ${SMALL_WIDTH}) {
-    display: block;
-  }
 `;
 
 const HomeButton = ({ type = 'a', onlyMobile = true, position, onClick }) => {
