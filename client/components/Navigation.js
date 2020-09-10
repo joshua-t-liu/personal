@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
 
-const StyledLink = styled.div`
+const Link = styled.div`
   margin: 1.75em;
   border: solid 0.1em rgb(51,51,51);
   border-radius: 2em;
@@ -14,8 +14,11 @@ const StyledLink = styled.div`
   cursor: pointer;
   text-decoration: none;
   background-color: rgb(255,255,255);
-  z-index: 1;
   position: relative;
+  &:hover {
+    color: dodgerblue;
+    border-color: dodgerblue;
+  }
   &:before {
     background-color: white;
     content: "";
@@ -44,8 +47,6 @@ const NavBar = styled.div`
     content: "";
     display: block;
   }
-  align-items: center;
-  z-index: 1000;
 `;
 
 const Line = styled.div`
@@ -66,12 +67,12 @@ export default () => {
     <NavBar>
       <Line />
       {['work', 'skills', 'about'].map((title) => (
-          <StyledLink
+          <Link
             as='a'
             href={`#${title}`}
             key={title}>
             {title.toUpperCase()}
-          </StyledLink>
+          </Link>
         ))}
     </NavBar>
   )

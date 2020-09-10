@@ -14,11 +14,11 @@ export default () => {
 
   useEffect(() => {
 
-    const jump = () => {
+    const scrollTop = () => {
       let id = window.location.hash.substr(1);
       if (id === '') id = 'home';
       const ele = document.getElementById(id);
-      window.scroll(0, ele.offsetTop);
+      ele.scrollTo(0, 0);
     }
 
     setInnerHeight(window.innerHeight);
@@ -26,15 +26,12 @@ export default () => {
 
     window.addEventListener('hashchange', () => {
       setHash(window.location.hash);
-      jump();
+      scrollTop();
     });
 
     window.addEventListener('resize', () => {
       setInnerHeight(window.innerHeight);
-      jump();
     });
-
-    window.addEventListener('load', () => jump());
 
   }, []);
 

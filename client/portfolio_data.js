@@ -12,9 +12,9 @@ const StyledImage = styled.img`
   transform: scale(1, 1);
 `;
 
-const Image = ({ active, deactive, link }) => {
+const Image = ({ link, onLoad }) => {
   return (
-    <StyledImage className='lazyload' data-src={link} />
+    <StyledImage className='lazyload' data-src={link} onLoad={onLoad} />
   )
 };
 
@@ -33,7 +33,7 @@ export default [
     ],
     result: 'Deployed product page has first meaningful paint under 2s.',
     href: 'https://github.com/joshua-t-liu/image-gallery',
-    Image: ({ active, deactive }) => <Image link='./image-gallery.jpg' />,
+    Image: ({ onLoad }) => <Image link='./image-gallery.jpg' onLoad={onLoad} />,
     Component: ({ isDesktop }) => {
 
       useEffect(() => {
@@ -43,12 +43,6 @@ export default [
         document.body.append(script);
       }
       loadScript();
-
-      // window.addEventListener('resize', () => {
-      //   setIsDesktop(window.innerWidth > SMALL_WIDTH_NUM);
-      //   setIsMobile(window.innerWidth <= SMALL_WIDTH_NUM);
-      //   if (!document.getElementById('image-gallery').childElementCount) loadScript();
-      // });
       }, []);
 
       return(
@@ -70,7 +64,7 @@ export default [
     ],
     result: 'Service handles 1200 RPS under load with an average load time of 50ms delay.',
     href: 'https://github.com/joshua-t-liu/reviews-module',
-    Image: ({ active, deactive }) => <Image link='./customer-reviews.jpg' />,
+    Image: ({ onLoad }) => <Image link='./customer-reviews.jpg' onLoad={onLoad} />,
     Component: () => (
       <div style={{ textAlign: 'center' }}>
         <img className='lazyload' style={{  maxWidth: '750px', width: '100%', border: 'solid 1px rgb(196,196,196)' }} data-src='./customer_reviews.png' />
@@ -110,7 +104,7 @@ export default [
     ],
     result: 'Responsive site with first contentful paint under 2 seconds.',
     href: 'https://github.com/joshua-t-liu/personal',
-    Image: ({ active, deactive }) => <Image link='./website-new.png' />,
+    Image: ({ onLoad }) => <Image link='./website-new.png' onLoad={onLoad} />,
     Component: () => {
       return (
         <div style={{ textAlign: 'center' }}>

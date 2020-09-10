@@ -6,6 +6,7 @@ import portfolios from '../../portfolio_data';
 import { computeClassNames } from '../../helper';
 import { Buttons, Space } from './CarouselButtons';
 import { HomeButton } from '../Buttons';
+import Spinner from '../Spinner';
 
 const SMALL_WIDTH = '768px';
 const SMALL_WIDTH_INT = 768;
@@ -262,6 +263,7 @@ export default ({ active, innerHeight }) => {
   const [offsets, setOffsets] = useState({ $width: window.innerWidth });
   const [currPortfolio, setCurrPortfolio] = useState(null);
   const [animState, setAnimState] = useState(null);
+  const [imgIsReady, setImgIsReady] = useState(0);
   const ref = useRef();
 
   const getOffsets = () => {
@@ -283,16 +285,20 @@ export default ({ active, innerHeight }) => {
     if (shiftLeft) setTimeout(() => setShiftLeft(null), 500);
   };
 
+  const isReady = active && imgIsReady === 2;
+
   return (
     <Container id='work' innerHeight={innerHeight}>
+      {!isReady && active && <Spinner />}
+
       {animState && <HomeButton type='div' onClick={close} />}
-      <Title className={computeClassNames({ active, reverse: animState })}>Work</Title>
+      <Title className={computeClassNames({ active: isReady, reverse: animState })}>Work</Title>
 
       <Carousel ref={ref} id='carousel'>
-        <Space {...{ left: true, active, animState, shift, onClick: () => setShift(0) }} />
+        <Space {...{ left: true, active: isReady, animState, shift, onClick: () => setShift(0) }} />
 
         <CarouselInner
-          className={computeClassNames({ active, 'shift-left': shiftLeft })}
+          className={computeClassNames({ active: isReady, 'shift-left': shiftLeft })}
           $shift={shift}>
 
           {portfolios.map((Work, idx) => {
@@ -323,7 +329,7 @@ export default ({ active, innerHeight }) => {
                   }}>
                     <WorkTitle>{Work.title}</WorkTitle>
                     <ImageWrapper>
-                      <Work.Image />
+                      <Work.Image onLoad={() => setImgIsReady((curr) => (idx < 2) ? curr + 1 : curr)} />
                     </ImageWrapper>
 
                     {currPortfolio === idx && (
@@ -342,10 +348,10 @@ export default ({ active, innerHeight }) => {
           })}
         </CarouselInner>
 
-        <Space {...{ active, animState, shift, onClick: () => setShift(-50) }} />
+        <Space {...{ active: isReady, animState, shift, onClick: () => setShift(-50) }} />
       </Carousel>
 
-      <Buttons {...{ active, animState, shift, setShift }} />
+      <Buttons {...{ active: isReady, animState, shift, setShift }} />
     </Container>
   )
 };

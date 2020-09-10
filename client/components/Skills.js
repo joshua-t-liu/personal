@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
-import styled, { css, keyframes } from 'styled-components';
+import React, { useRef } from 'react';
+import styled from 'styled-components';
 
 import SKILLS from '../skill_data';
 
@@ -10,10 +10,7 @@ const Container = styled.div`
   height: ${({ innerHeight }) => `calc(${innerHeight}px - 8em)`};
   overflow-y: auto;
   overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
   padding: 4em 1em;
-  align-items: stretch;
   text-align: center;
   @media (max-width: ${SMALL_WIDTH}) {
     font-size: 0.75em;
@@ -59,7 +56,9 @@ const Skills = styled.p`
   margin: 0;
   transform: translateY(5em);
   opacity: 0;
-  transition: ${({ delay }) => css`transform 0.5s ease-in-out ${(1 + delay)/8 + 0.11}s,opacity 0.5s ease-in-out ${(1 + delay)/8 + 0.11}s`};
+  &.active {
+    transition: ${({ delay }) => `transform 0.5s ease-in-out ${(1 + delay)/8 + 0.11}s,opacity 0.5s ease-in-out ${(1 + delay)/8 + 0.11}s`};
+  }
 `;
 
 const SkillSet = styled.div`
@@ -105,7 +104,7 @@ const List = ({ skillset, skills, active }) => {
   return (
     <SkillSet ref={ref} className={active && 'active'}>
       <SkillSetTitle title={skillset} />
-      {skills.map((skill, idx) => <Skills key={idx} delay={idx}>{skill}</Skills>)}
+      {skills.map((skill, idx) => <Skills className={active && 'active'} key={idx} delay={idx}>{skill}</Skills>)}
     </SkillSet>
   );
 };
