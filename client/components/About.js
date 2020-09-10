@@ -44,7 +44,7 @@ export default () => {
       <Home />
       <Portfolio active={hash === '#work'} innerHeight={innerHeight} />
       <Skills active={hash === '#skills'} innerHeight={innerHeight} />
-      <TimeLineParalax innerHeight={innerHeight} />
+      <TimeLineParalax active={hash === '#about'} innerHeight={innerHeight} />
       {/* <Form /> */}
     </React.Fragment>
   );

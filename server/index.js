@@ -23,7 +23,7 @@ app.use(express.static('./dist'));
 
 app.get('/portfolio', (req, res) => res.redirect('/'));
 
-app.get(/\/$|\/portfolio$/, (req, res) => {
+app.get('/', (req, res) => {
   const sheet = new ServerStyleSheet();
   try {
     const html = ReactDOMServer.renderToString(sheet.collectStyles(createElement(AppSSR, { location: ''  })));

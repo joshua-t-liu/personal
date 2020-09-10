@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect, forwardRef } from 'react';
-import styled, { css, keyframes } from 'styled-components';
+import React, { useRef, useState, useEffect } from 'react';
+import styled from 'styled-components';
 
 const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
@@ -9,7 +9,7 @@ const MEDIUM_WIDTH_INT = 1248;
 const TimeMark = styled.div`
   position: absolute;
   width: 100%;
-  visibility: hidden;
+  opacity: 0;
 `;
 
 const TimeMarkBubble = styled.div`
@@ -34,19 +34,13 @@ const TimeMarkLine = styled.div`
   left: 50%;
   width: ${({ left, right }) => `${(left && right && 10) || 5}vw`};
   transform: ${({ left, right }) => {
-    if (left && right) {
-      return `translate(-50%)`;
-    } else {
-      return `translate(${(left) ? '-100%' : null})`;
-    }
-  }};
+    if (left && right) return `translate(-50%)`;
+    return `translate(${(left) ? '-100%' : null})`;
+    }};
   background: ${({ left, right }) => {
-    if (right && left) {
-      return `linear-gradient(0.25turn, transparent, rgb(196,196,196), transparent)`;
-    } else {
-      return `linear-gradient(${(left) ? 'to left' : 'to right'}, rgb(196,196,196), transparent)`;
-    }
-  }};
+    if (right && left) return `linear-gradient(0.25turn, transparent, rgb(196,196,196), transparent)`;
+    return `linear-gradient(${(left) ? 'to left' : 'to right'}, rgb(196,196,196), transparent)`;
+    }};
   height: 0.1em;
   @media (max-width: ${MEDIUM_WIDTH}) {
     display: none;
@@ -108,7 +102,7 @@ const EventContainer = styled.div`
   padding: 15vh 0;
   overflow: hidden;
   &.active > ${TimeMark} {
-    visibility: visible;
+    opacity: 1;
   }
   @media (max-width: ${MEDIUM_WIDTH}) {
     flex-direction: column;
@@ -133,27 +127,36 @@ const Image = styled.img`
   height: 100%;
 `;
 
-export default ({ event, offset, innerHeight, innerWidth }) => {
-  const containerRef = useRef();
+const getTranslation = (visible, left, innerWidth, offsetTop, offset) => {
+  if (!visible) return;
+
+  let shift = (innerWidth < MEDIUM_WIDTH_INT) ? '50vh' : '75vh';
+  let leftBound = (innerWidth < MEDIUM_WIDTH_INT) ? '0px' : 'calc(45vw - 100%)';
+  let rightBound = (innerWidth < MEDIUM_WIDTH_INT) ? '0px' : 'calc(-45vw + 100%)';
+
+  if (left) {
+    return `translate(min(calc(-${offsetTop}px + ${offset}px + ${shift}), ${leftBound}))`;
+  }
+  return `translate(max(calc(${offsetTop}px - ${offset}px - ${shift}), ${rightBound}))`;
+};
+
+const getOpacity = (visible, offset, innerHeight, offsetTop) => {
+  if (!visible) return;
+  return `calc(0.75 + (${offset} + ${innerHeight / 2} - ${offsetTop}) /  ${innerHeight})`;
+};
+
+const getImgTranslation = (innerWidth, visible, offset, innerHeight, offsetTop) => {
+  let shift = (innerWidth < MEDIUM_WIDTH_INT) ? 0.75 : shift = 0.75;
+  if (!visible) return;
+  return `50% ${25 + 75 * (offset + innerHeight - offsetTop) / innerHeight}%`;
+};
+
+const Content = ({ right, event, left, props }) => {
   const ref = useRef();
-  const [active, setActive] = useState(false);
-  const [visible, setVisibility] = useState(false);
-  const year = (event.left && event.left.year) || (event.right && event.right.year);
+
+  const { visible, $offset, $innerHeight, $innerWidth, setActive } = props;
 
   useEffect(() => {
-
-    const optionsVisible = {
-      root: null,
-      rootMargin: `0px`,
-      threshold: 0,
-    };
-
-    const observerVisible = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => setVisibility(entry.isIntersecting));
-    }, optionsVisible);
-
-    observerVisible.observe(containerRef.current);
-
     const options = {
       root: document.body,
       rootMargin: `0px -44%`,
@@ -166,41 +169,66 @@ export default ({ event, offset, innerHeight, innerWidth }) => {
     observer.observe(ref.current);
   }, []);
 
-  const getTranslation = (left) => {
-    let shift = '75vh';
-    let leftBound = 'calc(45vw - 100%)';
-    let rightBound = 'calc(-45vw + 100%)';
-    if (innerWidth < MEDIUM_WIDTH_INT) {
-      shift = '50vh';
-      leftBound = '0px';
-      rightBound = '0px';
-    }
-    if (visible) {
-      if (left) {
-        return `translate(min(calc(-${ref.current.offsetTop}px + ${offset}px + ${shift}), ${leftBound}))`
-      }
-      return `translate(max(calc(${ref.current.offsetTop}px - ${offset}px - ${shift}), ${rightBound}))`
-    }
-  };
+  const { title, description, role, img } = event;
 
-  const getOpacity = () => {
-    if (ref.current && visible) return `calc(0.75 + (${offset} + ${innerHeight / 2} - ${ref.current.offsetTop}) /  ${innerHeight})`;
-  };
+  return (
+    <EventContent
+      style={{
+        transform: getTranslation(visible, left, $innerWidth, ref.current && ref.current.offsetTop, $offset),
+        opacity: getOpacity(visible, $offset, $innerHeight, ref.current && ref.current.offsetTop),
+      }}
+      ref={ref}
+      className={visible && 'watch'}
+      $right={right}
+      $offsetTop={ref.current && ref.current.offsetTop}
+      {...props}>
+        {img && (
+          <ImageFrame >
+            <Image
+              className='lazyload'
+              data-src={img}
+              style={{
+                objectPosition: getImgTranslation($innerWidth, visible, $offset, $innerHeight, ref.current && ref.current.offsetTop)
+              }} />
+          </ImageFrame>
+        )}
+        <Title>{title}</Title>
+        <Role>{role}</Role>
+        <Description>{description}</Description>
+    </EventContent>
+  )
+};
 
-  const getImgTranslation = () => {
-    let shift = (innerWidth < MEDIUM_WIDTH_INT) ? 0.75 : shift = 0.75;
-    if (ref.current && visible) return `50% ${25 + 75 * (offset + innerHeight - ref.current.offsetTop) / innerHeight}%`;
-  }
+export default ({ event, offset, innerHeight, innerWidth }) => {
+  const ref = useRef();
+  const [active, setActive] = useState(false);
+  const [visible, setVisibility] = useState(false);
+  const year = (event.left && event.left.year) || (event.right && event.right.year);
+
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: `0px`,
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => setVisibility(entry.isIntersecting));
+    }, options);
+
+    observer.observe(ref.current);
+  }, []);
 
   const props = {
+    visible,
     $offset: visible ? offset : undefined,
     $innerHeight: innerHeight,
     $innerWidth: innerWidth,
-    $offsetTop: ref.current && ref.current.offsetTop,
-  }
+    setActive,
+  };
 
   return (
-    <EventContainer ref={containerRef} className={active && 'active'}>
+    <EventContainer ref={ref} className={active && 'active'}>
       <TimeMark>
         <Date>{year}</Date>
         <TimeMarkLine left={event.left} right={event.right} />
@@ -208,46 +236,11 @@ export default ({ event, offset, innerHeight, innerWidth }) => {
       </TimeMark>
 
       {event.left && (
-        <EventContent
-          id={event.left.title}
-          style={{
-            transform: getTranslation(true),
-            opacity: getOpacity(),
-          }}
-          ref={ref}
-          className={visible && 'watch'}
-          $left={true}
-          {...props}>
-            {event.left.img && (
-            <ImageFrame >
-              <Image className='lazyload' data-src={event.left.img} style={{ objectPosition: getImgTranslation() }} />
-            </ImageFrame>
-            )}
-            <Title>{event.left.title}</Title>
-            <Role>{event.left.role}</Role>
-            <Description>{event.left.description}</Description>
-        </EventContent>
+        <Content {...{ event: event.left, left: true }} props={props}/>
       )}
 
       {event.right && (
-        <EventContent
-          style={{
-            transform: getTranslation(),
-            opacity: getOpacity(),
-          }}
-          ref={(!event.left || null)  && ref}
-          className={visible && 'watch'}
-          $right={true}
-          {...props}>
-            {event.right.img && (
-            <ImageFrame >
-              <Image className='lazyload' data-src={event.right.img} style={{ objectPosition: getImgTranslation() }} />
-              </ImageFrame>
-            )}
-            <Title>{event.right.title}</Title>
-            <Role>{event.right.role}</Role>
-            <Description>{event.right.description}</Description>
-        </EventContent>
+        <Content {...{ right: true, event: event.right }} props={props} />
       )}
     </EventContainer>
   )

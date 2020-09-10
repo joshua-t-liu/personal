@@ -15,14 +15,14 @@ const TimeLine = styled.div`
   width: 0.1em;
   background-color: rgb(196,196,196);
   transform: translateX(-50%);
-  visibility: hidden;
+  opacity: 0;
   &.active {
-    visibility: visible;
+    opacity: 1;
   }
   @media (max-width: ${MEDIUM_WIDTH}) {
-    visibility: hidden;
+    opacity: 0;
     &.active {
-      visibility: hidden;
+      opacity: 0;
     }
   }
 `;
@@ -46,7 +46,6 @@ const ScrollNote = styled.div`
     opacity: 0;
   }
 `
-
 const Desktop = styled.div`
   @media (max-width: ${SMALL_WIDTH}) {
     display: none;
@@ -61,16 +60,14 @@ const Mobile = styled.div`
 `;
 
 export default ({ offset, active }) => {
-  const ref = useRef();
-
   const words = ['ABOUT'];
 
   return (
-    <HeadContainer id='head' ref={ref}>
-      <TimeLine className={ref.current && offset && 'active'} />
+    <HeadContainer id='head'>
+      <TimeLine className={offset && 'active'} />
       <Mobile><Background words={words} stationary={true} size='7em' active={active} /></Mobile>
       <Desktop><Background words={words} stationary={true} size='15em' active={active} /></Desktop>
-      <ScrollNote className={ref.current && offset && 'active'}>scroll down</ScrollNote>
+      <ScrollNote className={offset && 'active'}>scroll down</ScrollNote>
     </HeadContainer>
   )
 };

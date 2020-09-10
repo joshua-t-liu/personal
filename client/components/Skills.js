@@ -46,9 +46,6 @@ const SkillSetTitle = styled.div`
   color: dodgerblue;
   transform: translateY(5em);
   opacity: 0;
-  // @media (max-width: ${SMALL_WIDTH}) {
-  //   align-self: flex-start;
-  // }
   transition: transform 0.5s ease-in-out 0.11s,opacity 0.5s ease-in-out 0.11s;
   &:before {
     content: ${({ title }) => `"${title }"`};
@@ -103,10 +100,6 @@ const SkillSet = styled.div`
 `;
 
 const List = ({ skillset, skills, active }) => {
-  useEffect(() => {
-
-  }, []);
-
   const ref = useRef();
 
   return (

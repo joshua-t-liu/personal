@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
-// import { PortfolioDesktop, PortfolioMobile } from './PortfolioModal';
 import PortfolioInfo from './PortfolioModal';
 import portfolios from '../../portfolio_data';
 import { computeClassNames } from '../../helper';

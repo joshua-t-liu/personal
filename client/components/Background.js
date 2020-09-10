@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from 'react';
-import styled, { css, keyframes } from 'styled-components';
 
 const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
@@ -54,7 +53,7 @@ const WordCloud = function(ctx, width, height, text, x, y, stationary, size) {
   this.top = measure.actualBoundingBoxAscent;
   this.bottom = measure.actualBoundingBoxDescent;
   this.x = x - (this.wide > this.width ? this.width : this.wide) / 2;
-  this.y = y - this.top - this.bottom;
+  this.y = y;
   this.states = [];
   this.state = 0;
 };
@@ -80,7 +79,7 @@ WordCloud.prototype.getParticles = function() {
         this.x,
         this.y,
         this.wide,
-        this.bottom + this.top);
+        this.height); //this.bottom + this.top
 
       for (let i=0; i< data.length; i += 4) {
         if (data[i] > 0 && Math.random() > 0.95) {
@@ -138,21 +137,18 @@ WordCloud.prototype.preRender = function() {
 
 WordCloud.prototype.draw = function() {
   if (!this.states.length) return;
-  this.state = (this.state + 1) % this.states.length;
+
   this.x += this.vx;
   this.y += this.vy;
-  if (this.width < (this.x + this.wide)) {
-    this.vx = -this.vx;
-  } else if (this.x < 0) {
+
+  if (this.width < (this.x + this.wide) || (this.x < 0)) {
     this.vx = -this.vx;
   }
-  if (this.height < (this.y + this.top + this.bottom)) {
-    this.vy = -this.vy;
-  } else if (this.y < 0) {
+  if (this.height < (this.y + this.top + this.bottom) || (this.y < 0)) {
     this.vy = -this.vy;
   }
 
-  this.ctx.drawImage(this.states[this.state], this.x, this.y);
+  this.ctx.drawImage(this.states[++this.state % this.states.length], this.x, this.y);
 };
 
 export default ({ active, words, stationary, size = '5em' }) => {
