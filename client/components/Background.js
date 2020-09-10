@@ -44,6 +44,7 @@ const WordCloud = function(ctx, width, height, text, x, y, stationary, size) {
   this.ctx = ctx;
   this.width = width;
   this.height = height;
+  this.rotRadius = 2;
 
   this.text = text;
   this.ctx.font = `${size} sans-serif`;
@@ -53,7 +54,7 @@ const WordCloud = function(ctx, width, height, text, x, y, stationary, size) {
   this.top = measure.actualBoundingBoxAscent;
   this.bottom = measure.actualBoundingBoxDescent;
   this.x = x - (this.wide > this.width ? this.width : this.wide) / 2;
-  this.y = y;
+  this.y = y - (this.top + this.bottom + this.rotRadius + Particle.max) / 2;
   this.states = [];
   this.state = 0;
 };
@@ -97,7 +98,6 @@ WordCloud.prototype.getParticles = function() {
 };
 
 WordCloud.prototype.preRender = function() {
-  const ROT_RADIUS = 2;
   const { cos } = Particle;
 
   const drawState = (i) => {
@@ -113,8 +113,8 @@ WordCloud.prototype.preRender = function() {
       this.particles[alpha].forEach((particle) => {
         const {x, y, radius, theta, dir} = particle;
         const thetaShift = (theta + i) % cos.length;
-        const xShift = ROT_RADIUS * Particle.cos[(dir) ? thetaShift : 19 - thetaShift];
-        const yShift = ROT_RADIUS * Particle.sin[(dir) ? thetaShift : 19 - thetaShift];
+        const xShift = this.rotRadius * Particle.cos[(dir) ? thetaShift : 19 - thetaShift];
+        const yShift = this.rotRadius * Particle.sin[(dir) ? thetaShift : 19 - thetaShift];
         const xPos = ~~(x + xShift);
         const yPos = ~~(y + yShift);
         ctx.moveTo(xPos, yPos);
