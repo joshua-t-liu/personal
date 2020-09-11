@@ -1,7 +1,8 @@
-import React, { useRef, useState, useEffect, forwardRef } from 'react';
-import styled, { css, keyframes } from 'styled-components';
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
 import Background from '../Background';
+import Spinner from '../Spinner';
 
 const SMALL_WIDTH = '768px';
 const MEDIUM_WIDTH = '1248px';
@@ -60,13 +61,23 @@ const Mobile = styled.div`
 `;
 
 export default ({ offset, active }) => {
+  const [isReady, setIsReady] = useState(false);
   const words = ['ABOUT'];
+
+  const onLoad = () => {
+    setIsReady(true);
+  };
 
   return (
     <HeadContainer id='head'>
+      {!isReady && active && <Spinner /> }
       <TimeLine className={offset && 'active'} />
-      <Mobile><Background words={words} stationary={true} size='7em' active={active} /></Mobile>
-      <Desktop><Background words={words} stationary={true} size='15em' active={active} /></Desktop>
+      <Mobile>
+        <Background words={words} stationary={true} size='7em' active={active} onLoad={onLoad} />
+      </Mobile>
+      <Desktop>
+        <Background words={words} stationary={true} size='15em' active={active} onLoad={onLoad} />
+      </Desktop>
       <ScrollNote className={offset && 'active'}>scroll down</ScrollNote>
     </HeadContainer>
   )

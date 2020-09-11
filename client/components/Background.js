@@ -151,20 +151,25 @@ WordCloud.prototype.draw = function() {
   this.ctx.drawImage(this.states[++this.state % this.states.length], this.x, this.y);
 };
 
-export default ({ active, words, stationary, size = '5em' }) => {
+export default ({ active, words, stationary, size = '5em', onLoad = () => {} }) => {
   const ref = useRef();
   const [wordClouds, setWordClouds] = useState([]);
 
   const animate = () => {
     const ctx = ref.current.getContext('2d', { alpha: true });
-    requestAnimationFrame(animate);
     ctx.clearRect(0, 0, ref.current.width, ref.current.height);
     wordClouds.forEach((wordCloud) => wordCloud.draw());
+    if (window.location.hash === '#about') requestAnimationFrame(animate);
   };
+
+  useEffect(() => animate(), [active])
 
   useEffect(() => {
     Promise.all(wordClouds.map((cloud) => cloud.init()))
-    .then(() => animate());
+    .then(() => {
+      animate();
+      onLoad();
+    });
   }, [wordClouds]);
 
   useEffect(() => {

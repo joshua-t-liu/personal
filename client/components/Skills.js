@@ -12,6 +12,8 @@ const Container = styled.div`
   overflow-x: hidden;
   padding: 4em 1em;
   text-align: center;
+  display: flex;
+  flex-direction: column;
   @media (max-width: ${SMALL_WIDTH}) {
     font-size: 0.75em;
   }

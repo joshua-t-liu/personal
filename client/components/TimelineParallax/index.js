@@ -20,7 +20,7 @@ export default ({ active, innerHeight }) => {
   const [innerWidth, setInnerWidth] = useState(0);
 
   const adjustOffset = () => {
-    if (active) requestAnimationFrame(adjustOffset);
+    if (window.location.hash === '#about') requestAnimationFrame(adjustOffset);
     if (ref.current) setOffset(ref.current.scrollTop);
   };
 

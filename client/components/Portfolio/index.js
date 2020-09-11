@@ -281,8 +281,20 @@ export default ({ active, innerHeight }) => {
   }, []);
 
   const close = () => {
-    setAnimState('deactive');
-    if (shiftLeft) setTimeout(() => setShiftLeft(null), 500);
+    const ele = document.getElementById('work');
+
+    const closePortfolio = () => {
+      if (!ele.scrollTop) {
+        setAnimState('deactive');
+        if (shiftLeft) setTimeout(() => setShiftLeft(null), 500);
+        ele.removeEventListener('scroll', closePortfolio);
+      } else {
+        setTimeout(closePortfolio, 50);
+      }
+    };
+
+    ele.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    closePortfolio();
   };
 
   const isReady = active && imgIsReady === 2;
