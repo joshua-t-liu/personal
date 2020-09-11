@@ -34,6 +34,7 @@ const HeadContainer = styled.div`
   height: 100%;
   width: 100%;
   font-weight: bold;
+  overflow: hidden;
 `;
 
 const ScrollNote = styled.div`

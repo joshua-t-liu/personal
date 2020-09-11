@@ -51,8 +51,8 @@ const WordCloud = function(ctx, width, height, text, x, y, stationary, size) {
   this.ctx.fillStyle = 'rgb(232,232,232)';
   const measure = this.ctx.measureText(this.text)
   this.wide = measure.width;
-  this.top = measure.actualBoundingBoxAscent;
-  this.bottom = measure.actualBoundingBoxDescent;
+  this.top = measure.actualBoundingBoxAscent || 0;
+  this.bottom = measure.actualBoundingBoxDescent || this.height / 4;
   this.x = x - (this.wide > this.width ? this.width : this.wide) / 2;
   this.y = y - (this.top + this.bottom + this.rotRadius + Particle.max) / 2;
   this.states = [];
@@ -110,7 +110,7 @@ WordCloud.prototype.preRender = function() {
 
     for (const alpha in this.particles) {
       ctx.beginPath();
-      ctx.fillStyle = `rgb(30,144,255,${alpha})`;
+      ctx.fillStyle = `rgba(30,144,255,${alpha})`;
 
       this.particles[alpha].forEach((particle) => {
         const {x, y, radius, theta, dir} = particle;

@@ -274,10 +274,18 @@ export default ({ active, innerHeight }) => {
   };
 
   useEffect(() => {
-    const resizeObserver = new ResizeObserver(entries => {
-      if (entries[0].target === ref.current) getOffsets(ref.current);
-    });
-    resizeObserver.observe(ref.current);
+    if (!window.ResizeObeserver) getOffsets();
+  }, [ref.current]);
+
+  useEffect(() => {
+    if (window.ResizeObserver) {
+      const resizeObserver = new ResizeObserver(entries => {
+        if (entries[0].target === ref.current) getOffsets();
+      });
+      resizeObserver.observe(ref.current);
+    } else {
+      getOffsets();
+    }
   }, []);
 
   const close = () => {
@@ -293,7 +301,12 @@ export default ({ active, innerHeight }) => {
       }
     };
 
-    ele.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    if (ele.scrollTo) {
+      ele.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    } else {
+      ele.scrollTop = 0;
+    }
+
     closePortfolio();
   };
 
@@ -325,7 +338,8 @@ export default ({ active, innerHeight }) => {
                   className={currPortfolio === idx && animState}
                   onClick={() => {
                     if (!animState) {
-                      setShiftLeft(portfolioRef.current && portfolioRef.current.getBoundingClientRect().x / window.innerWidth > 0.5);
+                      setShiftLeft(portfolioRef.current && portfolioRef.current.offsetLeft / window.innerWidth > 0.5);
+                      // setShiftLeft(portfolioRef.current && portfolioRef.current.getBoundingClientRect().x / window.innerWidth > 0.5);
                       setCurrPortfolio(idx);
                       setAnimState(() => (offsets.$width <= SMALL_WIDTH_INT) ? 'still' : 'active');
                     }

@@ -18,7 +18,13 @@ export default () => {
       let id = window.location.hash.substr(1);
       if (id === '') id = 'home';
       const ele = document.getElementById(id);
-      ele.scrollTo(0, 0);
+
+      if (ele.scrollTo) {
+        ele.scrollTo(0, 0);
+      } else {
+        ele.scrollTop = 0;
+      }
+
       window.scrollTo(0,ele.offsetTop);
     }
 

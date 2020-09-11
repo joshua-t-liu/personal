@@ -34,7 +34,7 @@ const Title = styled.h2`
 const SkillSets = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-around;
   margin: auto 0;
   @media (max-width: ${SMALL_WIDTH}) {
     margin-top: 1em;
