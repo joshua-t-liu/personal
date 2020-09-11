@@ -149,11 +149,8 @@ WordCloud.prototype.draw = function() {
   if (this.height < (this.y + this.top + this.bottom) || (this.y < 0)) {
     this.vy = -this.vy;
   }
-  if (this.ready === this.count) {
-    this.ctx.drawImage(this.states[++this.state % this.states.length], this.x, this.y);
-  } else {
 
-  }
+  this.ctx.drawImage(this.states[++this.state % this.states.length], this.x, this.y);
 };
 
 export default ({ active, words, stationary, size = '5em', onLoad = () => {} }) => {
