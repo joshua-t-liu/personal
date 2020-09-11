@@ -19,6 +19,7 @@ export default () => {
       if (id === '') id = 'home';
       const ele = document.getElementById(id);
       ele.scrollTo(0, 0);
+      window.scrollTo(0,ele.offsetTop);
     }
 
     setInnerHeight(window.innerHeight);
@@ -31,6 +32,7 @@ export default () => {
 
     window.addEventListener('resize', () => {
       setInnerHeight(window.innerHeight);
+      scrollTop();
     });
 
   }, []);

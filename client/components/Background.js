@@ -57,6 +57,8 @@ const WordCloud = function(ctx, width, height, text, x, y, stationary, size) {
   this.y = y - (this.top + this.bottom + this.rotRadius + Particle.max) / 2;
   this.states = [];
   this.state = 0;
+  this.count = 0;
+  this.ready = 0;
 };
 
 WordCloud.prototype.init = function() {
@@ -91,7 +93,7 @@ WordCloud.prototype.getParticles = function() {
           particles[particle.alpha].push(particle);
         }
       }
-
+      this.count = Object.keys(particles).reduce((total, alpha) => total += particles[alpha].length, 0);
       resolve(particles)
     }, 0);
   });
@@ -147,8 +149,11 @@ WordCloud.prototype.draw = function() {
   if (this.height < (this.y + this.top + this.bottom) || (this.y < 0)) {
     this.vy = -this.vy;
   }
+  if (this.ready === this.count) {
+    this.ctx.drawImage(this.states[++this.state % this.states.length], this.x, this.y);
+  } else {
 
-  this.ctx.drawImage(this.states[++this.state % this.states.length], this.x, this.y);
+  }
 };
 
 export default ({ active, words, stationary, size = '5em', onLoad = () => {} }) => {
