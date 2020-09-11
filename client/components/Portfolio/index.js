@@ -338,8 +338,8 @@ export default ({ active, innerHeight }) => {
                   className={currPortfolio === idx && animState}
                   onClick={() => {
                     if (!animState) {
-                      setShiftLeft(portfolioRef.current && portfolioRef.current.offsetLeft / window.innerWidth > 0.5);
                       // setShiftLeft(portfolioRef.current && portfolioRef.current.getBoundingClientRect().x / window.innerWidth > 0.5);
+                      setShiftLeft((Math.abs(shift / 50) + idx) % 2);
                       setCurrPortfolio(idx);
                       setAnimState(() => (offsets.$width <= SMALL_WIDTH_INT) ? 'still' : 'active');
                     }
