@@ -106,6 +106,15 @@ const Portfolio: FC<Prop> = ({ active, innerHeight }) => {
   const [imgIsReady, setImgIsReady] = useState(0);
   const ref = useRef(null);
 
+  // issue: Edge calls getOffsets with the wrong value
+  useEffect(() => {
+    const getOffsets = () => setOffsets(() => {
+      const { offsetWidth, offsetTop } = ref.current;
+      return { offsetWidth: offsetWidth / 4, offsetTop, width: window.innerWidth };
+    });
+    getOffsets();
+  }, [active]);
+
   useEffect(() => {
     const getOffsets = () => setOffsets(() => {
       const { offsetWidth, offsetTop } = ref.current;
