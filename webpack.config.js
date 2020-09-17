@@ -2,13 +2,7 @@ const path = require('path');
 
 module.exports = {
   mode: 'production',
-  // entry: ['babel-polyfill', './client/hydrate.js'],
-  entry: ['./client/hydrate.js'],
-  // entry: {
-  //   // website: './client/index.js',
-  //   'babel-polyfill': 'babel-polyfill',
-  //   hydrate: './client/hydrate.js',
-  // },
+  entry: ['./client/hydrate.tsx'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'hydrate.js',
@@ -16,13 +10,13 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.jsx?$|\.tsx?$/,
         include: [
           path.resolve(__dirname, 'client')
         ],
         loader: 'babel-loader',
         options: {
-          presets: ['@babel/preset-env', '@babel/preset-react'],
+          presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
           plugins: ['babel-plugin-styled-components'],
         }
       }
@@ -32,5 +26,8 @@ module.exports = {
     react: 'React',
     'react-dom': 'ReactDOM',
     'styled-components': 'styled',
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
   }
 }

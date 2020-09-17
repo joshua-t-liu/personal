@@ -1,6 +1,7 @@
-require('babel-register')({
-  presets: ['env', 'react'],
-  plugins: ['dynamic-import-node', 'babel-plugin-styled-components']
+require('@babel/register')({
+  extensions: ['.js', '.jsx', '.ts', '.tsx'],
+  presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+  plugins: ['babel-plugin-styled-components']
 });
 
 if (typeof(window) === 'undefined') global.window = new Object();
