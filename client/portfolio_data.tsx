@@ -115,7 +115,7 @@ export default [
   // },
   PortfolioData({
     title: 'PORTFOLIO',
-    technology: ['typescript', 'React', 'React Router', 'Node', 'Express', 'AWS', 'Server Side Rendering', 'Webpack'],
+    technology: ['TypeScript', 'React', 'React Router', 'Node', 'Express', 'AWS', 'Server Side Rendering', 'Webpack', 'Babel'],
     situation: 'I desgined and coded my portfolio website from scratch. Still working to create a better user experience for my portfolio.',
     actions: [
       'Delivered a responsive experience by implementing media queries and testing cross-browsers (Chrome, Safari, Firefox) and cross-devices (iphone and Samsung).',
