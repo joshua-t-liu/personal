@@ -30,8 +30,6 @@ const Icon = styled.svg`
   cursor: pointer;
 `;
 
-// Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
-
 interface LinkProps {
   href: string;
 }
@@ -47,8 +45,6 @@ const GitHub: FC<LinkProps> = ({ href = 'https://github.com/joshua-t-liu' }) => 
   </a>
 );
 
-// Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
-
 const Linkedin: FC<LinkProps> = ({ href = 'https://www.linkedin.com/in/joshuathliu/' }) => (
   <a href={href} aria-label="Linkedin">
     <Icon height="3em" viewBox="0 0 512 512" fill="rgb(74,74,74)">
@@ -58,7 +54,6 @@ const Linkedin: FC<LinkProps> = ({ href = 'https://www.linkedin.com/in/joshuathl
   </a>
 );
 
-// Icons made by <a href="https://www.flaticon.com/free-icon/email_181535" title="Chanut">Chanut</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 const Email: FC<LinkProps> = ({ href }) => (
   <a href="mailto:josh.th.liu@gmail.com" aria-label="Email">
     <Icon x="0px" y="0px" viewBox="0 0 299.997 299.997" fill="rgb(74,74,74)" height="3em">

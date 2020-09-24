@@ -1,22 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled, { keyframes } from 'styled-components';
 
+import Container from './Container';
 import Navigation from './Navigation';
 import { Social } from './Buttons';
-import { SMALL_WIDTH, MEDIUM_WIDTH } from '../helper';
-
-const Container = styled.div`
-  display: flex;
-  padding: 3em 1em;
-  height: calc(100vh - 6em);
-  overflow-y: auto;
-  overflow-x: hidden;
-  @media (max-width: ${MEDIUM_WIDTH}) {
-    padding: 2em 0;
-    height: calc(100vh - 4em);
-    font-size: 0.75em;
-  }
-`;
+import { SMALL_WIDTH } from '../helper';
 
 const Banner = styled.div`
   margin: auto;
@@ -56,8 +44,12 @@ const Title = styled.h1`
   }
 `;
 
-export default () => (
-  <Container id="home">
+interface Props {
+  innerHeight: number;
+}
+
+const Home: FC<Props> = ({ innerHeight }) => (
+  <Container id="home" innerHeight={innerHeight}>
     <Banner>
       <Role>Full Stack Engineer </Role>
       <Title>JOSHUA LIU</Title>
@@ -68,3 +60,5 @@ export default () => (
     </Banner>
   </Container>
 );
+
+export default Home;

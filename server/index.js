@@ -24,6 +24,9 @@ app.use(express.static('./dist'));
 
 app.get('/portfolio', (req, res) => res.redirect('/'));
 
+app.get('/chartsy', (req, res) => res.redirect('http://www.jliuportfolio.com:3100'));
+app.get('/easychart', (req, res) => res.redirect('http://www.jliuportfolio.com:3100'));
+
 app.get('/', (req, res) => {
   const sheet = new ServerStyleSheet();
   try {

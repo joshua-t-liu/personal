@@ -1,22 +1,23 @@
 import React, { useRef, FC } from 'react';
 import styled from 'styled-components';
 
+import Container from './Container';
 import SKILLS from '../skill_data';
 
 const SMALL_WIDTH = '768px';
 
-const Container = styled.div`
-  height: ${({ innerHeight }) => `calc(${innerHeight}px - 8em)`};
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 4em 1em;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  @media (max-width: ${SMALL_WIDTH}) {
-    font-size: 0.75em;
-  }
-`;
+// const Container = styled.div`
+//   height: ${({ innerHeight }) => `calc(${innerHeight}px - 8em)`};
+//   overflow-y: auto;
+//   overflow-x: hidden;
+//   padding: 4em 1em;
+//   text-align: center;
+//   display: flex;
+//   flex-direction: column;
+//   @media (max-width: ${SMALL_WIDTH}) {
+//     font-size: 0.75em;
+//   }
+// `;
 
 const Title = styled.h2`
   font-size: 3em;

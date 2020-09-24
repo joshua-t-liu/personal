@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 
+import Container from '../Container';
 import PortfolioCard from './PortfolioCard';
 import portfolios from '../../portfolio_data';
 import { computeClassNames } from '../../helper';
@@ -12,21 +13,10 @@ import Spinner from '../Spinner';
 
 const SMALL_WIDTH = '768px';
 
-const Container = styled.div`
-  position: relative;
-  height: ${({ innerHeight }) => `calc(${innerHeight}px - 4em)`};
-  overflow-y: auto;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2em;
-`;
-
 const Title = styled.h2`
   font-size: 3em;
   flex-grow: 1;
-  margin: 1em;
+  margin: 1em auto;
   opacity: 0;
   transform: translate(0, 300%);
   transition-property: opacity, transform;

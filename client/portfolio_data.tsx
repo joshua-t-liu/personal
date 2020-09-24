@@ -68,7 +68,10 @@ export default [
       }, []);
 
       return (
-        <div id="image-gallery" style={{ width: '100%' }} />
+        <div style={{ textAlign: 'center' }}>
+          <p>Click the image to view the gallery.</p>
+          <div id="image-gallery" style={{ width: '100%' }} />
+        </div>
       );
     },
   }),
@@ -93,52 +96,51 @@ export default [
       </div>
     ),
   }),
-  // {
-  //   title: 'IPHONE RESALE DASHBOARD',
-  //   technology: ['React', 'Node', 'Express', 'Puppeteer', 'AWS', 'Webpack', 'Babel'],
-  //   situation: 'Created a dashboard that pulls iphone re-sale values. Re-sale values were taken from Gazelle and SellYourMac.',
-  //   actions: [
-  //     'Scrapped Gazelle and SellYourMac to get the iphone re-sale price.',
-  //     'Created RESTful API implementation for dashboard.',
-  //     'Deployed website on AWS.',
-  //   ],
-  //   result: 'Streamlined process for collecting re-sale prices for iphones.',
-  //   href: 'https://github.com/joshua-t-liu/gazelle',
-  //   Image: ({ active, deactive }) => <Image link='' />,
-  //   Component: () => {
-  //     return (
-  //       <div style={{ textAlign: 'center' }}>
-  //         {<img className='lazyload' style={{ maxWidth: '750px', width: '100%', border: 'solid 1px rgb(196,196,196)' }} data-src='' />}
-  //       </div>
-  //     )
-  //   }
-  // },
   PortfolioData({
-    title: 'PORTFOLIO',
-    technology: ['TypeScript', 'React', 'React Router', 'Node', 'Express', 'AWS', 'Server Side Rendering', 'Webpack', 'Babel'],
-    situation: 'I desgined and coded my portfolio website from scratch. Still working to create a better user experience for my portfolio.',
+    title: 'CHARTSY',
+    technology: ['React', 'Chart.js','Node', 'Express', 'AWS', 'Webpack', 'Babel'],
+    situation: 'Developed a web application that helps users create different charts from csv files.',
     actions: [
-      'Delivered a responsive experience by implementing media queries and testing cross-browsers (Chrome, Safari, Firefox) and cross-devices (iphone and Samsung).',
-      'Implemented server side rendering using React.',
-      'Implemented parallax and animation effects from scratch.',
-      'Optimized animations to meet 60 fps (in progress).',
-      'Deployed website on AWS.',
+      'Designed front end using React and Chart.js.',
+      'Incorporated useReducer hook to manage application state.',
+      'Deployed web application on AWS.',
     ],
-    result: 'Responsive site with first contentful paint under 2 seconds.',
-    href: 'https://github.com/joshua-t-liu/personal',
-    link: './website-new.png',
+    result: 'Developed performant tool that creates beautiful charts.',
+    href: 'https://github.com/joshua-t-liu/gazelle',
+    link: './chartsy-graph.png',
     Component: () => (
       <div style={{ textAlign: 'center' }}>
-        <img className="lazyload" style={{ maxWidth: '750px', width: '100%', border: 'solid 1px rgb(196,196,196)' }} data-src="./website-new.png" />
-        {false && (
-          <img
-            style={{
-              border: '1px solid rgb(196, 196, 196)', objectFit: 'cover', height: '80%', margin: 'auto',
-            }}
-            src="./website-new.png"
-          />
-        )}
+        <p>Feel free to test out <a href="http://www.jliuportfolio.com/chartsy">Chartsy</a>.</p>
+        <img className="lazyload" style={{ maxWidth: '750px', width: '100%', border: 'solid 1px rgb(196,196,196)' }} data-src="./chartsy.png" />
       </div>
     ),
   }),
+  // PortfolioData({
+  //   title: 'PORTFOLIO',
+  //   technology: ['TypeScript', 'React', 'React Router', 'Node', 'Express', 'AWS', 'Server Side Rendering', 'Webpack', 'Babel'],
+  //   situation: 'I desgined and coded my portfolio website from scratch. Still working to create a better user experience for my portfolio.',
+  //   actions: [
+  //     'Delivered a responsive experience by implementing media queries and testing cross-browsers (Chrome, Safari, Firefox) and cross-devices (iphone and Samsung).',
+  //     'Implemented server side rendering using React.',
+  //     'Implemented parallax and animation effects from scratch.',
+  //     'Optimized animations to meet 60 fps (in progress).',
+  //     'Deployed website on AWS.',
+  //   ],
+  //   result: 'Responsive site with first contentful paint under 2 seconds.',
+  //   href: 'https://github.com/joshua-t-liu/personal',
+  //   link: './website-new.png',
+  //   Component: () => (
+  //     <div style={{ textAlign: 'center' }}>
+  //       <img className="lazyload" style={{ maxWidth: '750px', width: '100%', border: 'solid 1px rgb(196,196,196)' }} data-src="./website-new.png" />
+  //       {false && (
+  //         <img
+  //           style={{
+  //             border: '1px solid rgb(196, 196, 196)', objectFit: 'cover', height: '80%', margin: 'auto',
+  //           }}
+  //           src="./website-new.png"
+  //         />
+  //       )}
+  //     </div>
+  //   ),
+  // }),
 ];

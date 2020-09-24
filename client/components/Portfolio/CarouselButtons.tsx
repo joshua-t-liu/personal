@@ -14,7 +14,7 @@ const StyledButtons = styled.div`
   transition-delay: 0s;
   transition-duration: 1s;
   transition-timing-function: ease-in;
-  margin-top: 1em;
+  margin: 1em auto;
   &.active {
     opacity: 1;
   }
@@ -75,7 +75,7 @@ const StyledSpace = styled.div`
 const ArrowContainer = styled.div`
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: ${({ $left }) => ($left) ? '60%' : '40%'};
   transform: translate(-50%, -50%);
 `;
 
@@ -91,7 +91,7 @@ const Space: FC<SpaceProps> = ({
   left, active, animState, shift, onClick,
 }) => (
   <StyledSpace left={left} className={(active && animState === null) && 'active'}>
-    <ArrowContainer>
+    <ArrowContainer $left={left}>
       {left && <LeftArrow active={active && shift} onClick={onClick} />}
       {!left && <RightArrow active={active && !shift} onClick={onClick} />}
     </ArrowContainer>
