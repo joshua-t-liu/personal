@@ -18,6 +18,7 @@ const Title = styled.h2`
   flex-grow: 1;
   margin: 1em auto;
   opacity: 0;
+  text-align: center;
   transform: translate(0, 300%);
   transition-property: opacity, transform;
   transition-delay: 0s;
@@ -47,6 +48,7 @@ const Carousel = styled.div`
   @media (max-width: ${SMALL_WIDTH}) {
     flex-wrap: wrap;
     height: 100%;
+    justify-content: center;
     &:before {
       content: none;
     }
