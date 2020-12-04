@@ -5,7 +5,7 @@ module.exports = {
   entry: ['./client/app.jsx'],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: 'bundle-website.js',
   },
   module: {
     rules: [
