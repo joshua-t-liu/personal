@@ -2,7 +2,6 @@ node_modules
 client/components-old
 /client/images
 nohup.out
-index.html
 /client/index-old.js
 /client/components/Bubbles.js
 /client/components/Portfolios-old.js
