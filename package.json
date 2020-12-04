@@ -10,7 +10,7 @@
     "create-react-class": "^15.6.3",
     "express": "^4.17.1",
     "lazysizes": "^5.2.2",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.6",
     "react": "^16.13.1",
     "styled-components": "^5.2.0"
   },

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
 import About from './About';
@@ -16,13 +16,15 @@ interface Props {
 }
 
 const App: FC <Props> = ({ path }) => (
-  <StyledApp id="application">
-    <Switch>
-      <Route exact path="/">
-        <About />
-      </Route>
-    </Switch>
-  </StyledApp>
+  <Router>
+    <StyledApp id="application">
+      <Switch>
+        <Route exact path="/">
+          <About />
+        </Route>
+      </Switch>
+    </StyledApp>
+  </Router>
 );
 
 export default App;

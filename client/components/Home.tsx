@@ -51,7 +51,7 @@ interface Props {
 const Home: FC<Props> = ({ innerHeight }) => (
   <Container id="home" innerHeight={innerHeight}>
     <Banner>
-      <Role>Full Stack Engineer </Role>
+      <Role>Full Stack Engineer</Role>
       <Title>JOSHUA LIU</Title>
       <Menu>
         <Navigation />

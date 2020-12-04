@@ -2,10 +2,10 @@ const path = require('path');
 
 module.exports = {
   mode: 'production',
-  entry: ['./client/hydrate.tsx'],
+  entry: ['./client/app.jsx'],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'hydrate.js',
+    filename: 'bundle.js',
   },
   module: {
     rules: [
