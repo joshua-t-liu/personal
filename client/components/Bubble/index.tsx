@@ -13,7 +13,7 @@ interface Props {
 }
 
 const Bubble: FC<Props> = ({
-  active, words, stationary, size = '5em', onLoad = () => {},
+  active, words, stationary, size = '5em',
 }) => {
   const ref = useRef();
   const [wordClouds, setWordClouds] = useState([]);
@@ -22,7 +22,7 @@ const Bubble: FC<Props> = ({
     const ctx = ref.current.getContext('2d', { alpha: true });
     ctx.clearRect(0, 0, ref.current.width, ref.current.height);
     wordClouds.forEach((wordCloud) => wordCloud.draw());
-    if (window.location.hash === '#about') requestAnimationFrame(animate);
+    requestAnimationFrame(animate);
   };
 
   useEffect(() => animate(), [active]);
@@ -31,7 +31,6 @@ const Bubble: FC<Props> = ({
     Promise.all(wordClouds.map((cloud) => cloud.init()))
       .then(() => {
         animate();
-        onLoad();
       });
   }, [wordClouds]);
 

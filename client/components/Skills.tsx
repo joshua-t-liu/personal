@@ -1,29 +1,23 @@
-import React, { useRef, FC } from 'react';
-import styled from 'styled-components';
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  FC,
+} from 'react';
+import styled, {
+  keyframes
+} from 'styled-components';
 import { HomeButton } from './Buttons';
 
 import Container from './Container';
 import SKILLS from '../skill_data';
 
 const SMALL_WIDTH = '768px';
-
-// const Container = styled.div`
-//   height: ${({ innerHeight }) => `calc(${innerHeight}px - 8em)`};
-//   overflow-y: auto;
-//   overflow-x: hidden;
-//   padding: 4em 1em;
-//   text-align: center;
-//   display: flex;
-//   flex-direction: column;
-//   @media (max-width: ${SMALL_WIDTH}) {
-//     font-size: 0.75em;
-//   }
-// `;
-
 const Title = styled.h2`
   font-size: 3em;
   margin: 0;
   opacity: 0;
+  animation
   transform: translate(0, -5em);
   transition: transform 0.33s ease-in-out 0s, opacity 0.33s ease-in-out 0s;
   &.active {
@@ -122,16 +116,24 @@ interface SkillsProps {
   active: boolean;
 }
 
-const Skills: FC<SkillsProps> = ({ innerHeight, active }) => (
-  <Container id="skills" innerHeight={innerHeight}>
-    <HomeButton />
-    <Title className={active && 'active'}>Skills</Title>
-    <SkillSets>
-      {Object.entries(SKILLS.frameworks).map(([skillset, skills]) => (
-        <List key={skillset} {...{ skillset, skills }} active={active} />
-      ))}
-    </SkillSets>
-  </Container>
-);
+const Skills: FC<SkillsProps> = ({ innerHeight }) => {
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    setActive(true);
+  }, []);
+
+  return (
+    <Container id="skills" innerHeight={innerHeight}>
+      <HomeButton />
+      <Title className={active && 'active'}>Skills</Title>
+      <SkillSets>
+        {Object.entries(SKILLS.frameworks).map(([skillset, skills]) => (
+          <List key={skillset} {...{ skillset, skills }} active={active} />
+        ))}
+      </SkillSets>
+    </Container>
+  )
+};
 
 export default Skills;

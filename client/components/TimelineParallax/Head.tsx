@@ -65,20 +65,16 @@ interface Props {
 }
 
 const TimeLineHead: FC<Props> = ({ offset, active }) => {
-  const [isReady, setIsReady] = useState(false);
   const words: Array<string> = ['ABOUT'];
-
-  const onLoad = () => setIsReady(true);
 
   return (
     <HeadContainer id="head">
-      {!isReady && active && <Spinner /> }
       <TimeLine className={offset && 'active'} />
       <Mobile>
-        <Bubble words={words} stationary size="7em" active={active} onLoad={onLoad} />
+        <Bubble words={words} stationary size="7em" active={active} />
       </Mobile>
       <Desktop>
-        <Bubble words={words} stationary size="15em" active={active} onLoad={onLoad} />
+        <Bubble words={words} stationary size="15em" active={active} />
       </Desktop>
       <ScrollNote className={offset && 'active'}>scroll down</ScrollNote>
     </HeadContainer>
