@@ -10,7 +10,7 @@ import {
  } from 'react-router-dom';
 import styled from 'styled-components';
 
-import About from './About';
+import Home from './Home';
 import Portfolio from './Portfolio';
 import Skills from './Skills';
 import TimelineParalax from './TimelineParallax';
@@ -28,35 +28,10 @@ interface Props {
 
 const App: FC <Props> = ({ path }) => {
   const [innerHeight, setInnerHeight] = useState(100000);
-  const [hash, setHash]: [string, Function] = useState('#home');
 
   useEffect(() => {
-    const scrollTop = () => {
-      let id: string = window.location.hash.substr(1);
-      if (id === '') id = 'home';
-      const ele: HTMLElement = document.getElementById(id);
-
-      if (ele.scrollTo) {
-        ele.scrollTo(0, 0);
-      } else {
-        ele.scrollTop = 0;
-      }
-
-      window.scrollTo(0, ele.offsetTop);
-    };
-
     setInnerHeight(window.innerHeight);
-    setHash(window.location.hash);
-
-    window.addEventListener('hashchange', () => {
-      setHash(window.location.hash);
-      scrollTop();
-    });
-
-    window.addEventListener('resize', () => {
-      setInnerHeight(window.innerHeight);
-      scrollTop();
-    });
+    window.addEventListener('resize', () => setInnerHeight(window.innerHeight));
   }, []);
   
   return (
@@ -64,7 +39,7 @@ const App: FC <Props> = ({ path }) => {
       <StyledApp id="application">
         <Switch>
           <Route exact path="/">
-            <About />
+            <Home innerHeight={innerHeight} />
           </Route>
           <Route exact path="/work">
             <Portfolio active innerHeight={innerHeight} />

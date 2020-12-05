@@ -7,6 +7,7 @@ import Head from './Head';
 import Event from './Event';
 import Present from './Present';
 import events from '../../timeline_data';
+import { HomeButton } from '../Buttons';
 
 const Container = styled.div`
   position: relative;
@@ -40,6 +41,7 @@ const TimeLine: FC<Props> = ({ active, innerHeight }) => {
 
   return (
     <Container id="about" ref={ref} innerHeight={innerHeight}>
+      <HomeButton />
       <Head offset={offset} active={active} />
       {events.map((event, idx) => (
         <Event

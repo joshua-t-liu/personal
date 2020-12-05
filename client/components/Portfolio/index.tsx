@@ -154,6 +154,8 @@ const Portfolio: FC<Prop> = ({ active, innerHeight }) => {
     <Container id="work" innerHeight={innerHeight}>
       {!isReady && active && <Spinner />}
       {animState && <HomeButton type="div" onClick={close} />}
+      
+      <HomeButton />
       <Title className={computeClassNames({ active: isReady, reverse: animState })}>Work</Title>
 
       <Carousel ref={ref} id="carousel">

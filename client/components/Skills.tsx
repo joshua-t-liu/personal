@@ -1,5 +1,6 @@
 import React, { useRef, FC } from 'react';
 import styled from 'styled-components';
+import { HomeButton } from './Buttons';
 
 import Container from './Container';
 import SKILLS from '../skill_data';
@@ -123,6 +124,7 @@ interface SkillsProps {
 
 const Skills: FC<SkillsProps> = ({ innerHeight, active }) => (
   <Container id="skills" innerHeight={innerHeight}>
+    <HomeButton />
     <Title className={active && 'active'}>Skills</Title>
     <SkillSets>
       {Object.entries(SKILLS.frameworks).map(([skillset, skills]) => (
