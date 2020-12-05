@@ -43,9 +43,6 @@ export default () => {
     <React.Fragment>
       {(hash !== '#home' && hash.length > 0) && <HomeButton />}
       <Home innerHeight={innerHeight} />
-      <Portfolio active={hash === '#work'} innerHeight={innerHeight} />
-      <Skills active={hash === '#skills'} innerHeight={innerHeight} />
-      <TimeLineParalax active={hash === '#about'} innerHeight={innerHeight} />
     </React.Fragment>
   );
 };

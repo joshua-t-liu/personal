@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import {
+  Link,
+} from "react-router-dom";
 
 const SMALL_WIDTH = '768px';
 
-const Link = styled.div`
+const StyledLink = styled(Link)`
   margin: 1.75em;
   border: solid 0.1em rgb(51,51,51);
   border-radius: 2em;
@@ -65,13 +68,11 @@ export default () => (
   <NavBar>
     <Line />
     {['work', 'skills', 'about'].map((title) => (
-      <Link
-        as="a"
-        href={`#${title}`}
-        key={title}
+      <StyledLink
+        to={`/${title}`}
       >
         {title.toUpperCase()}
-      </Link>
+      </StyledLink>
     ))}
   </NavBar>
 );

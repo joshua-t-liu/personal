@@ -27,7 +27,7 @@ const TimeLine: FC<Props> = ({ active, innerHeight }) => {
   const [innerWidth, setInnerWidth] = useState(0);
 
   const adjustOffset = () => {
-    if (window.location.hash === '#about') requestAnimationFrame(adjustOffset);
+    requestAnimationFrame(adjustOffset);
     if (ref.current) setOffset(ref.current.scrollTop);
   };
 

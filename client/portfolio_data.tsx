@@ -119,17 +119,15 @@ export default [
     ),
   }),
   // PortfolioData({
-  //   title: 'PORTFOLIO',
-  //   technology: ['TypeScript', 'React', 'React Router', 'Node', 'Express', 'AWS', 'Server Side Rendering', 'Webpack', 'Babel'],
-  //   situation: 'I desgined and coded my portfolio website from scratch. Still working to create a better user experience for my portfolio.',
+  //   title: 'GIF-Maker',
+  //   technology: ['JavaScript', 'React', 'Canvas', 'Python'],
+  //   situation: 'Desgined and coded application that lets users \
+  //     create GIFs that displays an image slideshow.',
   //   actions: [
-  //     'Delivered a responsive experience by implementing media queries and testing cross-browsers (Chrome, Safari, Firefox) and cross-devices (iphone and Samsung).',
-  //     'Implemented server side rendering using React.',
-  //     'Implemented parallax and animation effects from scratch.',
-  //     'Optimized animations to meet 60 fps (in progress).',
-  //     'Deployed website on AWS.',
+  //     'Coded features that lets usesr upload images.',
+  //     'Developed features such as translating, cropping, resizing of images.',
   //   ],
-  //   result: 'Responsive site with first contentful paint under 2 seconds.',
+  //   result: 'Simple tool to let users create GIFs that displays an image slideshow.',
   //   href: 'https://github.com/joshua-t-liu/personal',
   //   link: './website-new.png',
   //   Component: () => (
