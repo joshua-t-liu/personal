@@ -61,7 +61,7 @@ export default [
       useEffect(() => {
         const loadScript = () => {
           const script = document.createElement('script');
-          script.src = './bundle.js';
+          script.src = './image-gallery/bundle.js';
           document.body.append(script);
         };
         loadScript();
@@ -107,11 +107,14 @@ export default [
     ],
     result: 'Developed performant tool that creates beautiful charts.',
     href: 'https://github.com/joshua-t-liu/gazelle',
-    link: './chartsy-graph.png',
+    link: './slide-chartsy.png',
     Component: () => (
       <div style={{ textAlign: 'center' }}>
-        <p>Feel free to test out <a href="http://www.jliuportfolio.com/chartsy">Chartsy</a>.</p>
-        <img className="lazyload" style={{ maxWidth: '750px', width: '100%', border: 'solid 1px rgb(196,196,196)' }} data-src="./chartsy.png" />
+        <p>Feel free to test out <a href="/chartsy">Chartsy</a>.</p>
+        <img
+          className="lazyload"
+          style={{ maxWidth: '750px', width: '100%', border: 'solid 1px rgb(196,196,196)' }}
+          data-src="./image-chartsy.png" />
       </div>
     ),
   }),
