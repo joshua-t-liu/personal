@@ -7,4 +7,8 @@ router.get(/\/portfolio|\/photos|\/mapView|\/streetView|\/schools|\/commute/, (r
   res.redirect('/');
 });
 
+router.all('*', (req, res) => {
+  res.sendFile('/home/joshua/personal/dist/index.html');
+});
+
 module.exports = router;
